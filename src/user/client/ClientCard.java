@@ -14,11 +14,9 @@ public class ClientCard extends User
 	private PurchaseHistory purchaseHistory;
 	public Role role;
 	private int clientID;
-
-//	public user.ClientCard() {}
-
-	public ClientCard(String namePersonal_,String nameUser_,String password_,int phoneNumber_,String email_){
-		super();
+	
+	public ClientCard(String namePersonal_,String nameUser_,String password_,int phoneNumber_,String email_,ClientConsole client){
+		super(client);
 		namePersonal = namePersonal_;
 		password = password_;
 		nameUser = nameUser_;
