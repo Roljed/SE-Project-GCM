@@ -1,20 +1,13 @@
-package user.manager;
+package user.worker;
 
-abstract Manager extends Worker{
+public class ContentWorker extends Worker{
+	
 	private ContentEdit editor;
-	private ActivityReport reporter;
-	private DataArchive archiver;
 	
-	public Manager(String namePersonal_,String nameUser_,String password_,int phoneNumber_,String email_,ClientConsole client_){
+	public ContentWorker(String namePersonal_,String nameUser_,String password_,int phoneNumber_,String email_,ClientConsole client_){
 		super(namePersonal_,nameUser_,password_,phoneNumber_,email_,client_);
+		role = ContentWorkerRole;
 		editor = new ContentEdit(client);
-		reporter = new ActivityReport(client);
-		archiver = new DataArchive()
-		Role = ManagerRole;
-	}
-	
-	public void viewReport(){
-		reporter.showReport();
 	}
 	
 	public void createCity(String cityName){
@@ -51,17 +44,5 @@ abstract Manager extends Worker{
 	
 	public void sendPublishVersion(){
 		editor.sendPublishVersion();
-	}
-	
-	public void newDateInterrupt(){
-		archiver.newDateInterrupt();
-	}
-	
-	public void createDailyReport(){
-		archiver.createDailyReport();
-	}
-	
-	public void addDailyReport(){
-		archiver.addDailyReport();
 	}
 }
