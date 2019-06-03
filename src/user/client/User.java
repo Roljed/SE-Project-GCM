@@ -7,16 +7,17 @@ import src.product.content.ContentInterestingPlaces;
 
 import java.util.Scanner;
 
-public class User extends ClientConsole
+public class User
 {
 	public boolean registeredUser;
 	private SignUpForm signUpForm;
 	private SignInForm signInForm;
 	private Search search;
-
-	public User(String loginID, String host, int port){
-		super(loginID, host, port);
+	private ClientConsole client;
+	
+	public User(ClientConsole client_){
 		registeredUser = false;
+		clientConsole = client_;
 	}
 	
 	public void signIn(){
@@ -29,8 +30,8 @@ public class User extends ClientConsole
 		String userName = in.nextLine();
 		System.out.println("Type your password:");
 		String passWord = in.nextLine();
-		signInForm = new SignInForm(username,password);
-		client.ChatClient.handleMessageFromClientUI(signInForm);
+		signInForm - new SignInForm(username,password);
+		client.handleMessageFromClientUI(signInForm);
 		boolean res = (boolean)input.readObject();
 		if(res){
 			registeredUser = true;
@@ -42,8 +43,7 @@ public class User extends ClientConsole
 		return;
 	}
 	
-	public void signUp()
-	{
+	public void signUp(){
 		Scanner in = new Scanner(System.in);
 		System.out.println("Type your name:");
 		String name = in.nextLine();
@@ -57,7 +57,7 @@ public class User extends ClientConsole
 		String email = in.nextLine();
 		signUpForm = new SignUpForm(name,userName,password,phoneNumber,email);
 		ClientCard clientCard = signUpForm.createClientCard();
-		ChatClient.handleMessageFromClientUI(clientCard);
+		client.handleMessageFromClientUI(clientCard);
 		boolean res = (boolean)input.readObject();
 		if(res){
 			System.out.println("You are signed up now. Please sign in using your username and password!");
@@ -70,20 +70,18 @@ public class User extends ClientConsole
 	public void viewCatalog(){
 		Scanner in = new Scanner(System.in);
 		String request;
+		search = new Search(client);
 		City resCity;
-		ContentInterestingPlaces resPlaceOfInterest;
-		while(true)
-		{
-			System.out.println("Please type the name of the city or the src.product.content that you are intrested in:");
+		PlaceOfInterest resPlaceOfInterest;
+		while(1){
+			System.out.println("Please type the name of the city or the content that you are intrested in:");
 			request = in.nextLine();
-			search = new Search();
-			resCity = search.searchByCity(request);
-			if(resCity == null)
-			{
+			res = search.searchByCity(request);
+			if(resCity == null){
 				resPlaceOfInterest = search.searchByContent(request);
 			}
 			if(resPlaceOfInterest == null){
-				System.out.println("Your request is n0t found. Please try again!");
+				System.out.println("Your request is not found. Please try again!");
 				continue;
 			}
 			break;
