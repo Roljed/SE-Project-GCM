@@ -1,0 +1,39 @@
+package product.content;
+
+/**
+ * Holds Content location on the DigitalMap
+ *
+ * @version 1
+ * @author Yaad Nahshon
+ */
+public class Location
+{
+    private double coordinateX;
+    private double coordinateY;
+
+    public Location(double newX, double newY)
+    {
+        this.coordinateX = newX;
+        this.coordinateY = newY;
+    }
+
+    public double getCoordinateX()
+    {
+        return coordinateX;
+    }
+
+    public void setCoordinateX(double coordinateX)
+    {
+        this.coordinateX = coordinateX;
+    }
+
+    public double getCoordinateY()
+    {
+        return coordinateY;
+    }
+
+    public void setCoordinateY(double coordinateY)
+    {
+        this.coordinateY = coordinateY;
+    }
+}

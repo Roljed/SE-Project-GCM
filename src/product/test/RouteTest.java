@@ -1,6 +1,6 @@
 package product.test;
 
-public class RouteTest
+public abstract class RouteTest
 {
 
 }
