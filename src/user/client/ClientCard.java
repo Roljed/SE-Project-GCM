@@ -1,6 +1,7 @@
 package user.client;
 
-import src.product.pricing.PurchaseHistory;
+import client.ClientConsole;
+import product.pricing.PurchaseHistory;
 
 public class ClientCard extends User
 {
@@ -15,7 +16,7 @@ public class ClientCard extends User
 	public Role role;
 	private int clientID;
 	
-	public ClientCard(String namePersonal_,String nameUser_,String password_,int phoneNumber_,String email_,ClientConsole client){
+	public ClientCard(String namePersonal_, String nameUser_, String password_, int phoneNumber_, String email_, ClientConsole client){
 		super(client);
 		namePersonal = namePersonal_;
 		password = password_;
@@ -27,7 +28,7 @@ public class ClientCard extends User
 		clientID = NextClientID;
 		NextClientID++;
 	}
-	
+
 	public void buyMap(int mapID){
 		boolean res = purchaseHistory.addMap(mapID);
 		if(res){
