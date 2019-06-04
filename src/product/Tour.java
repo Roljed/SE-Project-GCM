@@ -3,6 +3,12 @@ package product;
 import java.util.List;
 import product.content.Content;
 
+/**
+ * Third product - Route
+ *
+ * @version 1
+ * @author Yaad Nahshon
+ */
 public class Tour
 {
     private int tourID;
