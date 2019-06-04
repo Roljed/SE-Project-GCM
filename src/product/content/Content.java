@@ -11,17 +11,20 @@ public abstract class Content
 
     private int contendID;
     private Location locationCoordinate;
+    private double contentDuration;
 
-    public Content(int newContentID, Location newLocationCoordinate)
+    Content(int newContentID, Location newLocationCoordinate, double newDuration)
     {
         this.contendID = newContentID;
         this.locationCoordinate = newLocationCoordinate;
+        this.contentDuration = newDuration;
     }
 
-    public Content(int newContentID, double newCoordinateX, double newCoordinateY)
+    Content(int newContentID, double newCoordinateX, double newCoordinateY, double newDuration)
     {
         this.contendID = newContentID;
         this.locationCoordinate = new Location(newCoordinateX, newCoordinateY);
+        this.contentDuration = newDuration;
     }
 
     public void setContentID(int newID)
@@ -43,4 +46,15 @@ public abstract class Content
     {
         this.locationCoordinate = locationCoordinate;
     }
+
+    public double getContentDuration()
+    {
+        return contentDuration;
+    }
+
+    public void setContentDuration(double contentDuration)
+    {
+        this.contentDuration = contentDuration;
+    }
+
 }
