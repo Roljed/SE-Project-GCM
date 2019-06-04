@@ -25,9 +25,9 @@ public class ContentInterestingPlaces extends Content
         STORE
     }
 
-    public ContentInterestingPlaces(int newContentID, Location newLocationCoordinate, String name, Location location, Classification type, String details, boolean accessibility)
+    public ContentInterestingPlaces(int newContentID, Location newLocationCoordinate, double newDuration, String name, Location location, Classification type, String details, boolean accessibility)
     {
-        super(newContentID, newLocationCoordinate);
+        super(newContentID, newLocationCoordinate, newDuration);
         this.name = name;
         this.location = location;
         this.type = type;
@@ -35,9 +35,9 @@ public class ContentInterestingPlaces extends Content
         this.accessibility = accessibility;
     }
 
-    public ContentInterestingPlaces(int newContentID, double newCoordinateX, double newCoordinateY, String name, Location location, Classification type, String details, boolean accessibility)
+    public ContentInterestingPlaces(int newContentID, double newCoordinateX, double newCoordinateY, double newDuration, String name, Location location, Classification type, String details, boolean accessibility)
     {
-        super(newContentID, newCoordinateX, newCoordinateY);
+        super(newContentID, newCoordinateX, newCoordinateY, newDuration);
         this.name = name;
         this.location = location;
         this.type = type;
