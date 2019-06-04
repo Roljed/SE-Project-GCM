@@ -1,16 +1,18 @@
 package user.client;
 
+import client.ClientConsole;
 import java.lang.String;
 
-class SignUpForm{
+class SignUpForm
+{
 	private String name;
 	private String userName;
 	private String password;
 	private int phoneNumber;
 	private String email;
-	private ClientComsole client;
+	private ClientConsole client;
 	
-	public signUpForm(String name_,String userName_,String password_,int phoneNumber_,String email_,ClientComsole client_){
+	public SignUpForm(String name_,String userName_,String password_,int phoneNumber_,String email_, ClientConsole client_){
 		name = name_;
 		userName = userName_;
 		password = password_;
@@ -19,7 +21,8 @@ class SignUpForm{
 		client = client_;
 	}
 	
-	public ClientCard createClientCard(){
-		return new ClientCard(name,userName,password,phoneNumber,email,client);
+	public ClientCard createClientCard()
+	{
+		return new ClientCard( name, userName, password, phoneNumber, email, client);
 	}
 }

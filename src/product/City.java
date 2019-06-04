@@ -32,7 +32,7 @@ public class City
         {
             this.cityPrice = cityPrice;
         }
-        this.lastCityMapsVersionUpdate = lastCityMapsVersionUpdate;
+        this.lastCityMapsVersionUpdate = lastCityMapsVersionUpdate; //TODO make function to find last update
     }
 
     private double calculateCityPrice(List<DigitalMap> cityMaps)
@@ -43,6 +43,16 @@ public class City
             price += digitalMap.getDigitalMapCost().getPrice();
         }
         return price;
+    }
+
+    public int countCityContent()
+    {
+        int count = 0;
+        for (DigitalMap map : this.cityMaps)
+        {
+            count += map.getDigitalMapContents().length;
+        }
+        return count;
     }
 
     public int getCityID()

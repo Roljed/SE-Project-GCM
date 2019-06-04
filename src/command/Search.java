@@ -1,26 +1,38 @@
 package command;
 
-import src.product.City;
-import src.product.content.ContentInterestingPlaces;
+import product.content.Content;
+import product.City;
+import client.ClientConsole;
+import product.content.ContentInterestingPlaces;
+
 
 public class Search
 {
 	private ClientConsole client;
 	
-	public Search(ClientConsole client_){
+	public Search(ClientConsole client_)
+	{
 		client = client_;
 	}
 	
-	public City searchByCity(String cityName){
+	public City searchByCity(String cityName)
+	{
 		client.handleMessageFromClientUI(cityName);
 		return (City)input.readObject();
 	}
 	
-	public PlaceOfInterest SearchByContent(String contentName){
+	public Content SearchByContent(String contentName)
+	{
 		client.handleMessageFromClientUI(contentName);
-		return (PlaceOfInterest)input.readObject();
+		return (Content) input.readObject();
 	}
-	
-	//TO BE CONTINUED
+
+    public ContentInterestingPlaces searchByContent(String request)
+	{
+		client.handleMessageFromClientUI(contentName);
+		return (Content) input.readObject();
+    }
+
+    //TO BE CONTINUED
 	
 }
