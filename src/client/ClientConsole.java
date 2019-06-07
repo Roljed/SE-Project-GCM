@@ -5,6 +5,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import client.common.ChatIF;
+
 /**
  * This class constructs the UI for a chat client.  It implements the
  * chat interface in order to activate the display() method.
@@ -15,7 +17,7 @@ import java.io.InputStreamReader;
  * @author Dr Robert Lagani&egrave;re
  * @version July 2000
  */
-public class ClientConsole implements common.ChatIF
+public class ClientConsole implements ChatIF
 {
   //Class variables *************************************************
   

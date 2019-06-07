@@ -3,7 +3,7 @@ package server;// "Object Oriented Software Engineering" and is issued under the
 
 import java.io.*;
 
-import common.*;
+import client.common.ChatIF;
 
 /**
  * This class constructs the UI for a chat server.  It implements the
@@ -47,8 +47,7 @@ public class ServerConsole implements ChatIF
     } 
     catch(IOException exception) 
     {
-      System.out.println("Error: Can't setup connection!"
-                + " Terminating client.");
+      System.out.println("Error: Can't setup connection! Terminating client.");
       System.exit(1);
     }
     
@@ -107,7 +106,6 @@ public class ServerConsole implements ChatIF
   /**
    * This method is responsible for the creation of the Server UI.
    *
-   * @param args[0] The port to connect to.
    */
   public static void main(String[] args) 
   {
@@ -122,6 +120,7 @@ public class ServerConsole implements ChatIF
     {
       port = DEFAULT_PORT;
     }
+
     ServerConsole server = new ServerConsole(port);
     server.accept();  //Wait for console data
   }
