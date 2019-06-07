@@ -2,6 +2,8 @@ package product;
 import product.content.Content;
 import product.pricing.MapCost;
 
+import java.util.HashMap;
+
 /**
  * Main product - Digital Map
  *
@@ -11,15 +13,16 @@ import product.pricing.MapCost;
 public class DigitalMap
 {
     private int digitalMapID;
+    private static int digitalMapIDNext = 0;
     private double digitalMapVersion;
     private String digitalMapDescription;
-    private Content[] digitalMapContents;
+    private HashMap<Integer, Content> digitalMapContents;
     private MapCost digitalMapCost;
 
 
-    public DigitalMap(int digitalMapID, double digitalMapVersion, String digitalMapDescription, Content[] digitalMapContents, MapCost digitalMapCost)
+    public DigitalMap(double digitalMapVersion, String digitalMapDescription, HashMap<Integer, Content> digitalMapContents, MapCost digitalMapCost)
     {
-        this.digitalMapID = digitalMapID;
+        this.digitalMapID = digitalMapIDNext++;
         this.digitalMapVersion = digitalMapVersion;
         this.digitalMapDescription = digitalMapDescription;
         this.digitalMapContents = digitalMapContents;
@@ -29,11 +32,6 @@ public class DigitalMap
     public int getDigitalMapID()
     {
         return digitalMapID;
-    }
-
-    public void setDigitalMapID(int digitalMapID)
-    {
-        this.digitalMapID = digitalMapID;
     }
 
     public double getDigitalMapVersion()
@@ -56,12 +54,12 @@ public class DigitalMap
         this.digitalMapDescription = digitalMapDescription;
     }
 
-    public Content[] getDigitalMapContents()
+    public HashMap<Integer, Content> getDigitalMapContents()
     {
         return digitalMapContents;
     }
 
-    public void setDigitalMapContents(Content[] digitalMapContents)
+    public void setDigitalMapContents(HashMap<Integer, Content> digitalMapContents)
     {
         this.digitalMapContents = digitalMapContents;
     }
@@ -74,5 +72,10 @@ public class DigitalMap
     public void setDigitalMapCost(MapCost digitalMapCost)
     {
         this.digitalMapCost = digitalMapCost;
+    }
+
+    public Content addContent(Content newContent)
+    {
+       return this.digitalMapContents.put(newContent.getContendID(), newContent);
     }
 }

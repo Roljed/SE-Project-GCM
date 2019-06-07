@@ -6,15 +6,15 @@ package product.content;
  * @version 1
  * @author Yaad Nahshon
  */
-public class ContentInterestingPlaces extends Content
+public class Site extends Content
 {
     private String name;
-    private Location location;
     private Classification type;
     private String details;
     private boolean accessibility;
 
-    public enum Classification {
+    public enum Classification
+    {
         CINEMA,
         HISTORICAL,
         HOTEL,
@@ -25,21 +25,19 @@ public class ContentInterestingPlaces extends Content
         STORE
     }
 
-    public ContentInterestingPlaces(int newContentID, Location newLocationCoordinate, double newDuration, String name, Location location, Classification type, String details, boolean accessibility)
+    public Site(Location newLocationCoordinate, double newDuration, String name, Classification type, String details, boolean accessibility)
     {
-        super(newContentID, newLocationCoordinate, newDuration);
+        super(newLocationCoordinate, newDuration);
         this.name = name;
-        this.location = location;
         this.type = type;
         this.details = details;
         this.accessibility = accessibility;
     }
 
-    public ContentInterestingPlaces(int newContentID, double newCoordinateX, double newCoordinateY, double newDuration, String name, Location location, Classification type, String details, boolean accessibility)
+    public Site(double newCoordinateX, double newCoordinateY, double newDuration, String name, Classification type, String details, boolean accessibility)
     {
-        super(newContentID, newCoordinateX, newCoordinateY, newDuration);
+        super(newCoordinateX, newCoordinateY, newDuration);
         this.name = name;
-        this.location = location;
         this.type = type;
         this.details = details;
         this.accessibility = accessibility;
@@ -57,12 +55,12 @@ public class ContentInterestingPlaces extends Content
 
     public Location getLocation()
     {
-        return location;
+        return this.getLocationCoordinate();
     }
 
     public void setLocation(Location location)
     {
-        this.location = location;
+        this.setLocationCoordinate(location);
     }
 
     public Classification getType()

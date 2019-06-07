@@ -1,7 +1,8 @@
 package product;
 
 import java.util.Date;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Second product - City
@@ -12,35 +13,38 @@ import java.util.List;
 public class City
 {
     private int cityID;
+    private static int cityIDNext = 0;
     private String cityName;
-    private List<DigitalMap> cityMaps;
-    private List<Tour> cityTours;
+    private HashMap<Integer, DigitalMap> cityMaps;
+    private HashMap<Integer, Tour> cityTours;
     private double cityPrice;
-    private Date lastCityMapsVersionUpdate;
+    private int cityVersion;
+    private Date updateVersionDate;
 
-    public City(int cityID, String cityName, List<DigitalMap> cityMaps, List<Tour> cityTours, double cityPrice, Date lastCityMapsVersionUpdate)
+    public City(String cityName, HashMap<Integer, DigitalMap> cityMaps, HashMap<Integer, Tour> cityTours, double cityPrice, int cityVersion, Date updateVersionDate)
     {
-        this.cityID = cityID;
+        this.cityID = cityIDNext++;
         this.cityName = cityName;
         this.cityMaps = cityMaps;
         this.cityTours = cityTours;
+        this.cityVersion = cityVersion;
         if (cityPrice <= 0 && cityMaps.isEmpty() == false)
         {
-            this.cityPrice = calculateCityPrice(cityMaps);
+            this.cityPrice = calculateCityPrice();
         }
         else
         {
             this.cityPrice = cityPrice;
         }
-        this.lastCityMapsVersionUpdate = lastCityMapsVersionUpdate; //TODO make function to find last update
+        this.updateVersionDate = updateVersionDate; //TODO make function to find last update
     }
 
-    private double calculateCityPrice(List<DigitalMap> cityMaps)
+    private double calculateCityPrice()
     {
         double price = 0;
-        for (DigitalMap digitalMap : cityMaps)
+        for (Map.Entry<Integer, DigitalMap> digitalMap : this.cityMaps.entrySet())
         {
-            price += digitalMap.getDigitalMapCost().getPrice();
+            price += digitalMap.getValue().getDigitalMapCost().getPrice();
         }
         return price;
     }
@@ -48,9 +52,9 @@ public class City
     public int countCityContent()
     {
         int count = 0;
-        for (DigitalMap map : this.cityMaps)
+        for (Map.Entry<Integer, DigitalMap> digitalMap : this.cityMaps.entrySet())
         {
-            count += map.getDigitalMapContents().length;
+            count += digitalMap.getValue().getDigitalMapContents().size();
         }
         return count;
     }
@@ -58,11 +62,6 @@ public class City
     public int getCityID()
     {
         return cityID;
-    }
-
-    public void setCityID(int cityID)
-    {
-        this.cityID = cityID;
     }
 
     public String getCityName()
@@ -75,22 +74,22 @@ public class City
         this.cityName = cityName;
     }
 
-    public List<DigitalMap> getCityMaps()
+    public HashMap<Integer, DigitalMap> getCityMaps()
     {
         return cityMaps;
     }
 
-    public void setCityMaps(List<DigitalMap> cityMaps)
+    public void setCityMaps(HashMap<Integer, DigitalMap> cityMaps)
     {
         this.cityMaps = cityMaps;
     }
 
-    public List<Tour> getCityTours()
+    public HashMap<Integer, Tour> getCityTours()
     {
         return cityTours;
     }
 
-    public void setCityTours(List<Tour> cityTours)
+    public void setCityTours(HashMap<Integer, Tour> cityTours)
     {
         this.cityTours = cityTours;
     }
@@ -105,13 +104,29 @@ public class City
         this.cityPrice = cityPrice;
     }
 
-    public Date getLastCityMapsVersionUpdate()
+    public Date getUpdateVersionDate()
     {
-        return lastCityMapsVersionUpdate;
+        return updateVersionDate;
     }
 
-    public void setLastCityMapsVersionUpdate(Date lastCityMapsVersionUpdate)
+    public void setUpdateVersionDate(Date updateVersionDate)
     {
-        this.lastCityMapsVersionUpdate = lastCityMapsVersionUpdate;
+        this.updateVersionDate = updateVersionDate;
+    }
+
+    public int getVersion()
+    {
+        return cityVersion;
+    }
+
+    public void setCityVersionVersion(int cityVersion)
+    {
+        this.cityVersion = cityVersion;
+        setUpdateVersionDate(new Date());
+    }
+
+    public void updateVersion()
+    {
+        this.cityVersion += 1;
     }
 }
