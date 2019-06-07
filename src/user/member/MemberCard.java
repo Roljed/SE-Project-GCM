@@ -5,7 +5,7 @@ import client.ChatClient;
 import product.pricing.PurchaseHistory;
 import user.User;
 
-public class Member extends User
+public class MemberCard extends User
 {
 	protected static int NextClientID = 1;
 	
@@ -18,7 +18,7 @@ public class Member extends User
 	private String email;
 	private PurchaseHistory purchaseHistory;
 
-	public Member(String namePersonal_, String nameUser_, String password_, int phoneNumber_, String email_, ChatClient client){
+	public MemberCard(String namePersonal_, String nameUser_, String password_, int phoneNumber_, String email_, ChatClient client){
 		super(chat);
 		namePersonal = namePersonal_;
 		password = password_;

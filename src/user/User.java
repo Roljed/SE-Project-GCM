@@ -1,14 +1,13 @@
 package user;
 
 import product.content.Content;
-import user.member.Member;
+import user.member.MemberCard;
 import user.member.SignInForm;
 import command.Search;
 import product.City;
 import product.DigitalMap;
 import client.ChatClient;
 import user.member.SignUpForm;
-import user.Role;
 
 import java.io.IOException;
 import java.util.List;
@@ -71,7 +70,7 @@ public class User
 		System.out.println("Type your email:");
 		String email = in.nextLine();
 		SignUpForm signUpForm = new SignUpForm(name, username,password,phoneNumber,email, chat);
-		Member clientCard = signUpForm.createMemberCard();
+		MemberCard clientCard = signUpForm.createMemberCard();
 		try {
 			chat.sendToServer(clientCard);
 		}

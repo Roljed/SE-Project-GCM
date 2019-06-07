@@ -2,8 +2,9 @@ package user.worker;
 
 import client.ChatClient;
 import user.Role;
+import user.member.MemberCard;
 
-public class Worker extends user.member.Member
+public class Worker extends MemberCard
 {
 	private int workerID;
 	static int NextworkerID = 0;
