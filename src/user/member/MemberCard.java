@@ -7,7 +7,7 @@ import user.UserRole;
 
 public class MemberCard extends User
 {
-	static int NextClientID = 1;
+	protected static int NextClientID = 1;
 	
 	public String namePersonal;
 	public String password;
