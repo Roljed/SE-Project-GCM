@@ -12,8 +12,8 @@ public class ReportActivity extends Report
 {
 	private int countMaps;
 	private int countSinglePurchase;
-	private int countSubsctiptions;
-	private int countRenewSubsctiptions;
+	private int countSubscriptions;
+	private int countRenewSubscriptions;
 	private int countView;
 	private int countDownload;
 	
@@ -21,8 +21,8 @@ public class ReportActivity extends Report
 		super(activeManager);
 		countMaps=0;
 		countSinglePurchase=0;
-		countSubsctiptions=0;
-		countRenewSubsctiptions=0;
+		countSubscriptions =0;
+		countRenewSubscriptions =0;
 		countView=0;
 		countDownload=0;
 	}
@@ -35,12 +35,12 @@ public class ReportActivity extends Report
 		return countSinglePurchase;
 	}
 	
-	public int getCountSubsctiptions() {
-		return countSubsctiptions;
+	public int getCountSubscriptions() {
+		return countSubscriptions;
 	}
 	
-	public int getCountRenewSubsctiptions() {
-		return countRenewSubsctiptions;
+	public int getCountRenewSubscriptions() {
+		return countRenewSubscriptions;
 	}
 	
 	public int getCountView() {
@@ -60,11 +60,11 @@ public class ReportActivity extends Report
 	}
 	
 	public void AddCountSubsctiptions(int add) {
-		countSubsctiptions+=add;
+		countSubscriptions +=add;
 	}
 	
 	public void AddCountRenewSubsctiptions(int add) {
-		countRenewSubsctiptions+=add;
+		countRenewSubscriptions +=add;
 	}
 	
 	public void AddCountView(int add) {
@@ -79,8 +79,8 @@ public class ReportActivity extends Report
 		System.out.println("Activity Report:");
 		System.out.println("Number of maps: "+countMaps);
 		System.out.println("Number of single purchase: "+countSinglePurchase);
-		System.out.println("Number of subsctiptions: "+countSubsctiptions);
-		System.out.println("Number of renew subsctiptions: "+ countRenewSubsctiptions);
+		System.out.println("Number of subscriptions: "+ countSubscriptions);
+		System.out.println("Number of renew subscriptions: "+ countRenewSubscriptions);
 		System.out.println("Number of views: "+countView);
 		System.out.println("Number of downloads: "+countDownload);
 		System.out.println("Active Manager: "+this.getActiveManager());
