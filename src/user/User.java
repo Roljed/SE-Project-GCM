@@ -1,39 +1,25 @@
-package user;
-import client.ClientConsole;
+package user.client;
 import command.Search;
 import product.City;
 import product.DigitalMap;
-import product.content.Site;
-import user.UserRole.Role;
-import user.member.MemberCard;
-import user.member.SignInForm;
-import user.member.SignUpForm;
-
+import product.content.ContentInterestingPlaces;
+import client.ChatClient;
+import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
 public class User
 {
-	private boolean registeredUser;
-	private SignUpForm signUpForm;
-	private SignInForm signInForm;
-	private Search search;
-	private ClientConsole clientConsole;
-	protected Role userRole;
-
-	protected void setRole()
-	{
-		this.userRole = Role.USER;
-	}
-	public Role getRole()
-	{
-		return this.userRole;
-	}
+	public boolean registeredUser;
+	private SignUpForm signUpForm = null;
+	private SignInForm signInForm = null;
+	private Search search = null;
+	protected static ChatClient chat;
 	
-	public User(ClientConsole client_)
+	public User(ChatClient chat_)
 	{
 		registeredUser = false;
-		clientConsole = client_;
+		chat = chat_;
 	}
 	
 	public void signIn()
@@ -49,8 +35,11 @@ public class User
 		System.out.println("Type your password:");
 		String password = in.nextLine();
 		signInForm = new SignInForm(username,password);
-		client.handleMessageFromClientUI(signInForm);
-		boolean res = (boolean)input.readObject();
+		try {
+			chat.sendToServer(signInForm);
+		}
+		catch(IOException ex) {}
+		boolean res = (boolean)chat.recieveObjectFromServer();
 		if(res){
 			registeredUser = true;
 			System.out.println("You are Signed in now!");
@@ -74,10 +63,13 @@ public class User
 		int phoneNumber = Integer.parseInt(in.nextLine());
 		System.out.println("Type your email:");
 		String email = in.nextLine();
-		SignUpForm signUpForm = new SignUpForm(name, username,password,phoneNumber,email, clientConsole);
-		MemberCard memberCard = signUpForm.createMemberCard();
-		clientConsole.handleMessageFromClientUI(memberCard);
-		boolean res = (boolean)input.readObject();
+		SignUpForm signUpForm = new SignUpForm(name, username,password,phoneNumber,email, chat);
+		ClientCard clientCard = signUpForm.createClientCard();
+		try {
+			chat.sendToServer(clientCard);
+		}
+		catch(IOException ex) {}
+		boolean res = (boolean)chat.recieveObjectFromServer();
 		if(res){
 			System.out.println("You are signed up now. Please sign in using your username and password!");
 		}
@@ -89,9 +81,9 @@ public class User
 	public void viewCatalog(){
 		Scanner in = new Scanner(System.in);
 		String request;
-		search = new Search(in);
+		search = new Search(chat);
 		City resCity;
-		Site content = null;
+		ContentInterestingPlaces content = null;
 		while(true){
 			System.out.println("Please type the name of the city or the content that you are intrested in:");
 			request = in.nextLine();
