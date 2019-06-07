@@ -1,12 +1,14 @@
 package database.report;
 
+import java.text.SimpleDateFormat;
+
 /**
 *
 * @version 1
 * @author Avi Ayeli
 */
 
-public class ReportActivity implements Report
+public class ReportActivity extends Report
 {
 	private int countMaps;
 	private int countSinglePurchase;
@@ -15,7 +17,8 @@ public class ReportActivity implements Report
 	private int countView;
 	private int countDownload;
 	
-	public ReportActivity() {
+	public ReportActivity(String activeManager) {
+		super(activeManager);
 		countMaps=0;
 		countSinglePurchase=0;
 		countSubsctiptions=0;
@@ -70,5 +73,18 @@ public class ReportActivity implements Report
 	
 	public void AddCountDownload(int add) {
 		countDownload+=add;
+	}
+	
+	public void PrintReport() {
+		System.out.println("Activity Report:");
+		System.out.println("Number of maps: "+countMaps);
+		System.out.println("Number of single purchase: "+countSinglePurchase);
+		System.out.println("Number of subsctiptions: "+countSubsctiptions);
+		System.out.println("Number of renew subsctiptions: "+ countRenewSubsctiptions);
+		System.out.println("Number of views: "+countView);
+		System.out.println("Number of downloads: "+countDownload);
+		System.out.println("Active Manager: "+this.getActiveManager());
+		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+		System.out.println("Date: "+formatter.format(this.getDate()));
 	}
 }
