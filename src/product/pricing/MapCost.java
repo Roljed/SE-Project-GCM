@@ -2,7 +2,7 @@ package product.pricing;
 
 import java.util.Date;
 
-import user.UserRole.Role;
+import user.Role.Role;
 
 
 

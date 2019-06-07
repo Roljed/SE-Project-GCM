@@ -1,4 +1,4 @@
-package product.catalog;
+package command.catalog;
 
 import product.City;
 import product.DigitalMap;

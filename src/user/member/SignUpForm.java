@@ -1,10 +1,11 @@
-package user.client;
+package user.member;
 
 import client.ChatClient;
 import client.ClientConsole;
 import java.lang.String;
+import user.member.Member;
 
-class SignUpForm
+public class SignUpForm
 {
 	private String name;
 	private String userName;
@@ -22,9 +23,10 @@ class SignUpForm
 		setChat(chat_);
 	}
 	
-	public ClientCard createClientCard()
+	public Member createMemberCard()
 	{
-		return new ClientCard( name, userName, password, phoneNumber, email, chat);
+		return new Member(name, userName, password, phoneNumber, email, chat) {
+		};
 	}
 
 	public ChatClient getChat() {

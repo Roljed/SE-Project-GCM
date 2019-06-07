@@ -1,9 +1,15 @@
-package user.client;
+package user;
+
+import product.content.Content;
+import user.member.Member;
+import user.member.SignInForm;
 import command.Search;
 import product.City;
 import product.DigitalMap;
-import product.content.ContentInterestingPlaces;
 import client.ChatClient;
+import user.member.SignUpForm;
+import user.Role;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
@@ -15,6 +21,7 @@ public class User
 	private SignInForm signInForm = null;
 	private Search search = null;
 	protected static ChatClient chat;
+	protected Role role = Role.USER;
 	
 	public User(ChatClient chat_)
 	{
@@ -64,7 +71,7 @@ public class User
 		System.out.println("Type your email:");
 		String email = in.nextLine();
 		SignUpForm signUpForm = new SignUpForm(name, username,password,phoneNumber,email, chat);
-		ClientCard clientCard = signUpForm.createClientCard();
+		Member clientCard = signUpForm.createMemberCard();
 		try {
 			chat.sendToServer(clientCard);
 		}
@@ -83,7 +90,7 @@ public class User
 		String request;
 		search = new Search(chat);
 		City resCity;
-		ContentInterestingPlaces content = null;
+		Content content = null;
 		while(true){
 			System.out.println("Please type the name of the city or the content that you are intrested in:");
 			request = in.nextLine();

@@ -1,11 +1,14 @@
 package user.manager;
 
+import client.ClientConsole;
 import product.content.Editor;
+
+import java.util.Scanner;
 
 public class CompanyManager extends Manager
 {
 	
-	public CompanyManager(String namePersonal_,String nameUser_,String password_,int phoneNumber_,String email_,ClientConsole client_){
+	public CompanyManager(String namePersonal_, String nameUser_, String password_, int phoneNumber_, String email_, ClientConsole client_){
 		super(namePersonal_,nameUser_,password_,phoneNumber_,email_,client_);
 	}
 	

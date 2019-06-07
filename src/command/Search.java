@@ -7,7 +7,7 @@ import java.io.IOException;
 
 import client.ChatClient;
 import client.ClientConsole;
-import product.content.ContentInterestingPlaces;
+import product.content.Content;
 
 
 public class Search
@@ -30,7 +30,7 @@ public class Search
 		}
 	}
 	
-	public Content SearchByContent(String contentName)
+	public Content searchByContent(String contentName)
 	{
 		try {
 			chat.sendToServer(contentName);
@@ -40,17 +40,6 @@ public class Search
 			return null;
 		}
 	}
-
-    public ContentInterestingPlaces searchByContent(String contentName)
-	{
-    	try {
-			chat.sendToServer(contentName);
-			return (ContentInterestingPlaces)chat.recieveObjectFromServer();
-		}
-		catch(IOException ex) {
-			return null;
-		}
-    }
 
     //TO BE CONTINUED
 	
