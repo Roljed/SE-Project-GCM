@@ -1,12 +1,20 @@
 package user.manager;
 
-public class ContentManager extends Manager{
+import client.ClientConsole;
+import user.UserRole.Role;
+import product.pricing.MapCost;
+
+public class ContentManager extends Manager
+{
 	
-	public ContentManager(String namePersonal_,String nameUser_,String password_,int phoneNumber_,String email_,ClientConsole client_){
+	public ContentManager(String namePersonal_, String nameUser_, String password_, int phoneNumber_, String email_, ClientConsole client_)
+	{
 		super(namePersonal_,nameUser_,password_,phoneNumber_,email_,client_);
+		this.userRole = Role.CONTENT_MANAGER;
 	}
-	
-	public MapsCost setMapCost(int mapID,int mapPrice){
-		return new MapsCost(mapID,mapPrice);
+
+	// TODO just use the method inside MapCost
+	public MapCost setMapCost(int mapID,int mapPrice){
+		return new MapCost(mapID,mapPrice);
 	}
 }

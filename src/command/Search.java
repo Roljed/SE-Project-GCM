@@ -3,7 +3,7 @@ package command;
 import product.content.Content;
 import product.City;
 import client.ClientConsole;
-import product.content.ContentInterestingPlaces;
+import product.content.Site;
 
 
 public class Search
@@ -27,7 +27,7 @@ public class Search
 		return (Content) input.readObject();
 	}
 
-    public ContentInterestingPlaces searchByContent(String request)
+    public Site searchByContent(String request)
 	{
 		client.handleMessageFromClientUI(contentName);
 		return (Content) input.readObject();

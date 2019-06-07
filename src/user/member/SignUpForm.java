@@ -1,9 +1,9 @@
-package user.client;
+package user.member;
 
 import client.ClientConsole;
 import java.lang.String;
 
-class SignUpForm
+public class SignUpForm
 {
 	private String name;
 	private String userName;
@@ -21,8 +21,8 @@ class SignUpForm
 		client = client_;
 	}
 	
-	public ClientCard createClientCard()
+	public MemberCard createMemberCard()
 	{
-		return new ClientCard( name, userName, password, phoneNumber, email, client);
+		return new MemberCard( name, userName, password, phoneNumber, email, client);
 	}
 }

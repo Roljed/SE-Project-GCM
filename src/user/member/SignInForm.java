@@ -1,6 +1,7 @@
-package user.client;
+package user.member;
 
-class SignInForm{
+public class SignInForm
+{
 	private String userName;
 	private String password;
 	

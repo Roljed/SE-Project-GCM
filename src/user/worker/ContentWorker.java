@@ -1,12 +1,18 @@
 package user.worker;
 
-public class ContentWorker extends Worker{
+import client.ClientConsole;
+import product.content.Editor;
+import product.content.Editor;
+import user.UserRole;
+
+public class ContentWorker extends Worker implements Editor
+{
 	
 	private ContentEdit editor;
 	
-	public ContentWorker(String namePersonal_,String nameUser_,String password_,int phoneNumber_,String email_,ClientConsole client_){
+	public ContentWorker(String namePersonal_, String nameUser_, String password_, int phoneNumber_, String email_, ClientConsole client_){
 		super(namePersonal_,nameUser_,password_,phoneNumber_,email_,client_);
-		role = ContentWorkerRole;
+		this.userRole = UserRole.Role.CONTENT_WORKER;
 		editor = new ContentEdit(client);
 	}
 	

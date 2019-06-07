@@ -305,8 +305,9 @@ public abstract class AbstractClient implements Runnable
    * messages.
    *
    * @param msg   the src.command.message sent.
+   * @return
    */
-  protected abstract void handleMessageFromServer(Object msg);
+  protected abstract Object handleMessageFromServer(Object msg);
 
 
 // METHODS TO BE USED FROM WITHIN THE FRAMEWORK ONLY ----------------

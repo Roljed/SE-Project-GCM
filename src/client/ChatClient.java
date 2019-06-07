@@ -2,8 +2,10 @@ package client;// This file contains material supporting section 3.7 of the text
 // "Object Oriented Software Engineering" and is issued under the open-source
 // license found at www.lloseng.com 
 
-import src.ocsf.client.*;
-import common.*;
+import ocsf.client.*;
+import client.common.*;
+import user.member.SignInForm;
+
 import java.io.*;
 
 /**
@@ -82,17 +84,18 @@ public class ChatClient extends AbstractClient
    *
    * @param msg The src.command.message from the server.
    */
-  public void handleMessageFromServer(Object msg) 
-  {
-    clientUI.display(msg.toString());
-  }
+//  public void handleMessageFromServer(Object msg)
+//  {
+//    clientUI.display(msg.toString());
+//  }
   
   /** ADDED METHOD!!!!!!!
    * This method handles all data that comes in from the server.
    *
    * @param msg The object from the server.
+   * @return
    */
-  public Object handleMessageFromServer(Object msg) 
+  public Object handleMessageFromServer(Object msg)
   {
     return msg;
   }

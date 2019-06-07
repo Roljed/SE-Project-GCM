@@ -3,8 +3,8 @@ package server;// This file contains material supporting section 3.7 of the text
 // license found at www.lloseng.com 
 
 import java.io.*;
-import src.ocsf.server.*;
-import common.*;
+import ocsf.server.*;
+import client.common.*;
 
 /**
  * This class overrides some of the methods in the abstract 

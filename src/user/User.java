@@ -1,25 +1,34 @@
-package user.client;
+package user;
 import client.ClientConsole;
 import command.Search;
 import product.City;
 import product.DigitalMap;
-import product.content.ContentInterestingPlaces;
-import src.client.ChatClient;
-import src.client.ClientConsole;
-import src.command.Search;
-import src.product.City;
-import src.product.content.ContentInterestingPlaces;
+import product.content.Site;
+import user.UserRole.Role;
+import user.member.MemberCard;
+import user.member.SignInForm;
+import user.member.SignUpForm;
 
 import java.util.List;
 import java.util.Scanner;
 
 public class User
 {
-	public boolean registeredUser;
+	private boolean registeredUser;
 	private SignUpForm signUpForm;
 	private SignInForm signInForm;
 	private Search search;
 	private ClientConsole clientConsole;
+	protected Role userRole;
+
+	protected void setRole()
+	{
+		this.userRole = Role.USER;
+	}
+	public Role getRole()
+	{
+		return this.userRole;
+	}
 	
 	public User(ClientConsole client_)
 	{
@@ -66,8 +75,8 @@ public class User
 		System.out.println("Type your email:");
 		String email = in.nextLine();
 		SignUpForm signUpForm = new SignUpForm(name, username,password,phoneNumber,email, clientConsole);
-		ClientCard clientCard = signUpForm.createClientCard();
-		clientConsole.handleMessageFromClientUI(clientCard);
+		MemberCard memberCard = signUpForm.createMemberCard();
+		clientConsole.handleMessageFromClientUI(memberCard);
 		boolean res = (boolean)input.readObject();
 		if(res){
 			System.out.println("You are signed up now. Please sign in using your username and password!");
@@ -82,7 +91,7 @@ public class User
 		String request;
 		search = new Search(in);
 		City resCity;
-		ContentInterestingPlaces content = null;
+		Site content = null;
 		while(true){
 			System.out.println("Please type the name of the city or the content that you are intrested in:");
 			request = in.nextLine();

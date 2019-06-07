@@ -1,9 +1,11 @@
-package user.client;
+package user.member;
 
 import client.ClientConsole;
 import product.pricing.PurchaseHistory;
+import user.User;
+import user.UserRole;
 
-public class ClientCard extends User
+public class MemberCard extends User
 {
 	static int NextClientID = 1;
 	
@@ -13,10 +15,10 @@ public class ClientCard extends User
 	public int phoneNumber;
 	public String email;
 	private PurchaseHistory purchaseHistory;
-	public Role role;
 	private int clientID;
 	
-	public ClientCard(String namePersonal_, String nameUser_, String password_, int phoneNumber_, String email_, ClientConsole client){
+	public MemberCard(String namePersonal_, String nameUser_, String password_, int phoneNumber_, String email_, ClientConsole client)
+	{
 		super(client);
 		namePersonal = namePersonal_;
 		password = password_;
@@ -24,7 +26,7 @@ public class ClientCard extends User
 		phoneNumber = phoneNumber_;
 		email = email_;
 		purchaseHistory = new PurchaseHistory();
-		role = ClientRole;
+		this.userRole = UserRole.Role.MEMBER;
 		clientID = NextClientID;
 		NextClientID++;
 	}
@@ -48,9 +50,4 @@ public class ClientCard extends User
 			System.out.println("Something went wrong. Please try again or contact us.");
 		}
 	}
-}
-
-enum Role 
-{ 
-    ClientRole, WorkerRole, ManagerRole, ContentWorkerRole; 
 }

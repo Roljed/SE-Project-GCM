@@ -10,26 +10,22 @@ public abstract class Content
 {
 
     private int contendID;
+    private static int nextContentID = 0;
     private Location locationCoordinate;
     private double contentDuration;
 
-    Content(int newContentID, Location newLocationCoordinate, double newDuration)
+    Content(Location newLocationCoordinate, double newDuration)
     {
-        this.contendID = newContentID;
+        this.contendID = nextContentID++;
         this.locationCoordinate = newLocationCoordinate;
         this.contentDuration = newDuration;
     }
 
-    Content(int newContentID, double newCoordinateX, double newCoordinateY, double newDuration)
+    Content(double newCoordinateX, double newCoordinateY, double newDuration)
     {
-        this.contendID = newContentID;
+        this.contendID = nextContentID + 1;
         this.locationCoordinate = new Location(newCoordinateX, newCoordinateY);
         this.contentDuration = newDuration;
-    }
-
-    public void setContentID(int newID)
-    {
-        this.contendID = newID;
     }
 
     public int getContendID()
