@@ -1,20 +1,17 @@
 package user.worker;
 
 import client.ChatClient;
-import user.client.ClientCard;
+import user.Role;
+import user.member.MemberCard;
 
-public class Worker extends ClientCard
+public class Worker extends MemberCard
 {
-	static int NextworkerID = 1;
-	
 	private int workerID;
-	
+	static int NextworkerID = 0;
+
 	public Worker(String namePersonal_,String nameUser_,String password_,int phoneNumber_,String email_,ChatClient chat_){
 		super(namePersonal_,nameUser_,password_,phoneNumber_,email_,chat_);
-		clientID = 0;
-		NextClientID--;
-		workerID = NextworkerID;
-		NextworkerID++;
-		role = WorkerRole;
+		workerID = NextworkerID++;
+		role = Role.WORKER;
 	}
 }

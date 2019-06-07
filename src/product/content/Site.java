@@ -1,5 +1,7 @@
 package product.content;
 
+import user.Role;
+
 /**
  * Implements interesting places on the DigitalMap
  *
@@ -8,10 +10,10 @@ package product.content;
  */
 public class Site extends Content
 {
-    private String name;
-    private Classification type;
-    private String details;
-    private boolean accessibility;
+    private String siteName;
+    private Classification siteType;
+    private String siteDescription;
+    private boolean siteAccessibility;
 
     public enum Classification
     {
@@ -25,32 +27,32 @@ public class Site extends Content
         STORE
     }
 
-    public Site(Location newLocationCoordinate, double newDuration, String name, Classification type, String details, boolean accessibility)
+    public Site(Location newLocationCoordinate, double newDuration, String siteName, Classification siteType, String siteDescription, boolean siteAccessibility)
     {
         super(newLocationCoordinate, newDuration);
-        this.name = name;
-        this.type = type;
-        this.details = details;
-        this.accessibility = accessibility;
+        this.siteName = siteName;
+        this.siteType = siteType;
+        this.siteDescription = siteDescription;
+        this.siteAccessibility = siteAccessibility;
     }
 
-    public Site(double newCoordinateX, double newCoordinateY, double newDuration, String name, Classification type, String details, boolean accessibility)
+    public Site(double newCoordinateX, double newCoordinateY, double newDuration, String siteName, Classification siteType, String siteDescription, boolean siteAccessibility)
     {
         super(newCoordinateX, newCoordinateY, newDuration);
-        this.name = name;
-        this.type = type;
-        this.details = details;
-        this.accessibility = accessibility;
+        this.siteName = siteName;
+        this.siteType = siteType;
+        this.siteDescription = siteDescription;
+        this.siteAccessibility = siteAccessibility;
     }
 
-    public String getName()
+    public String getSiteName()
     {
-        return name;
+        return siteName;
     }
 
-    public void setName(String name)
+    public void setSiteName(String siteName)
     {
-        this.name = name;
+        this.siteName = siteName;
     }
 
     public Location getLocation()
@@ -63,33 +65,56 @@ public class Site extends Content
         this.setLocationCoordinate(location);
     }
 
-    public Classification getType()
+    public Classification getSiteType()
     {
-        return type;
+        return siteType;
     }
 
-    public void setType(Classification type)
+    public void setSiteType(Classification siteType)
     {
-        this.type = type;
+        this.siteType = siteType;
     }
 
-    public String getDetails()
+    public String getSiteDescription()
     {
-        return details;
+        return siteDescription;
     }
 
-    public void setDetails(String details)
+    public void setSiteDescription(String siteDescription)
     {
-        this.details = details;
+        this.siteDescription = siteDescription;
     }
 
-    public boolean isAccessibility()
+    public boolean isSiteAccessibility()
     {
-        return accessibility;
+        return siteAccessibility;
     }
 
-    public void setAccessibility(boolean accessibility)
+    public void setSiteAccessibility(boolean siteAccessibility)
     {
-        this.accessibility = accessibility;
+        this.siteAccessibility = siteAccessibility;
+    }
+
+    public void out()
+    {
+
+    }
+
+    public void out(Role role)
+    {
+        if (role != Role.USER && role != Role.MEMBER)
+        {
+            System.out.println("\tID: " + getContendID());
+            System.out.println("\tLocation:");
+            System.out.println("\t\tCoordinate X " + this.getLocationCoordinate().getCoordinateX());
+            System.out.println("\t\tCoordinate Y " + this.getLocationCoordinate().getCoordinateY());
+        }
+
+        System.out.println("\tName: " + siteName);
+        System.out.println("\tType: " + siteType);
+        System.out.println("\tDuration: " + this.getContentDuration());
+        System.out.println("\tDescription: " + siteDescription);
+        System.out.println("\tAccessibility: " + ((siteAccessibility) ? "True" : "False"));
+        System.out.println("\tName: " + this.getSiteName());
     }
 }

@@ -1,7 +1,7 @@
 package user.manager;
 
 import client.ClientConsole;
-import user.UserRole.Role;
+import user.Role;
 import product.pricing.MapCost;
 
 public class ContentManager extends Manager
@@ -10,7 +10,7 @@ public class ContentManager extends Manager
 	public ContentManager(String namePersonal_, String nameUser_, String password_, int phoneNumber_, String email_, ClientConsole client_)
 	{
 		super(namePersonal_,nameUser_,password_,phoneNumber_,email_,client_);
-		this.userRole = Role.CONTENT_MANAGER;
+		role = Role.CONTENT_MANAGER;
 	}
 
 	// TODO just use the method inside MapCost

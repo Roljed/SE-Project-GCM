@@ -1,5 +1,7 @@
 package product.content;
 
+import user.Role;
+
 /**
  * Abstract class for future proof content classes
  *
@@ -52,5 +54,7 @@ public abstract class Content
     {
         this.contentDuration = contentDuration;
     }
+
+    public abstract void out(Role role);
 
 }

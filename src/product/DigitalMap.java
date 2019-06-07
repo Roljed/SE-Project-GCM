@@ -1,8 +1,10 @@
 package product;
 import product.content.Content;
 import product.pricing.MapCost;
+import user.Role;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Main product - Digital Map
@@ -77,5 +79,22 @@ public class DigitalMap
     public Content addContent(Content newContent)
     {
        return this.digitalMapContents.put(newContent.getContendID(), newContent);
+    }
+
+    public void out(Role role)
+    {
+        if (role != null && (role != Role.USER && role != Role.MEMBER))
+        {
+            System.out.println("\tID: " + digitalMapID);
+        }
+
+        System.out.println("\tVersion: " + digitalMapVersion);
+        System.out.println("\tMap Description: " + digitalMapDescription);
+        System.out.println("\tPrice: " + digitalMapCost.getPrice());
+        System.out.println("\tContent");
+        for (Map.Entry<Integer, Content> content : digitalMapContents.entrySet())
+        {
+            content.getValue().out(role);
+        }
     }
 }

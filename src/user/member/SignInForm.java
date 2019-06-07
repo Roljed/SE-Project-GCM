@@ -1,4 +1,4 @@
-package user.client;
+package user.member;
 
 public class SignInForm {
 	private String userName;

@@ -1,5 +1,7 @@
 package product;
 
+import user.Role;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -128,5 +130,25 @@ public class City
     public void updateVersion()
     {
         this.cityVersion += 1;
+    }
+
+    public void out(Role role)
+    {
+        if (role != null && (role != Role.USER && role != Role.MEMBER))
+        {
+            System.out.println("\tID: " + cityID);
+        }
+        System.out.println("\tCity Name: " + cityName);
+        System.out.println("\tMap Count:" + cityMaps.size());
+
+        int countContent = 0;
+        for (Map.Entry<Integer, DigitalMap> map : cityMaps.entrySet())
+        {
+            System.out.println("\t\tMap Description" + map.getValue().getDigitalMapDescription());
+            countContent += map.getValue().getDigitalMapContents().size();
+        }
+
+        System.out.println("\tNumber Of Contents: " + countContent);
+        System.out.println("\tNumber Of Tours: " + cityTours.size());
     }
 }

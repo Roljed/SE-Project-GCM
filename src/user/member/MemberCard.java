@@ -1,23 +1,24 @@
-package user.client;
+package user.member;
 
+import user.Role;
 import client.ChatClient;
-import client.ClientConsole;
 import product.pricing.PurchaseHistory;
+import user.User;
 
-public class ClientCard extends User
+public class MemberCard extends User
 {
 	protected static int NextClientID = 1;
 	
-	public String namePersonal;
-	public String password;
-	public String nameUser;
-	public int phoneNumber;
-	public String email;
+	private int memberID;
+	private static int memberIDNext = 0;
+	private String namePersonal;
+	private String password;
+	private String nameUser;
+	private int phoneNumber;
+	private String email;
 	private PurchaseHistory purchaseHistory;
-	public Role role;
-	private int clientID;
-	
-	public ClientCard(String namePersonal_, String nameUser_, String password_, int phoneNumber_, String email_, ChatClient client){
+
+	public MemberCard(String namePersonal_, String nameUser_, String password_, int phoneNumber_, String email_, ChatClient client){
 		super(chat);
 		namePersonal = namePersonal_;
 		password = password_;
@@ -25,9 +26,8 @@ public class ClientCard extends User
 		phoneNumber = phoneNumber_;
 		email = email_;
 		purchaseHistory = new PurchaseHistory();
-		role = ClientRole;
-		clientID = NextClientID;
-		NextClientID++;
+		role = Role.MEMBER;
+		memberID = NextClientID++;
 	}
 
 	public void buyMap(int mapID){
