@@ -44,12 +44,12 @@ public abstract class AbstractClient implements Runnable
   /**
   * The stream to handle data going to the server.
   */
-  private ObjectOutputStream output;
+  protected ObjectOutputStream output;
 
   /**
   * The stream to handle data from the server.
   */
-  private ObjectInputStream input;
+  protected ObjectInputStream input;
 
   /**
   * The thread created to read data from the server.
@@ -305,9 +305,8 @@ public abstract class AbstractClient implements Runnable
    * messages.
    *
    * @param msg   the src.command.message sent.
-   * @return
    */
-  protected abstract Object handleMessageFromServer(Object msg);
+  protected abstract void handleMessageFromServer(Object msg);
 
 
 // METHODS TO BE USED FROM WITHIN THE FRAMEWORK ONLY ----------------
