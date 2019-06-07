@@ -2,35 +2,54 @@ package command;
 
 import product.content.Content;
 import product.City;
+
+import java.io.IOException;
+
+import client.ChatClient;
 import client.ClientConsole;
-import product.content.Site;
+import product.content.ContentInterestingPlaces;
 
 
 public class Search
 {
-	private ClientConsole client;
+	private ChatClient chat;
 	
-	public Search(ClientConsole client_)
+	public Search(ChatClient chat_)
 	{
-		client = client_;
+		chat = chat_;
 	}
 	
 	public City searchByCity(String cityName)
 	{
-		client.handleMessageFromClientUI(cityName);
-		return (City)input.readObject();
+		try {
+			chat.sendToServer(cityName);
+			return (City)chat.recieveObjectFromServer();
+		}
+		catch(IOException ex) {
+			return null;
+		}
 	}
 	
 	public Content SearchByContent(String contentName)
 	{
-		client.handleMessageFromClientUI(contentName);
-		return (Content) input.readObject();
+		try {
+			chat.sendToServer(contentName);
+			return (Content)chat.recieveObjectFromServer();
+		}
+		catch(IOException ex) {
+			return null;
+		}
 	}
 
-    public Site searchByContent(String request)
+    public ContentInterestingPlaces searchByContent(String contentName)
 	{
-		client.handleMessageFromClientUI(contentName);
-		return (Content) input.readObject();
+    	try {
+			chat.sendToServer(contentName);
+			return (ContentInterestingPlaces)chat.recieveObjectFromServer();
+		}
+		catch(IOException ex) {
+			return null;
+		}
     }
 
     //TO BE CONTINUED
