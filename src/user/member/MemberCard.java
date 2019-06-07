@@ -1,11 +1,10 @@
-package user.member;
+package user.client;
 
+import client.ChatClient;
 import client.ClientConsole;
 import product.pricing.PurchaseHistory;
-import user.User;
-import user.UserRole;
 
-public class MemberCard extends User
+public class ClientCard extends User
 {
 	protected static int NextClientID = 1;
 	
@@ -15,18 +14,18 @@ public class MemberCard extends User
 	public int phoneNumber;
 	public String email;
 	private PurchaseHistory purchaseHistory;
+	public Role role;
 	private int clientID;
 	
-	public MemberCard(String namePersonal_, String nameUser_, String password_, int phoneNumber_, String email_, ClientConsole client)
-	{
-		super(client);
+	public ClientCard(String namePersonal_, String nameUser_, String password_, int phoneNumber_, String email_, ChatClient client){
+		super(chat);
 		namePersonal = namePersonal_;
 		password = password_;
 		nameUser = nameUser_;
 		phoneNumber = phoneNumber_;
 		email = email_;
 		purchaseHistory = new PurchaseHistory();
-		this.userRole = UserRole.Role.MEMBER;
+		role = ClientRole;
 		clientID = NextClientID;
 		NextClientID++;
 	}
