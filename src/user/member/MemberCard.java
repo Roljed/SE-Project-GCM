@@ -1,34 +1,32 @@
 package user.member;
 
-import client.ClientConsole;
+import user.Role;
+import client.ChatClient;
 import product.pricing.PurchaseHistory;
 import user.User;
-import user.UserRole;
 
 public class MemberCard extends User
 {
-	static int NextClientID = 1;
+	protected static int NextMemberID = 1;
 	
-	public String namePersonal;
-	public String password;
-	public String nameUser;
-	public int phoneNumber;
-	public String email;
+	private int memberID;
+	private String namePersonal;
+	private String password;
+	protected String nameUser;
+	private int phoneNumber;
+	private String email;
 	private PurchaseHistory purchaseHistory;
-	private int clientID;
-	
-	public MemberCard(String namePersonal_, String nameUser_, String password_, int phoneNumber_, String email_, ClientConsole client)
-	{
-		super(client);
+
+	public MemberCard(String namePersonal_, String nameUser_, String password_, int phoneNumber_, String email_, ChatClient client){
+		super(chat);
 		namePersonal = namePersonal_;
 		password = password_;
 		nameUser = nameUser_;
 		phoneNumber = phoneNumber_;
 		email = email_;
 		purchaseHistory = new PurchaseHistory();
-		this.userRole = UserRole.Role.MEMBER;
-		clientID = NextClientID;
-		NextClientID++;
+		role = Role.MEMBER;
+		memberID = NextMemberID++;
 	}
 
 	public void buyMap(int mapID){
@@ -49,5 +47,29 @@ public class MemberCard extends User
 		else{
 			System.out.println("Something went wrong. Please try again or contact us.");
 		}
+	}
+
+	public int getMemberID() {
+		return memberID;
+	}
+
+	public String getNamePersonal() {
+		return namePersonal;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public String getNameUser() {
+		return nameUser;
+	}
+
+	public int getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public String getEmail() {
+		return email;
 	}
 }

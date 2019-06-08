@@ -1,19 +1,17 @@
 package user.worker;
 
+import client.ChatClient;
 import client.ClientConsole;
+import product.DigitalMap;
+import product.content.Content;
 import product.content.Editor;
-import product.content.Editor;
-import user.UserRole;
+import user.Role;
 
 public class ContentWorker extends Worker implements Editor
 {
-	
-	private ContentEdit editor;
-	
-	public ContentWorker(String namePersonal_, String nameUser_, String password_, int phoneNumber_, String email_, ClientConsole client_){
-		super(namePersonal_,nameUser_,password_,phoneNumber_,email_,client_);
-		this.userRole = UserRole.Role.CONTENT_WORKER;
-		editor = new ContentEdit(client);
+	public ContentWorker(String namePersonal_, String nameUser_, String password_, int phoneNumber_, String email_, ChatClient chat_){
+		super(namePersonal_, nameUser_, password_, phoneNumber_, email_, chat_);
+		role = Role.CONTENT_WORKER;
 	}
 	
 	public void createCity(String cityName){
@@ -28,11 +26,11 @@ public class ContentWorker extends Worker implements Editor
 		editor.editCity(cityID);
 	}
 	
-	public void addNewElectronicMapToCity(int cityID,ElectronicMap map){
+	public void addNewElectronicMapToCity(int cityID, DigitalMap map){
 		editor.addNewElectronicMapToCity(cityID,map);
 	}
 	
-	public void addNewContent(int cityID,PlaceOfInterest content){
+	public void addNewContent(int cityID, Content content){
 		editor.addNewContent(cityID,content);
 	}
 	
