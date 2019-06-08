@@ -15,19 +15,19 @@ import java.util.Scanner;
 
 public class User
 {
-	public boolean registeredUser;
+	public boolean registeredUser = false;
 	private SignUpForm signUpForm = null;
 	private SignInForm signInForm = null;
 	private Search search = null;
 	protected static ChatClient chat;
 	protected Role role = Role.USER;
-	
+	private Scanner in = new Scanner(System.in);
+
 	public User(ChatClient chat_)
 	{
-		registeredUser = false;
 		chat = chat_;
 	}
-	
+
 	public void signIn()
 	{
 		if (registeredUser)
@@ -35,7 +35,6 @@ public class User
 			System.out.println("The user is already signed in.");
 			return;
 		}
-		Scanner in = new Scanner(System.in);
 		System.out.println("Type your username:");
 		String username = in.nextLine();
 		System.out.println("Type your password:");
@@ -55,10 +54,9 @@ public class User
 		}
 		return;
 	}
-	
+
 	public void signUp()
 	{
-		Scanner in = new Scanner(System.in);
 		System.out.println("Type your name:");
 		String name = in.nextLine();
 		System.out.println("Type your username:");
@@ -83,7 +81,7 @@ public class User
 			System.out.println("Something went wrong. Please try again.");
 		}
 	}
-	
+
 	public void viewCatalog(){
 		Scanner in = new Scanner(System.in);
 		String request;
@@ -124,5 +122,9 @@ public class User
 			System.out.println("Here is the description of every map:");
 			content.printMapDetails();
 		}
+	}
+
+	public SignUpForm getSignUpForm() {
+		return signUpForm;
 	}
 }
