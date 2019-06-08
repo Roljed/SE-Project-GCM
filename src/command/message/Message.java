@@ -1,6 +1,16 @@
 package command.message;
 
-public interface Message
+public class Message
 {
-
+	void AdvanceNotice(){
+		System.out.println("Advanced Notice");
+	}
+	void EndSubscription(){
+		System.out.println("Your Subscription period has ended");
+	}
+	void NewVersion()
+	{
+		System.out.println("Your Maps have been updated to the new version");
+	}
+		
 }
