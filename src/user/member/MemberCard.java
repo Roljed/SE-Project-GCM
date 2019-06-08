@@ -7,13 +7,12 @@ import user.User;
 
 public class MemberCard extends User
 {
-	protected static int NextClientID = 1;
-	
+	protected static int NextMemberID = 1;
+
 	private int memberID;
-	private static int memberIDNext = 0;
 	private String namePersonal;
 	private String password;
-	private String nameUser;
+	protected String nameUser;
 	private int phoneNumber;
 	private String email;
 	private PurchaseHistory purchaseHistory;
@@ -27,7 +26,7 @@ public class MemberCard extends User
 		email = email_;
 		purchaseHistory = new PurchaseHistory();
 		role = Role.MEMBER;
-		memberID = NextClientID++;
+		memberID = NextMemberID++;
 	}
 
 	public void buyMap(int mapID){
@@ -39,7 +38,7 @@ public class MemberCard extends User
 			System.out.println("Something went wrong. Please try again or contact us.");
 		}
 	}
-	
+
 	public void buySubscription(int cityID){
 		boolean res = purchaseHistory.addCity(cityID);
 		if(res){
@@ -48,5 +47,29 @@ public class MemberCard extends User
 		else{
 			System.out.println("Something went wrong. Please try again or contact us.");
 		}
+	}
+
+	public int getMemberID() {
+		return memberID;
+	}
+
+	public String getNamePersonal() {
+		return namePersonal;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public String getNameUser() {
+		return nameUser;
+	}
+
+	public int getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public String getEmail() {
+		return email;
 	}
 }

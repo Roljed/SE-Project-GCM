@@ -12,7 +12,7 @@ public class SignUpForm
 	private int phoneNumber;
 	private String email;
 	private ChatClient chat;
-	
+
 	public SignUpForm(String name_,String userName_,String password_,int phoneNumber_,String email_, ChatClient chat_){
 		name = name_;
 		userName = userName_;
@@ -21,7 +21,7 @@ public class SignUpForm
 		email = email_;
 		setChat(chat_);
 	}
-	
+
 	public MemberCard createMemberCard()
 	{
 		return new MemberCard(name, userName, password, phoneNumber, email, chat) {

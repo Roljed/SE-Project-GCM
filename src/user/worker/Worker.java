@@ -14,4 +14,8 @@ public class Worker extends MemberCard
 		workerID = NextworkerID++;
 		role = Role.WORKER;
 	}
+
+	public int getWorkerID() {
+		return workerID;
+	}
 }
