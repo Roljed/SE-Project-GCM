@@ -1,14 +1,14 @@
-package command.message;
+package command;
 
-public interface Message	// abstract Message class
+public interface Message
 {
-	default void AdvanceNotice(){
+	default void advanceNotice(){
 		System.out.println("Advanced Notice");
 	}
-	default void EndSubscription(){
+	default void endSubscription(){
 		System.out.println("Your Subscription period has ended");
 	}
-	default void NewVersion()
+	default void newVersion()
 	{
 		System.out.println("Your Maps have been updated to the new version");
 	}

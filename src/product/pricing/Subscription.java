@@ -3,7 +3,7 @@ package product.pricing;
 import java.util.Calendar;
 import java.util.Date;
 
-import command.message.Message;
+import command.Message;
 
 /**
 *
@@ -36,14 +36,14 @@ public class Subscription extends Acquisition{
 	}
 	
 	public void SendAdvanceNotice() {
-		Message.AdvanceNotice();
+		Message.advanceNotice();
 	}
 	
 	public void SendEndSubscription() {
-		Message.EndSubscription();
+		Message.endSubscription();
 	}
 	
 	public void SendNewVersion() {
-		Message.NewVersion();
+		Message.newVersion();
 	}
 }
