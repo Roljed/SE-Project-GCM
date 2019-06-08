@@ -3,7 +3,7 @@ package command.message;
 public class Message
 {
 	void AdvanceNotice(){
-		System.out.println("Advanced Notice2");
+		System.out.println("Advanced Notice");
 	}
 	void EndSubscription(){
 		System.out.println("Your Subscription period has ended");
