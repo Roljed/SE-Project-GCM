@@ -44,16 +44,47 @@ public class ConnectionToDatabase {
 		return con;
 	}
 
-	public static boolean SignIn (String nameUser, String password)
+	public static String SignIn (String nameUser, String password)
 	{
 		Connection conn= connectToDatabase();
 		Statement stmt;
+		String name="";
 		try 
 		{
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
 			ResultSet rs = stmt.executeQuery("SELECT Password FROM User_Database WHERE UserName = '" + nameUser + "'");
 			if((!rs.next()) || (!rs.getString("Password").equals(password)))
-				return false;
+				return "Worng user name or password";
+			rs=stmt.executeQuery("SELECT SignIn FROM User_Database WHERE UserName = '" + nameUser + "'");
+			if ((!rs.next()) || (rs.getString("SignIn").equals("YES")))
+				return "User already connected";
+			stmt.executeUpdate("UPDATE User_Database SET SignIn = 'YES' WHERE UserName='"+ nameUser +"'");
+			rs=stmt.executeQuery("SELECT PersonalName FROM User_Database WHERE UserName = '" + nameUser + "'");
+			rs.next();
+			name=rs.getString("PersonalName");
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return "Welcome " + name;
+	}
+	
+	public static boolean SignOut (String nameUser)
+	{
+		Connection conn= connectToDatabase();
+		Statement stmt = null;
+		try {
+			stmt = conn.createStatement();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		try 
+		{
+			stmt.executeUpdate("UPDATE User_Database SET SignIn = 'NO' WHERE UserName='"+ nameUser +"'");
 			if (stmt != null) {
 				try {
 					stmt.close();
@@ -75,7 +106,7 @@ public class ConnectionToDatabase {
 		{
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
 			stmt.executeUpdate("INSERT INTO User_Database VALUES ('" + nameUser + "' , '" + namePersonal + "' , '" + password + "' , '" 
-					+ phoneNumber + "', '" + email + "', '" + role + "')");	 	
+					+ phoneNumber + "', '" + email + "', '" + role + "', 'NO')");	 	
 			if (stmt != null) {
 				try {
 					stmt.close();
