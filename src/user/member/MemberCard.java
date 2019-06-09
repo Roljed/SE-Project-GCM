@@ -9,10 +9,9 @@ import java.util.List;
 
 public class MemberCard extends User
 {
-	protected static int NextMemberID = 1;
-
 	private int memberID;
-	private String namePersonal;
+	protected static int NextMemberID = 0;
+	protected String namePersonal;
 	private String password;
 	protected String nameUser;
 	private int phoneNumber;

@@ -1,10 +1,7 @@
 package product.pricing;
 
 import java.util.Date;
-
-import user.Role.Role;
-
-
+import user.Role;
 
 /**
 *
@@ -44,7 +41,7 @@ public class MapCost
     }
 
 
-    public boolean setPrice(double price,String approvalName,Role role) {
+    public boolean setPrice(double price, String approvalName, Role role) {
         if (role == Role.MANAGER)
         {
         	this.price=price;

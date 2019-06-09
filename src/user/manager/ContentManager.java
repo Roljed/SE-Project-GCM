@@ -1,5 +1,6 @@
 package user.manager;
 
+import command.catalog.PublishVersion;
 import client.ChatClient;
 import user.Role;
 import product.pricing.MapCost;
@@ -13,8 +14,14 @@ public class ContentManager extends Manager
 		role = Role.CONTENT_MANAGER;
 	}
 
-	// TODO just use the method inside MapCost
-	public MapCost setMapCost(double price,int mapID){
+	public MapCost setMapCost(int mapID, double price)
+	{
 		return new MapCost(price,mapID,nameUser);
+	}
+
+	public boolean approveVersion(PublishVersion publishVersion)
+	{
+		publishVersion.approveVersion();
+		return true;
 	}
 }
