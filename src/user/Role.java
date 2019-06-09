@@ -8,4 +8,5 @@ public enum Role
     CONTENT_WORKER,
     MANAGER,
     CONTENT_MANAGER,
+    EDITOR
 }

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import client.ChatClient;
 import command.catalog.Catalog;
+import user.Role;
 
 
 /**
@@ -25,7 +26,7 @@ public class Search
     }
 
 
-    public Object searchByID(int objectID, ProductType productType)
+    public Object searchByID(int objectID, ProductType productType, Role role)
     {
         String type = productTypeToString(productType);
         assert !type.equals("none");
