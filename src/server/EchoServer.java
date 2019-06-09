@@ -4,6 +4,8 @@ package server;// This file contains material supporting section 3.7 of the text
 
 import java.io.*;
 import ocsf.server.*;
+import user.member.MemberCard;
+import user.member.SignInForm;
 import client.common.*;
 
 /**
@@ -65,40 +67,27 @@ public class EchoServer extends AbstractServer
    * @param msg The src.command.message received from the client.
    * @param client The connection from which the src.command.message originated.
    */
-  public void handleMessageFromClient
-    (Object msg, ConnectionToClient client)
+  public void handleMessageFromClient (Object msg, ConnectionToClient client)
   {
-    if (msg.toString().startsWith("#login "))
+    if (msg instanceof SignInForm)
     {
-      if (client.getInfo("loginID") != null)
-      {
-        try
-        {
-          client.sendToClient("You are already logged in.");
-        }
-        catch (IOException e)
-        {
-        }
-        return;
-      }
-      client.setInfo("loginID", msg.toString().substring(7));
+    	try {
+			client.sendToClient(ConnectionToDatabase.SignIn(((SignInForm) msg).getUserName(),((SignInForm) msg).getPassword()));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
     }
-    else 
+    if (msg instanceof MemberCard)
     {
-      if (client.getInfo("loginID") == null)
-      {
-        try
-        {
-          client.sendToClient("You need to login before you can chat.");
-          client.close();
-        }
-        catch (IOException e) {}
-        return;
-      }
-      System.out.println("Message received: " + msg + " from \"" + 
-        client.getInfo("loginID") + "\" " + client);
-      this.sendToAllClients(client.getInfo("loginID") + "> " + msg);
+    	try {
+    	client.sendToClient(ConnectionToDatabase.AddClient(((MemberCard) msg).getNameUser(), ((MemberCard) msg).getNamePersonal(), 
+    			((MemberCard) msg).getPassword(), ((MemberCard) msg).getPhoneNumber(), ((MemberCard) msg).getEmail(), 
+    			((MemberCard) msg).getRole()));
+    	} catch (IOException e) {
+			e.printStackTrace();
+		}
     }
+    
   }
 
   /**
