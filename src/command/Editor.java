@@ -10,7 +10,7 @@ import product.City;
 import product.DigitalMap;
 import product.ProductType;
 import product.Tour;
-import product.content.Content;
+import product.content.Site;
 import user.Role;
 
 /**
@@ -27,7 +27,7 @@ public interface Editor
      * @param chat communicator with the server
      * @return true or false
      */
-    default boolean updateContent(int oldContentID, Content newContent, ChatClient chat)
+    default boolean updateContent(int oldContentID, Site newContent, ChatClient chat)
     {
         if (oldContentID <= 0 || newContent == null )
         {
@@ -35,7 +35,7 @@ public interface Editor
         }
 
         Search search = new Search(chat);
-        Content updateContent = (Content) search.searchByID(oldContentID, ProductType.CONTENT, Role.EDITOR);
+        Site updateContent = (Site) search.searchByID(oldContentID, ProductType.CONTENT, Role.EDITOR);
         if (updateContent == null)
         {
             return false;
@@ -60,7 +60,7 @@ public interface Editor
      * @param chat communicator with the server
      * @return true or false
      */
-    default boolean addContentToMap(int digitalMapID, Content newContent, ChatClient chat)
+    default boolean addContentToMap(int digitalMapID, Site newContent, ChatClient chat)
     {
         if (digitalMapID <= 0 || newContent == null)
         {
@@ -91,7 +91,7 @@ public interface Editor
      * @param chat communicator with the server
      * @return true or false
      */
-    default boolean addContentToCity(int cityID, Content newContent, ChatClient chat)
+    default boolean addContentToCity(int cityID, Site newContent, ChatClient chat)
     {
         if (cityID <= 0 || newContent == null)
         {
