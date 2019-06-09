@@ -13,24 +13,28 @@ import product.DigitalMap;
 */
 
 public class Purchase {
-	private Date dateOfAcquisition;
+	private int purchaseID;
+	private static int purchaseIDNext = 0;
+	private Date dateOfPurchase;
 	private int[] purchasedCityID;
 	private int[] purchasedMapID;
 	private int purchasedCost;
-	private AcquisitionType acquisitionType;
+	private PurchaseType purchaseType;
 	private List<DigitalMap> digitalMap;
 	
-	public Purchase(int[] purchasedCityID, int[] purchasedMapID, int purchasedCost, AcquisitionType acquisitionType) {
-		this.dateOfAcquisition=new Date();
+	public Purchase(int[] purchasedCityID, int[] purchasedMapID, int purchasedCost, PurchaseType purchaseType)
+	{
+		purchaseID = purchaseIDNext++;
+		this.dateOfPurchase=new Date();
 		this.purchasedCityID=purchasedCityID;
 		this.purchasedMapID=purchasedMapID;
 		this.purchasedCost=purchasedCost;
-		this.acquisitionType=acquisitionType;
+		this.purchaseType = purchaseType;
 		this.digitalMap=new ArrayList<DigitalMap>();
 	}
 	
-	public Date getDateOfAcquisition() {
-		return dateOfAcquisition;
+	public Date getDateOfPurchase() {
+		return dateOfPurchase;
 	}
 	
 	public int[] getPurchasedCityID() {
@@ -45,8 +49,8 @@ public class Purchase {
 		return purchasedCost;
 	}
 	
-	public AcquisitionType getAcquisitionType(){
-		return acquisitionType;
+	public PurchaseType getPurchaseType(){
+		return purchaseType;
 	}
 	
 	public void AddDigitalMap(DigitalMap map) {

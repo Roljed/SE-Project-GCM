@@ -1,11 +1,10 @@
 package user.manager;
 import client.ChatClient;
-import client.ClientConsole;
 import database.ModelDataArchive;
 import database.report.Report;
 import database.report.ReportActivity;
 import product.content.Content;
-import product.content.Editor;
+import command.Editor;
 import user.Role;
 import user.worker.Worker;
 

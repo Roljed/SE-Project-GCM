@@ -39,6 +39,10 @@ public class Tour
     public int getTourID() {
         return tourID;
     }
+    public String getTourIDToString()
+    {
+        return String.valueOf(tourID);
+    }
 
     public void setTourID(int tourID) {
         this.tourID = tourID;
@@ -70,6 +74,10 @@ public class Tour
 
     public double getTourTotalDuration() {
         return tourTotalDuration;
+    }
+
+    public String getTourTotalDurationToString() {
+        return String.valueOf(tourTotalDuration);
     }
 
     public void setTourTotalDuration(double tourTotalDuration) {

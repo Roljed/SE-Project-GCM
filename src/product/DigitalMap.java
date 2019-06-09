@@ -36,9 +36,19 @@ public class DigitalMap
         return digitalMapID;
     }
 
+    public String getDigitalMapIDToString()
+    {
+        return String.valueOf(digitalMapID);
+    }
+
     public double getDigitalMapVersion()
     {
         return digitalMapVersion;
+    }
+
+    public String getDigitalMapVersionToString()
+    {
+        return String.valueOf(digitalMapVersion);
     }
 
     public void setDigitalMapVersion(double digitalMapVersion)
