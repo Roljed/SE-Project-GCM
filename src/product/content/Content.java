@@ -35,10 +35,22 @@ public abstract class Content
         return contendID;
     }
 
+    public String getContendIDToString()
+    {
+        return String.valueOf(contendID);
+    }
+
     public Location getLocationCoordinate()
     {
         return locationCoordinate;
     }
+
+    public String getLocationCoordinateToString()
+    {
+        Location location = getLocationCoordinate();
+        return location.getCoordinateX() + "," + location.getCoordinateY();
+    }
+
 
     public void setLocationCoordinate(Location locationCoordinate)
     {
@@ -48,6 +60,11 @@ public abstract class Content
     public double getContentDuration()
     {
         return contentDuration;
+    }
+
+    public String getContentDurationToString()
+    {
+        return String.valueOf(contentDuration);
     }
 
     public void setContentDuration(double contentDuration)

@@ -3,9 +3,6 @@ package product.pricing;
 import java.util.Calendar;
 import java.util.Date;
 
-import command.Message;
-import database.ModelDataArchive;
-
 /**
 *
 * @version 1
@@ -16,10 +13,10 @@ import database.ModelDataArchive;
 public class Subscription extends Purchase {
 	private Date dateOfExpiration;
 	
-	public Subscription(int[] purchasedCityID,int[] purchasedMapID,int purchasedCost,AcquisitionType acquisitionType) {
-		super(purchasedCityID,purchasedMapID,purchasedCost,acquisitionType);
+	public Subscription(int[] purchasedCityID, int[] purchasedMapID, int purchasedCost, PurchaseType purchaseType) {
+		super(purchasedCityID,purchasedMapID,purchasedCost, purchaseType);
 		dateOfExpiration=new Date();
-		if (acquisitionType == AcquisitionType.Subscription)
+		if (purchaseType == PurchaseType.SUBSCRIPTION)
 		{
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(dateOfExpiration);

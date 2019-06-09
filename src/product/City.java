@@ -66,6 +66,11 @@ public class City
         return cityID;
     }
 
+    public String getCityIDToString()
+    {
+        return String.valueOf(cityID);
+    }
+
     public String getCityName()
     {
         return cityName;
@@ -101,6 +106,11 @@ public class City
         return cityPrice;
     }
 
+    public String getCityPriceToString()
+    {
+        return String.valueOf(cityPrice);
+    }
+
     public void setCityPrice(double cityPrice)
     {
         this.cityPrice = cityPrice;
@@ -111,6 +121,12 @@ public class City
         return updateVersionDate;
     }
 
+    public String getUpdateVersionDateToString()
+    {
+        return String.valueOf(updateVersionDate);
+    }
+
+
     public void setUpdateVersionDate(Date updateVersionDate)
     {
         this.updateVersionDate = updateVersionDate;
@@ -119,6 +135,11 @@ public class City
     public int getVersion()
     {
         return cityVersion;
+    }
+
+    public String getVersionToString()
+    {
+        return String.valueOf(cityVersion);
     }
 
     public void setCityVersionVersion(int cityVersion)

@@ -117,7 +117,6 @@ public class User
 	public String getRoleByString()
 	{
 		switch(role) {
-			case USER: return "USER";
 			case MEMBER: return "MEMBER";
 			case WORKER: return "WORKER";
 			case CONTENT_WORKER: return "CONTENT_WORKER";

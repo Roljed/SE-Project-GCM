@@ -1,4 +1,4 @@
-package product.content;
+package command;
 
 import java.io.IOException;
 import java.util.Date;
@@ -6,11 +6,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import client.ChatClient;
-import command.Search;
 import product.City;
 import product.DigitalMap;
 import product.ProductType;
 import product.Tour;
+import product.content.Content;
 import user.Role;
 
 /**
@@ -27,7 +27,7 @@ public interface Editor
      * @param chat communicator with the server
      * @return true or false
      */
-    default boolean updateContent(int oldContentID, Content newContent,  ChatClient chat)
+    default boolean updateContent(int oldContentID, Content newContent, ChatClient chat)
     {
         if (oldContentID <= 0 || newContent == null )
         {
@@ -84,7 +84,7 @@ public interface Editor
 
         return true;
     }
-    
+
     /**
      * @param cityID city id to add desired content to
      * @param newContent the content we wish to add

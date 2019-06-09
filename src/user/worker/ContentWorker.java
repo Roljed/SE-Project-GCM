@@ -1,10 +1,9 @@
 package user.worker;
 
 import client.ChatClient;
-import client.ClientConsole;
 import product.DigitalMap;
 import product.content.Content;
-import product.content.Editor;
+import command.Editor;
 import user.Role;
 
 public class ContentWorker extends Worker implements Editor
