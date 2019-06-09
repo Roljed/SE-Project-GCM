@@ -1,9 +1,11 @@
 package user.member;
 
+import product.pricing.Purchase;
 import user.Role;
 import client.ChatClient;
-import product.pricing.PurchaseHistory;
 import user.User;
+
+import java.util.List;
 
 public class MemberCard extends User
 {
@@ -15,7 +17,7 @@ public class MemberCard extends User
 	protected String nameUser;
 	private int phoneNumber;
 	private String email;
-	private PurchaseHistory purchaseHistory;
+	private List<Purchase> purchaseHistory;
 
 	public MemberCard(String namePersonal_, String nameUser_, String password_, int phoneNumber_, String email_, ChatClient client){
 		super(chat);
@@ -24,29 +26,16 @@ public class MemberCard extends User
 		nameUser = nameUser_;
 		phoneNumber = phoneNumber_;
 		email = email_;
-		purchaseHistory = new PurchaseHistory();
 		role = Role.MEMBER;
 		memberID = NextMemberID++;
 	}
 
-	public void buyMap(int mapID){
-		boolean res = purchaseHistory.addMap(mapID);
-		if(res){
-			System.out.println("The purchase is completed.");
-		}
-		else{
-			System.out.println("Something went wrong. Please try again or contact us.");
-		}
+	public void buyMap(Purchase purchase){
+		purchaseHistory.add(purchase);
 	}
 
-	public void buySubscription(int cityID){
-		boolean res = purchaseHistory.addCity(cityID);
-		if(res){
-			System.out.println("The purchase is completed.");
-		}
-		else{
-			System.out.println("Something went wrong. Please try again or contact us.");
-		}
+	public void buySubscription(Purchase purchase){
+		purchaseHistory.add(purchase);
 	}
 
 	public int getMemberID() {
@@ -67,6 +56,11 @@ public class MemberCard extends User
 
 	public int getPhoneNumber() {
 		return phoneNumber;
+	}
+
+	public String getPhoneNumberByString()
+	{
+		return Integer.toString(phoneNumber);
 	}
 
 	public String getEmail() {

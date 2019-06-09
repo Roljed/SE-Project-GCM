@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import command.Message;
+import database.ModelDataArchive;
 
 /**
 *
@@ -12,7 +13,7 @@ import command.Message;
 */
 
 
-public class Subscription extends Acquisition{
+public class Subscription extends Purchase {
 	private Date dateOfExpiration;
 	
 	public Subscription(int[] purchasedCityID,int[] purchasedMapID,int purchasedCost,AcquisitionType acquisitionType) {
@@ -34,16 +35,5 @@ public class Subscription extends Acquisition{
 	public void RenewSubscription(Date dateOfExpiration) {
 		this.dateOfExpiration=dateOfExpiration;
 	}
-	
-	public void SendAdvanceNotice() {
-		Message.advanceNotice();
-	}
-	
-	public void SendEndSubscription() {
-		Message.endSubscription();
-	}
-	
-	public void SendNewVersion() {
-		Message.newVersion();
-	}
+
 }
