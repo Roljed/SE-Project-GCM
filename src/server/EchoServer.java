@@ -3,11 +3,13 @@ package server;// This file contains material supporting section 3.7 of the text
 // license found at www.lloseng.com 
 
 import java.io.*;
-import src.ocsf.server.*;
-import common.*;
+import ocsf.server.*;
+import user.member.MemberCard;
+import user.member.SignInForm;
+import client.common.*;
 
 /**
- * This class overrides some of the methods in the abstract 
+ * This class overrides some of the methods in the abstract
  * superclass in order to give more functionality to the server.
  *
  * @author Dr Timothy C. Lethbridge
@@ -16,35 +18,35 @@ import common.*;
  * @author Paul Holden
  * @version July 2000
  */
-public class EchoServer extends AbstractServer 
+public class EchoServer extends AbstractServer
 {
   //Class variables *************************************************
-  
+
   /**
    * The default port to listen on.
    */
   final public static int DEFAULT_PORT =5555;
-  
+
   /**
-   * The interface type variable. It allows the implementation of 
+   * The interface type variable. It allows the implementation of
    * the display method in the client.
    */
   ChatIF serverUI;
 
-  
+
   //Constructors ****************************************************
-  
+
   /**
    * Constructs an instance of the echo server.
    *
    * @param port The port number to connect on.
    */
-  public EchoServer(int port) 
+  public EchoServer(int port)
   {
     super(port);
   }
 
-   /**
+  /**
    * Constructs an instance of the echo server.
    *
    * @param port The port number to connect on.
@@ -56,49 +58,36 @@ public class EchoServer extends AbstractServer
     this.serverUI = serverUI;
   }
 
-  
+
   //Instance methods ************************************************
-  
+
   /**
    * This method handles any messages received from the client.
    *
    * @param msg The src.command.message received from the client.
    * @param client The connection from which the src.command.message originated.
    */
-  public void handleMessageFromClient
-    (Object msg, ConnectionToClient client)
+  public void handleMessageFromClient (Object msg, ConnectionToClient client)
   {
-    if (msg.toString().startsWith("#login "))
+    if (msg instanceof SignInForm)
     {
-      if (client.getInfo("loginID") != null)
-      {
-        try
-        {
-          client.sendToClient("You are already logged in.");
-        }
-        catch (IOException e)
-        {
-        }
-        return;
+      try {
+        client.sendToClient(ConnectionToDatabase.SignIn(((SignInForm) msg).getUserName(),((SignInForm) msg).getPassword()));
+      } catch (IOException e) {
+        e.printStackTrace();
       }
-      client.setInfo("loginID", msg.toString().substring(7));
     }
-    else 
+    if (msg instanceof MemberCard)
     {
-      if (client.getInfo("loginID") == null)
-      {
-        try
-        {
-          client.sendToClient("You need to login before you can chat.");
-          client.close();
-        }
-        catch (IOException e) {}
-        return;
+      try {
+        client.sendToClient(ConnectionToDatabase.AddClient(((MemberCard) msg).getNameUser(), ((MemberCard) msg).getNamePersonal(),
+                ((MemberCard) msg).getPassword(), ((MemberCard) msg).getPhoneNumber(), ((MemberCard) msg).getEmail(),
+                ((MemberCard) msg).getRole()));
+      } catch (IOException e) {
+        e.printStackTrace();
       }
-      System.out.println("Message received: " + msg + " from \"" + 
-        client.getInfo("loginID") + "\" " + client);
-      this.sendToAllClients(client.getInfo("loginID") + "> " + msg);
     }
+
   }
 
   /**
@@ -158,12 +147,12 @@ public class EchoServer extends AbstractServer
         setPort(newPort);
         //error checking should be added
         serverUI.display
-          ("Server port changed to " + getPort());
+                ("Server port changed to " + getPort());
       }
       else
       {
         serverUI.display
-          ("The server is not closed. Port cannot be changed.");
+                ("The server is not closed. Port cannot be changed.");
       }
     }
     else if (message.equalsIgnoreCase("#start"))
@@ -182,7 +171,7 @@ public class EchoServer extends AbstractServer
       else
       {
         serverUI.display
-          ("The server is already listening for clients.");
+                ("The server is already listening for clients.");
       }
     }
     else if (message.equalsIgnoreCase("#getport"))
@@ -190,7 +179,7 @@ public class EchoServer extends AbstractServer
       serverUI.display("Currently port: " + Integer.toString(getPort()));
     }
   }
-    
+
   /**
    * This method overrides the one in the superclass.  Called
    * when the server starts listening for connections.
@@ -198,9 +187,9 @@ public class EchoServer extends AbstractServer
   protected void serverStarted()
   {
     System.out.println
-      ("Server listening for connections on port " + getPort());
+            ("Server listening for connections on port " + getPort());
   }
-  
+
   /**
    * This method overrides the one in the superclass.  Called
    * when the server stops listening for connections.
@@ -208,7 +197,7 @@ public class EchoServer extends AbstractServer
   protected void serverStopped()
   {
     System.out.println
-      ("Server has stopped listening for connections.");
+            ("Server has stopped listening for connections.");
   }
 
   /**
@@ -217,7 +206,7 @@ public class EchoServer extends AbstractServer
    *
    * @param client the connection connected to the client
    */
-  protected void clientConnected(ConnectionToClient client) 
+  protected void clientConnected(ConnectionToClient client)
   {
     // display on server and clients that the client has connected.
     String msg = "A Client has connected";
@@ -232,7 +221,7 @@ public class EchoServer extends AbstractServer
    * @param client the connection with the client
    */
   synchronized protected void clientDisconnected(
-    ConnectionToClient client)
+          ConnectionToClient client)
   {
     // display on server and clients when a user disconnects
     String msg = client.getInfo("loginID").toString() + " has disconnected";
@@ -246,10 +235,10 @@ public class EchoServer extends AbstractServer
    * Bergman, Oct 22, 2009
    *
    * @param client the client that raised the exception
-   * @param Throwable the exception thrown
+   * @param exception the exception thrown
    */
   synchronized protected void clientException(
-    ConnectionToClient client, Throwable exception) 
+          ConnectionToClient client, Throwable exception)
   {
     String msg = client.getInfo("loginID").toString() + " has disconnected";
 
@@ -274,15 +263,15 @@ public class EchoServer extends AbstractServer
 
 
   //Class methods ***************************************************
-  
+
   /**
    * This method is responsible for the creation of 
    * the server instance (there is no UI in this phase).
    *
-   * @param args[0] The port number to listen on.  Defaults to 5555 
+   * @param args The port number to listen on. Defaults to 5555
    *          if no argument is entered.
    */
-  public static void main(String[] args) 
+  public static void main(String[] args)
   {
     int port = 0; //Port to listen on
 
@@ -294,14 +283,14 @@ public class EchoServer extends AbstractServer
     {
       port = DEFAULT_PORT; //Set port to 5555
     }
-	
+
     EchoServer sv = new EchoServer(port);
-    
-    try 
+
+    try
     {
       sv.listen(); //Start listening for connections
-    } 
-    catch (Exception ex) 
+    }
+    catch (Exception ex)
     {
       System.out.println("ERROR - Could not listen for clients!");
     }

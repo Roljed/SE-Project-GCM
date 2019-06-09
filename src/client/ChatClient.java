@@ -2,8 +2,8 @@ package client;// This file contains material supporting section 3.7 of the text
 // "Object Oriented Software Engineering" and is issued under the open-source
 // license found at www.lloseng.com 
 
-import src.ocsf.client.*;
-import common.*;
+import ocsf.client.AbstractClient;
+import client.common.*;
 import java.io.*;
 
 /**
@@ -63,18 +63,12 @@ public class ChatClient extends AbstractClient
     throws IOException 
   {
     super(host, port); //Call the superclass constructor
-    this.clientUI = clientUI;
+    this.clientUI = (ChatIF) clientUI;
     this.loginID = loginID;
     openConnection();
     sendToServer("#login " + loginID);
   }
-
-    public static void handleMessageFromClientUI(SignInForm signInForm)
-    {
-
-    }
-
-
+  
     //Instance methods ************************************************
     
   /**
@@ -92,10 +86,6 @@ public class ChatClient extends AbstractClient
    *
    * @param msg The object from the server.
    */
-  public Object handleMessageFromServer(Object msg) 
-  {
-    return msg;
-  }
 
    /**
    * This method handles all data coming from the UI            
@@ -245,5 +235,14 @@ public class ChatClient extends AbstractClient
       ("The connection to the Server (" + getHost() + ", " + getPort() + 
       ") has been disconnected");
   }
+  
+  final public Object recieveObjectFromServer() {
+	  try {
+		  return input.readObject();
+	  }
+	  catch(Exception exception){
+		  return null;
+	  }
+}
 }
 //End of src.client.ChatClient class

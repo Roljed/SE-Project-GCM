@@ -1,12 +1,27 @@
 package user.manager;
 
-public class ContentManager extends Manager{
-	
-	public ContentManager(String namePersonal_,String nameUser_,String password_,int phoneNumber_,String email_,ClientConsole client_){
-		super(namePersonal_,nameUser_,password_,phoneNumber_,email_,client_);
+import command.catalog.PublishVersion;
+import client.ChatClient;
+import user.Role;
+import product.pricing.MapCost;
+
+public class ContentManager extends Manager
+{
+
+	public ContentManager(String namePersonal_, String nameUser_, String password_, int phoneNumber_, String email_, ChatClient chat_)
+	{
+		super(namePersonal_,nameUser_,password_,phoneNumber_,email_,chat_);
+		role = Role.CONTENT_MANAGER;
 	}
-	
-	public MapsCost setMapCost(int mapID,int mapPrice){
-		return new MapsCost(mapID,mapPrice);
+
+	public MapCost setMapCost(int mapID, double price)
+	{
+		return new MapCost(price,mapID,nameUser);
+	}
+
+	public boolean approveVersion(PublishVersion publishVersion)
+	{
+		publishVersion.approveVersion();
+		return true;
 	}
 }
