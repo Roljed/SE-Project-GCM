@@ -1,17 +1,15 @@
 package user;
 
-import product.content.Content;
+import command.catalog.Catalog;
+import product.ProductType;
 import user.member.MemberCard;
 import user.member.SignInForm;
 import command.Search;
-import product.City;
-import product.DigitalMap;
 import client.ChatClient;
 import user.member.SignUpForm;
-
 import java.io.IOException;
-import java.util.List;
 import java.util.Scanner;
+
 
 public class User
 {
@@ -82,49 +80,36 @@ public class User
 		}
 	}
 
-	public void viewCatalog(){
-		Scanner in = new Scanner(System.in);
+	public void viewCatalog()
+	{
 		String request;
 		search = new Search(chat);
-		City resCity;
-		Content content = null;
-		while(true){
-			System.out.println("Please type the name of the city or the content that you are intrested in:");
+		while(true)
+		{
+			System.out.println("Please type which product you are searching:");
+			System.out.println("Please type the name of the city or the content that you are interested in:");
 			request = in.nextLine();
-			resCity = search.searchByCity(request);
-			if(resCity == null)
+
+			Catalog resultCatalog = search.searchByCityName(request);
+			if(resultCatalog == null)
 			{
-				content = search.searchByContent(request);
-				if(content == null){
-					System.out.println("Your request is not found. Please try again!");
+				resultCatalog = search.searchByContent(request);
+				if(resultCatalog == null){
+					System.out.println("Your request is not found. Please try again.");
 					continue;
 				}
+				resultCatalog.viewCatalog();
 			}
 			break;
-		}
-
-		if(resCity != null)
-		{
-			System.out.println("The number of maps in the city is: " + resCity.getCityMaps().size() + ".\n");
-			System.out.println("Here is the description of every map:");
-			List<DigitalMap> cityMaps = resCity.getCityMaps();
-			for (DigitalMap map : cityMaps)
-			{
-				System.out.println("\tMap ID: " + map.getDigitalMapID() + "\n\tMap Description: \n\t\t" + map.getDigitalMapDescription() + ".\n");
-			}
-			System.out.println("The numbers of places of interest in the city is: " + resCity.countCityContent() + ".\n");
-			System.out.println("The numbers of routes in the city is: " + resCity.getCityTours().size() + ".");
-		}
-		else
-		{
-			System.out.println("The name of " + content.getName() + "'s city is: " + content.getCityName() + ".\n");	// TODO: content resides inside a map, not city.
-			System.out.println(content.getName() + " exists in " + content.getMapsNum() + " maps.\n");
-			System.out.println("Here is the description of every map:");
-			content.printMapDetails();
 		}
 	}
 
 	public SignUpForm getSignUpForm() {
 		return signUpForm;
+	}
+
+	public Role getRole()
+	{
+		return role;
 	}
 }
