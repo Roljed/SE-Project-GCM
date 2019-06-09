@@ -28,11 +28,6 @@ public class User
 
 	public void signIn()
 	{
-		if (registeredUser)
-		{
-			System.out.println("The user is already signed in.");
-			return;
-		}
 		System.out.println("Type your username:");
 		String username = in.nextLine();
 		System.out.println("Type your password:");
@@ -42,15 +37,19 @@ public class User
 			chat.sendToServer(signInForm);
 		}
 		catch(IOException ex) {}
-		boolean res = (boolean)chat.recieveObjectFromServer();
-		if(res){
-			registeredUser = true;
-			System.out.println("You are Signed in now!");
+		String res = (String)chat.recieveObjectFromServer();
+		switch(res) {
+			case("Wrong user name or password"):
+				System.out.println(res);
+				return;
+			case("User already connected"):
+				System.out.println(res);
+				return;
+			default:
+				registeredUser = true;
+				System.out.println(res);
+				return;
 		}
-		else{
-			System.out.println("Check your username and password and try again!");
-		}
-		return;
 	}
 
 	public void signUp()
@@ -65,7 +64,7 @@ public class User
 		int phoneNumber = Integer.parseInt(in.nextLine());
 		System.out.println("Type your email:");
 		String email = in.nextLine();
-		SignUpForm signUpForm = new SignUpForm(name, username,password,phoneNumber,email, chat);
+		SignUpForm signUpForm = new SignUpForm(name, username, password, phoneNumber, email, chat);
 		MemberCard clientCard = signUpForm.createMemberCard();
 		try {
 			chat.sendToServer(clientCard);
@@ -75,7 +74,8 @@ public class User
 		if(res){
 			System.out.println("You are signed up now. Please sign in using your username and password!");
 		}
-		else{
+		else
+		{
 			System.out.println("Something went wrong. Please try again.");
 		}
 	}
@@ -104,12 +104,26 @@ public class User
 		}
 	}
 
-	public SignUpForm getSignUpForm() {
+	public SignUpForm getSignUpForm()
+	{
 		return signUpForm;
 	}
 
 	public Role getRole()
 	{
 		return role;
+	}
+
+	public String getRoleByString()
+	{
+		switch(role) {
+			case USER: return "USER";
+			case MEMBER: return "MEMBER";
+			case WORKER: return "WORKER";
+			case CONTENT_WORKER: return "CONTENT_WORKER";
+			case MANAGER: return "MANAGER";
+			case CONTENT_MANAGER: return "CONTENT_MANAGER";
+			default: return "USER";
+		}
 	}
 }
