@@ -1,65 +1,310 @@
 package product.content;
 
+import java.io.IOException;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+import client.ChatClient;
+import command.Search;
 import product.City;
 import product.DigitalMap;
+import product.ProductType;
 import product.Tour;
+import user.Role;
 
-import java.util.HashMap;
-
+/**
+ * Interface of editor capabilities
+ *
+ * @version 1
+ * @author Yaad Nahshon
+ */
 public interface Editor
 {
-    default DigitalMap addContent(HashMap<Integer, DigitalMap> digitalMap, Content newContent, int digitalMapID)
+    /**
+     * @param oldContentID id of the content we want to update
+     * @param newContent the content we wish to update
+     * @param chat communicator with the server
+     * @return true or false
+     */
+    default boolean updateContent(int oldContentID, Content newContent,  ChatClient chat)
     {
-        if (digitalMapHub == null || newContent == null)
+        if (oldContentID <= 0 || newContent == null )
         {
-            throw new IllegalArgumentException("addContent can't except null arguments.");
+            throw new IllegalArgumentException("Error.\nupdateContent can't except null arguments.");
         }
 
-        DigitalMap updateMap = digitalMapHub.get(digitalMapID);
-        if ( updateMap != null)
+        Search search = new Search(chat);
+        Content updateContent = (Content) search.searchByID(oldContentID, ProductType.CONTENT, Role.EDITOR);
+        if (updateContent == null)
         {
-            if (updateMap.addContent(newContent) == true)
+            return false;
+        }
+
+        updateContent = newContent;
+        try
+        {
+            chat.sendToServer(updateContent);
+        }
+        catch(IOException ex)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * @param digitalMapID map id to add desired content to
+     * @param newContent the content we wish to add
+     * @param chat communicator with the server
+     * @return true or false
+     */
+    default boolean addContentToMap(int digitalMapID, Content newContent, ChatClient chat)
+    {
+        if (digitalMapID <= 0 || newContent == null)
+        {
+            throw new IllegalArgumentException("Error.\naddContentToMap can't except null arguments.");
+        }
+
+        Search search = new Search(chat);
+        DigitalMap updateMap  = (DigitalMap) search.searchByID(digitalMapID, ProductType.DIGITAL_MAP, Role.EDITOR);
+        if (updateMap == null)
+        {
+            return false;
+        }
+        try
+        {
+            chat.sendToServer(updateMap);
+        }
+        catch(IOException ex)
+        {
+            return false;
+        }
+
+        return true;
+    }
+    
+    /**
+     * @param cityID city id to add desired content to
+     * @param newContent the content we wish to add
+     * @param chat communicator with the server
+     * @return true or false
+     */
+    default boolean addContentToCity(int cityID, Content newContent, ChatClient chat)
+    {
+        if (cityID <= 0 || newContent == null)
+        {
+            throw new IllegalArgumentException("Error.\naddContentToCity can't except null arguments.");
+        }
+
+        Search search = new Search(chat);
+        City updateCity  = (City) search.searchByID(cityID, ProductType.CITY, Role.EDITOR);
+        if (updateCity == null)
+        {
+            return false;
+        }
+
+        try
+        {
+            for (Map.Entry<Integer, DigitalMap> updateMap : updateCity.getCityMaps().entrySet())
             {
-                digitalMapHub.replace(digitalMapID, updateMap);
-                return true;
+                updateMap.getValue().getDigitalMapContents().put(newContent.getContendID() , newContent);
             }
+            chat.sendToServer(updateCity);
         }
-        return false;
+        catch(IOException ex)
+        {
+            return false;
+        }
+
+        return true;
     }
 
-    default Boolean updateContent(Content newContent, DigitalMap digitalMapID)
+    /**
+     * @param oldDigitalMapID id of the digital map we want to update
+     * @param newDigitalMap the digital map we wish to update
+     * @param chat communicator with the server
+     * @return true or false
+     */
+    default boolean updateDigitalMap(int oldDigitalMapID, DigitalMap newDigitalMap, ChatClient chat)
     {
+        if (oldDigitalMapID <= 0 || newDigitalMap == null)
+        {
+            throw new IllegalArgumentException("Error.\nupdateDigitalMap can't except null arguments.");
+        }
 
+        Search search = new Search(chat);
+        DigitalMap updateDigitalMap = (DigitalMap) search.searchByID(oldDigitalMapID, ProductType.DIGITAL_MAP, Role.EDITOR);
+        if (updateDigitalMap == null)
+        {
+            return false;
+        }
+
+        updateDigitalMap = newDigitalMap;
+        try
+        {
+            chat.sendToServer(updateDigitalMap);
+        }
+        catch(IOException ex)
+        {
+            return false;
+        }
+        return true;
     }
 
-    default Boolean addDigitalMap(DigitalMap digitalMap, int cityID)
+    /**
+     * @param cityID city id to add desired digital map to
+     * @param newDigitalMap the digital map we wish to add
+     * @param chat communicator with the server
+     * @return City object to check for new_city or null
+     */
+    default City addDigitalMapToCity(int cityID, DigitalMap newDigitalMap, ChatClient chat)
     {
+        if (cityID <= 0 || newDigitalMap == null)
+        {
+            throw new IllegalArgumentException("Error.\naddDigitalMapToCity can't except null arguments.");
+        }
 
+        Search search = new Search(chat);
+        City updatedCity = (City) search.searchByID(cityID, ProductType.CITY, Role.EDITOR);
+        if (updatedCity == null)
+        {
+            updatedCity = new City("new_city", new HashMap<>(), new HashMap<>(), 0, 0, new Date());
+        }
+
+        updatedCity.getCityMaps().put(newDigitalMap.getDigitalMapID(), newDigitalMap);
+        try
+        {
+            chat.sendToServer(updatedCity);
+        }
+        catch(IOException ex)
+        {
+            return null;
+        }
+
+        return updatedCity;
     }
 
-    default Boolean updateDigitalMap(DigitalMap digitalMap, int cityID)
+    /**
+     * @param oldTour id of the tour we want to update
+     * @param newTour the tour we wish to update
+     * @param chat communicator with the server
+     * @return true or false
+     */
+    default boolean updateTour(int oldTour, Tour newTour, ChatClient chat)
     {
+        if (oldTour <= 0 || newTour == null)
+        {
+            throw new IllegalArgumentException("Error.\nupdateTour can't except null arguments.");
+        }
 
+        Search search = new Search(chat);
+        Tour updatedTour = (Tour) search.searchByID(oldTour, ProductType.TOUR, Role.EDITOR);
+        if (updatedTour == null)
+        {
+            return false;
+        }
+
+        updatedTour = newTour;
+        try
+        {
+            chat.sendToServer(updatedTour);
+        }
+        catch(IOException ex)
+        {
+            return false;
+        }
+
+        return true;
     }
 
-    default Boolean addTour(Tour newTour, City cityID)
+    /**
+     * @param cityID city id to add desired tour to
+     * @param newTour the tour we wish to add
+     * @param chat communicator with the server
+     * @return true or false
+     */
+    default City addTour(int cityID, Tour newTour, ChatClient chat)
     {
+        if (cityID <= 0 || newTour == null)
+        {
+            throw new IllegalArgumentException("Error.\naddTour can't except null arguments.");
+        }
 
+        Search search = new Search(chat);
+        City updatedCity = (City) search.searchByID(cityID, ProductType.CITY, Role.EDITOR);
+        if (updatedCity == null)
+        {
+            return null;
+        }
+
+        updatedCity.getCityTours().put(newTour.getTourID(), newTour);
+        try
+        {
+            chat.sendToServer(updatedCity);
+        }
+        catch(IOException ex)
+        {
+            return null;
+        }
+
+        return updatedCity;
     }
 
-    default Boolean updateTour(Tour newTour, City cityID)
+    /**
+     * @param cityID city id we want to update
+     * @param newCity the city we wish to update
+     * @param chat communicator with the server
+     * @return true or false
+     */
+    default boolean updateCity(int cityID, City newCity, ChatClient chat)
     {
+        if (cityID <= 0 || newCity == null)
+        {
+            throw new IllegalArgumentException("Error.\nupdateCity can't except null arguments.");
+        }
 
+        Search search = new Search(chat);
+        City updatedCity = (City) search.searchByID(cityID, ProductType.CITY, Role.EDITOR);
+        if (updatedCity == null)
+        {
+            return false;
+        }
+
+        updatedCity = newCity;
+        try
+        {
+            chat.sendToServer(updatedCity);
+        }
+        catch(IOException ex)
+        {
+            return false;
+        }
+
+        return true;
     }
 
-    default Boolean addCity(City city)
+    /**
+     * @param city the city we wish to add
+     * @param chat communicator with the server
+     * @return true or false
+     */
+    default boolean addCity(City city, ChatClient chat)
     {
+        if (city == null)
+        {
+            throw new IllegalArgumentException("Error.\naddCity can't except null arguments.");
+        }
 
+        try
+        {
+            chat.sendToServer(city);
+        }
+        catch(IOException ex)
+        {
+            return false;
+        }
+        return true;
     }
-
-    default Boolean updateCity(City city)
-    {
-
-    }
-
 }
