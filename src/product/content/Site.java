@@ -17,6 +17,7 @@ public class Site extends Content
 
     public enum Classification
     {
+        NONE,
         CINEMA,
         HISTORICAL,
         HOTEL,
@@ -43,6 +44,15 @@ public class Site extends Content
         this.siteType = siteType;
         this.siteDescription = siteDescription;
         this.siteAccessibility = siteAccessibility;
+    }
+
+    public Site (int newContentID, Location newLocationCoordinate, double newDuration)
+    {
+        super(newContentID, newLocationCoordinate, newDuration);
+        this.siteName = "";
+        this.siteType = Classification.NONE;
+        this.siteDescription = "";
+        this.siteAccessibility = false;
     }
 
     public String getSiteName()

@@ -4,5 +4,5 @@ module Project
     requires javafx.controls;
     requires java.sql;
 
-    opens gui.sample;
+    opens gui;
 }
