@@ -23,7 +23,7 @@ public class Site extends Content
         MUSEUM,
         PARK,
         PUBLIC_SITE,
-        RESTURANT,
+        RESTAURANT,
         STORE
     }
 
@@ -69,6 +69,32 @@ public class Site extends Content
     {
         return siteType;
     }
+
+    public String getSityTypeToString()
+    {
+        switch(siteType)
+        {
+            case PARK:
+                return "Park";
+            case HOTEL:
+                return "Hotel";
+            case STORE:
+                return "Store";
+            case CINEMA:
+                return "Cinema";
+            case MUSEUM:
+                return "Museum";
+            case RESTAURANT:
+                return "Restaurant";
+            case HISTORICAL:
+                return "Historical";
+            case PUBLIC_SITE:
+                return "Public Site";
+            default:
+                return "New Site Classification";
+        }
+    }
+
 
     public void setSiteType(Classification siteType)
     {
