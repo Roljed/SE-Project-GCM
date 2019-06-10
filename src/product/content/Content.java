@@ -30,6 +30,13 @@ public abstract class Content
         this.contentDuration = newDuration;
     }
 
+    Content(int newContentID, Location newLocationCoordinate, double newDuration)
+    {
+        this.contendID = newContentID;
+        this.locationCoordinate = newLocationCoordinate;
+        this.contentDuration = newDuration;
+    }
+
     public int getContendID()
     {
         return contendID;

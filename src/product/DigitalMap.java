@@ -31,6 +31,15 @@ public class DigitalMap
         this.digitalMapCost = digitalMapCost;
     }
 
+    public DigitalMap(int newDigitalMapID, double digitalMapVersion, String digitalMapDescription, HashMap<Integer, Content> digitalMapContents, MapCost digitalMapCost)
+    {
+        this.digitalMapID = newDigitalMapID;
+        this.digitalMapVersion = digitalMapVersion;
+        this.digitalMapDescription = digitalMapDescription;
+        this.digitalMapContents = digitalMapContents;
+        this.digitalMapCost = digitalMapCost;
+    }
+
     public int getDigitalMapID()
     {
         return digitalMapID;
