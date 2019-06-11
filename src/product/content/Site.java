@@ -46,6 +46,15 @@ public class Site extends Content
         this.siteAccessibility = siteAccessibility;
     }
 
+    public Site(int newContentID,Location newLocationCoordinate, double newDuration, String siteName, String siteType, String siteDescription, int siteAccessibility)
+    {
+        super(newContentID,newLocationCoordinate, newDuration);
+        this.siteName = siteName;
+        this.siteDescription = siteDescription;
+        this.siteAccessibility = siteAccessibility == 1;
+        this.siteType = getSiteTypeStringToClassification(siteType);
+    }
+
     public Site (int newContentID, Location newLocationCoordinate, double newDuration)
     {
         super(newContentID, newLocationCoordinate, newDuration);
@@ -80,7 +89,7 @@ public class Site extends Content
         return siteType;
     }
 
-    public String getSityTypeToString()
+    public String getSiteTypeToString()
     {
         switch(siteType)
         {
@@ -102,6 +111,33 @@ public class Site extends Content
                 return "Public Site";
             default:
                 return "New Site Classification";
+        }
+    }
+
+    private Classification getSiteTypeStringToClassification(String type)
+    {
+        type = type.toLowerCase();
+        String cap = type.substring(0, 1).toUpperCase() + type.substring(1);
+        switch (cap)
+        {
+            case "Park":
+                return Classification.PARK;
+            case "Hotel":
+                return Classification.HOTEL;
+            case "Store":
+                return Classification.STORE;
+            case "Cinema":
+                return Classification.CINEMA;
+            case "Museum":
+                return Classification.MUSEUM;
+            case "Restaurant":
+                return Classification.RESTAURANT;
+            case "Historical":
+                return Classification.HISTORICAL;
+            case "Public Site":
+                return Classification.PUBLIC_SITE;
+            default:
+                return Classification.NONE;
         }
     }
 

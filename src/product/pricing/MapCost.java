@@ -1,5 +1,7 @@
 package product.pricing;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import user.Role;
 
@@ -24,24 +26,39 @@ public class MapCost
     	this.lastModifiedDate=new Date();
     }
 
-    public double getPrice() {
+    public double getPrice()
+    {
         return price;
     }
+
+    public String getPriceToString()
+    {
+        return String.valueOf(price);
+    }
     
-    public int getMapID() {
+    public int getMapID()
+    {
         return mapID;
     }
     
-    public String getLastApproval() {
+    public String getLastApproval()
+    {
     	return lastApproval;
     }
     
-    public Date getLastModifiedDate() {
+    public Date getLastModifiedDate()
+    {
     	return lastModifiedDate;
     }
 
+    public String getLastModifiedDateToString() {
+        String pattern = "dd/MM/yyyy";
+        DateFormat df = new SimpleDateFormat(pattern);
+        return df.format(lastModifiedDate);
+    }
 
-    public boolean setPrice(double price, String approvalName, Role role) {
+    public boolean setPrice(double price, String approvalName, Role role)
+    {
         if (role == Role.MANAGER)
         {
         	this.price=price;
@@ -51,5 +68,4 @@ public class MapCost
         }
         return false;
     }
-
 }

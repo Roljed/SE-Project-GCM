@@ -26,6 +26,14 @@ public class Tour
         this.tourTotalDuration = calculateTourDuration(tourSequence);
     }
 
+    public Tour(int tourID, String tourName, String tourDescription, List<Content> tourSequence, double tourTotalDuration) {
+        this.tourID = tourID;
+        this.tourName = tourName;
+        this.tourDescription = tourDescription;
+        this.tourSequence = tourSequence;
+        this.tourTotalDuration = tourTotalDuration;
+    }
+
     private double calculateTourDuration(List<Content> tourSequence)
     {
         double duration = 0;
