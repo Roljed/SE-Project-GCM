@@ -8,7 +8,7 @@ import java.util.List;
 import client.ChatClient;
 import command.catalog.Catalog;
 import product.content.Site;
-import user.Role;
+import user.UserStatus;
 
 
 /**
@@ -26,7 +26,7 @@ public class Search
     }
 
 
-    public Object searchByID(int objectID, ProductType productType, Role role)
+    public Object searchByID(int objectID, ProductType productType, UserStatus userStatus)
     {
         String type = productTypeToString(productType);
         assert !type.equals("none");
@@ -92,10 +92,17 @@ public class Search
                 return null;
             }
             List<City> cities = new ArrayList<>();
+            List<Site> sites = new ArrayList<>();
             for (Object obj : objectCities) {
-                cities.add((City)obj);
+                if(obj instanceof City)
+                {
+                    cities.add((City)obj);
+                }
+                else {
+                    sites.add((Site)obj);
+                }
             }
-            catalog = new Catalog(null,null,null,cities);
+            catalog = new Catalog(sites,null,null,cities);
             return catalog;
         }
         catch(IOException ex) {
