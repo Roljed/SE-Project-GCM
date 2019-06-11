@@ -19,7 +19,7 @@ public class Catalog
 {
     private Role role = Role.USER;
 
-    private List<Content> contents;
+    private List<Site> contents;
     private List<DigitalMap> digitalMaps;
     private List<Tour> tours;
     private List<City> cities;
