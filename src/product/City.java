@@ -23,6 +23,24 @@ public class City
     private int cityVersion;
     private Date updateVersionDate;
 
+    public City(int cityID, String cityName, HashMap<Integer, DigitalMap> cityMaps, HashMap<Integer, Tour> cityTours, double cityPrice, int cityVersion, Date updateVersionDate)
+    {
+        this.cityID = cityID;
+        this.cityName = cityName;
+        this.cityMaps = cityMaps;
+        this.cityTours = cityTours;
+        this.cityVersion = cityVersion;
+        if (cityPrice <= 0 && cityMaps.isEmpty() == false)
+        {
+            this.cityPrice = calculateCityPrice();
+        }
+        else
+        {
+            this.cityPrice = cityPrice;
+        }
+        this.updateVersionDate = updateVersionDate; //TODO make function to find last update
+    }
+
     public City(String cityName, HashMap<Integer, DigitalMap> cityMaps, HashMap<Integer, Tour> cityTours, double cityPrice, int cityVersion, Date updateVersionDate)
     {
         this.cityID = cityIDNext++;

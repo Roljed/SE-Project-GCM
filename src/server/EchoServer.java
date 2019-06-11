@@ -4,6 +4,10 @@ package server;// This file contains material supporting section 3.7 of the text
 
 import java.io.*;
 import ocsf.server.*;
+import product.City;
+import product.DigitalMap;
+import product.Tour;
+import product.content.Site;
 import user.member.MemberCard;
 import user.member.SignInForm;
 import client.common.*;
@@ -88,6 +92,62 @@ public class EchoServer extends AbstractServer
             }
         }
 
+        if (msg instanceof Site)
+        {
+            ConnectionToDatabase.UpdateContent(((Site) msg).getContendIDToString(),((Site) msg).getSiteName(),((Site) msg).getLocationCoordinateToString(),
+                    ((Site) msg).getContentDurationToString(), ((Site) msg).getSiteTypeToString(), ((Site) msg).getSiteDescription()
+                    , ((Site) msg). isSiteAccessibility());
+        }
+
+        if (msg instanceof DigitalMap)
+        {
+            ConnectionToDatabase.AddContentToMap(((DigitalMap) msg).getDigitalMapIDToString(),((DigitalMap) msg).getDigitalMapVersionToString(),
+                    ((DigitalMap) msg).getDigitalMapDescription(),((DigitalMap) msg).getDigitalMapContents(),((DigitalMap) msg).getDigitalMapCost().getPriceToString(),
+                    ((DigitalMap) msg).getDigitalMapCost().getLastApproval(),((DigitalMap) msg).getDigitalMapCost().getLastModifiedDateToString());
+        }
+
+        if (msg instanceof City)
+        {
+            ConnectionToDatabase.AddContentToCity(((City) msg).getCityIDToString(),((City) msg).getCityName(),((City) msg).getCityPriceToString(),
+                    ((City) msg).getVersionToString(),((City) msg).getUpdateVersionDateToString(),((City) msg).getCityMaps(),
+                    ((City) msg).getCityTours());
+        }
+
+        if (msg instanceof Tour)
+        {
+            ConnectionToDatabase.UpdateTour(((Tour)msg).getTourIDToString(),((Tour)msg).getTourName(),((Tour)msg).getTourDescription(),
+                    ((Tour)msg).getTourTotalDurationToString(),	((Tour)msg).getTourSequence());
+        }
+
+        if (msg instanceof String)
+        {
+            String[] message = ((String) msg).split(" ");
+            if (message[1].equals("product"))
+            {
+                try {
+                    client.sendToClient(ConnectionToDatabase.SearchByID(message[2],message[3]));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (message[1].equals("city"))
+            {
+                try {
+                    client.sendToClient(ConnectionToDatabase.SearchByCityName(message[3]));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            if (message[1].equals("content"))
+            {
+                try {
+                    client.sendToClient(ConnectionToDatabase.SearchByContent(message[3]));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     /**
