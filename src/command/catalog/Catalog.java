@@ -7,7 +7,7 @@ import product.DigitalMap;
 import product.Tour;
 import product.content.Content;
 import product.content.Site;
-import user.Role;
+import user.UserStatus;
 
 /**
  * Catalog of all products that can be accessed directly by all users
@@ -17,7 +17,7 @@ import user.Role;
  */
 public class Catalog
 {
-    private Role role = Role.USER;
+    private UserStatus userStatus = UserStatus.USER;
 
     private List<Site> contents;
     private List<DigitalMap> digitalMaps;
@@ -32,9 +32,9 @@ public class Catalog
         this.cities = cities;
     }
 
-    public void setRole(Role role)
+    public void setUserStatus(UserStatus userStatus)
     {
-        this.role = role;
+        this.userStatus = userStatus;
     }
 
     public void viewCatalog()
@@ -44,7 +44,7 @@ public class Catalog
             System.out.println("List of Contents:");
             for (Content content : contents)
             {
-                content.out(this.role);
+                content.out(this.userStatus);
                 System.out.println("********************");
             }
             System.out.println();
@@ -55,7 +55,7 @@ public class Catalog
             System.out.println("List of Maps:");
             for (DigitalMap map : digitalMaps)
             {
-                map.out(this.role);
+                map.out(this.userStatus);
                 System.out.println("********************");
             }
             System.out.println();
@@ -66,7 +66,7 @@ public class Catalog
             System.out.println("List of Tours:");
             for (Tour tour : tours)
             {
-                tour.out(this.role);
+                tour.out(this.userStatus);
                 System.out.println("********************");
             }
             System.out.println();
@@ -77,7 +77,7 @@ public class Catalog
             System.out.println("List of Cities:");
             for (City city : cities)
             {
-                city.out(this.role);
+                city.out(this.userStatus);
                 System.out.println("********************");
             }
             System.out.println();

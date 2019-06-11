@@ -142,7 +142,7 @@ public class EchoServer extends AbstractServer
             if (message[1].equals("content"))
             {
                 try {
-                    client.sendToClient(ConnectionToDatabase.SearchByContent(message[3]));
+                    client.sendToClient(ConnectionToDatabase.SearchBySite(message[3]));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

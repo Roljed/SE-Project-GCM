@@ -3,8 +3,9 @@ package user.member;
 public class SignInForm {
 	private String userName;
 	private String password;
-	
-	public SignInForm(String userName_, String password_){
+
+	public SignInForm(String userName_, String password_)
+	{
 		setUserName(userName_);
 		setPassword(password_);
 	}
