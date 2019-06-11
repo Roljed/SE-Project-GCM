@@ -1,7 +1,6 @@
 package user;
 
 import command.catalog.Catalog;
-import product.ProductType;
 import user.member.MemberCard;
 import user.member.SignInForm;
 import command.Search;
@@ -18,7 +17,7 @@ public class User
 	private SignInForm signInForm = null;
 	private Search search = null;
 	protected static ChatClient chat;
-	protected Role role = Role.USER;
+	protected UserStatus userStatus = UserStatus.USER;
 	private Scanner in = new Scanner(System.in);
 
 	public User(ChatClient chat_)
@@ -26,12 +25,12 @@ public class User
 		chat = chat_;
 	}
 
-	public void signIn()
+	public UserStatus signIn(String username, String password)
 	{
 		System.out.println("Type your username:");
-		String username = in.nextLine();
+		username = in.nextLine();
 		System.out.println("Type your password:");
-		String password = in.nextLine();
+		password = in.nextLine();
 		signInForm = new SignInForm(username,password);
 		try {
 			chat.sendToServer(signInForm);
@@ -41,14 +40,14 @@ public class User
 		switch(res) {
 			case("Wrong user name or password"):
 				System.out.println(res);
-				return;
+				return UserStatus.USER;
 			case("User already connected"):
 				System.out.println(res);
-				return;
+				return UserStatus.USER;
 			default:
 				registeredUser = true;
 				System.out.println(res);
-				return;
+				return UserStatus.USER;
 		}
 	}
 
@@ -93,7 +92,7 @@ public class User
 			Catalog resultCatalog = search.searchByCityName(request);
 			if(resultCatalog == null)
 			{
-				resultCatalog = search.searchByContent(request);
+				resultCatalog = search.searchBySite(request);
 				if(resultCatalog == null){
 					System.out.println("Your request is not found. Please try again.");
 					continue;
@@ -109,14 +108,14 @@ public class User
 		return signUpForm;
 	}
 
-	public Role getRole()
+	public UserStatus getUserStatus()
 	{
-		return role;
+		return userStatus;
 	}
 
 	public String getRoleByString()
 	{
-		switch(role) {
+		switch(userStatus) {
 			case MEMBER: return "MEMBER";
 			case WORKER: return "WORKER";
 			case CONTENT_WORKER: return "CONTENT_WORKER";

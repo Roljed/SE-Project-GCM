@@ -1,6 +1,6 @@
 package user;
 
-public enum Role
+public enum UserStatus
 {
     USER,
     MEMBER,
@@ -8,5 +8,7 @@ public enum Role
     CONTENT_WORKER,
     MANAGER,
     CONTENT_MANAGER,
-    EDITOR
+    EDITOR,
+    NOT_EXIST,
+    ALREADY_CONNECTED,
 }

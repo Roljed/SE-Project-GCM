@@ -11,6 +11,6 @@ public class CompanyManager extends Manager
 	}
 
 	public void setMapPrice(MapCost mapCost,double price){
-		mapCost.setPrice(price,nameUser,role);
+		mapCost.setPrice(price,nameUser, userStatus);
 	}
 }

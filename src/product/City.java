@@ -1,6 +1,6 @@
 package product;
 
-import user.Role;
+import user.UserStatus;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -171,9 +171,9 @@ public class City
         this.cityVersion += 1;
     }
 
-    public void out(Role role)
+    public void out(UserStatus userStatus)
     {
-        if (role != null && (role != Role.USER && role != Role.MEMBER))
+        if (userStatus != null && (userStatus != UserStatus.USER && userStatus != UserStatus.MEMBER))
         {
             System.out.println("\tID: " + cityID);
         }

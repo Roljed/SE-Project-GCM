@@ -1,7 +1,7 @@
 package user.member;
 
 import product.pricing.Purchase;
-import user.Role;
+import user.UserStatus;
 import client.ChatClient;
 import user.User;
 
@@ -17,6 +17,7 @@ public class MemberCard extends User
 	private int phoneNumber;
 	private String email;
 	private List<Purchase> purchaseHistory;
+	private boolean connencted = false;
 
 	public MemberCard(String namePersonal_, String nameUser_, String password_, int phoneNumber_, String email_, ChatClient client){
 		super(chat);
@@ -25,7 +26,7 @@ public class MemberCard extends User
 		nameUser = nameUser_;
 		phoneNumber = phoneNumber_;
 		email = email_;
-		role = Role.MEMBER;
+		userStatus = UserStatus.MEMBER;
 		memberID = NextMemberID++;
 	}
 

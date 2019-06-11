@@ -1,6 +1,6 @@
 package product.content;
 
-import user.Role;
+import user.UserStatus;
 
 /**
  * Implements interesting places on the DigitalMap
@@ -172,9 +172,9 @@ public class Site extends Content
 
     }
 
-    public void out(Role role)
+    public void out(UserStatus userStatus)
     {
-        if (role != Role.USER && role != Role.MEMBER)
+        if (userStatus != UserStatus.USER && userStatus != UserStatus.MEMBER)
         {
             System.out.println("\tID: " + getContendID());
             System.out.println("\tLocation:");

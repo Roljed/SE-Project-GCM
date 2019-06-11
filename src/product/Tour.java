@@ -2,7 +2,7 @@ package product;
 
 import java.util.List;
 import product.content.Content;
-import user.Role;
+import user.UserStatus;
 
 /**
  * Third product - Route
@@ -92,9 +92,9 @@ public class Tour
         this.tourTotalDuration = tourTotalDuration;
     }
 
-    public void out(Role role)
+    public void out(UserStatus userStatus)
     {
-        if (role != null && (role != Role.USER && role != Role.MEMBER))
+        if (userStatus != null && (userStatus != UserStatus.USER && userStatus != UserStatus.MEMBER))
         {
             System.out.println("\tID: " + tourID);
         }
@@ -103,7 +103,7 @@ public class Tour
         System.out.println("\tDuration: " + tourTotalDuration);
         for (Content content : tourSequence)
         {
-            content.out(role);
+            content.out(userStatus);
         }
     }
 }

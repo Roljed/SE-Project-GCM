@@ -1,6 +1,6 @@
 package product.content;
 
-import user.Role;
+import user.UserStatus;
 
 /**
  * Abstract class for future proof content classes
@@ -79,6 +79,6 @@ public abstract class Content
         this.contentDuration = contentDuration;
     }
 
-    public abstract void out(Role role);
+    public abstract void out(UserStatus userStatus);
 
 }
