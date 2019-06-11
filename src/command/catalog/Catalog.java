@@ -6,6 +6,7 @@ import product.City;
 import product.DigitalMap;
 import product.Tour;
 import product.content.Content;
+import product.content.Site;
 import user.Role;
 
 /**
@@ -23,7 +24,7 @@ public class Catalog
     private List<Tour> tours;
     private List<City> cities;
 
-    public Catalog(List<Content> contents, List<DigitalMap> digitalMaps, List<Tour> tours, List<City> cities)
+    public Catalog(List<Site> contents, List<DigitalMap> digitalMaps, List<Tour> tours, List<City> cities)
     {
         this.contents = contents;
         this.digitalMaps = digitalMaps;

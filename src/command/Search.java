@@ -1,13 +1,13 @@
 package command;
 
 import product.ProductType;
-import product.content.Content;
 import product.City;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import client.ChatClient;
 import command.catalog.Catalog;
+import product.content.Site;
 import user.Role;
 
 
@@ -63,19 +63,19 @@ public class Search
         }
     }
 
-    public Catalog searchByContent(String contentName)
+    public Catalog searchBySite(String siteName)
     {
         try {
-            chat.sendToServer("#search content name" + contentName);
-            List<?> objectContents = (List<?>)chat.recieveObjectFromServer();
-            if(objectContents.isEmpty()) {
+            chat.sendToServer("#search site name" + siteName);
+            List<?> objectSites = (List<?>)chat.recieveObjectFromServer();
+            if(objectSites.isEmpty()) {
                 return null;
             }
-            List<Content> contents = new ArrayList<>();
-            for (Object obj : objectContents) {
-                contents.add((Content)obj);
+            List<Site> sites = new ArrayList<>();
+            for (Object obj : objectSites) {
+                sites.add((Site)obj);
             }
-            catalog = new Catalog(contents,null,null,null);
+            catalog = new Catalog(sites,null,null,null);
             catalog.viewCatalog();
             return catalog;
         }
