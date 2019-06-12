@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.MainServer">
+   <children>
+      <Label alignment="CENTER" text="Server Configuration">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin></Label>
+      <Label fx:id="messageLabel" alignment="CENTER" contentDisplay="CENTER" textFill="#078d1f">
+         <font>
+            <Font name="Consolas" size="18.0" />
+         </font>
+      </Label>
+      <AnchorPane prefHeight="181.0" prefWidth="400.0">
+         <children>
+            <Label layoutX="80.0" layoutY="18.0" text="IP">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
+            <TextField fx:id="ipText" layoutX="208.0" layoutY="15.0" prefHeight="25.0" prefWidth="160.0" promptText="Enter IP" />
+            <Label layoutX="80.0" layoutY="114.0" text="Database Username">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
+            <TextField fx:id="databaseUsernameText" layoutX="208.0" layoutY="111.0" prefHeight="25.0" prefWidth="160.0" promptText="Enter Database Username" />
+            <Label layoutX="80.0" layoutY="83.0" text="Database Name">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
+            <TextField fx:id="databaseNameText" layoutX="208.0" layoutY="80.0" prefHeight="25.0" prefWidth="160.0" promptText="Enter Database Name" />
+            <Label layoutX="80.0" layoutY="51.0" text="Port">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
+            <TextField fx:id="portText" layoutX="208.0" layoutY="48.0" prefHeight="25.0" prefWidth="160.0" promptText="Enter Port" />
+            <Label layoutX="80.0" layoutY="145.0" text="Database Password">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
+            <TextField fx:id="databasePasswordText" layoutX="208.0" layoutY="142.0" prefHeight="25.0" prefWidth="160.0" promptText="Enter Database Password" />
+         </children>
+      </AnchorPane>
+      <HBox alignment="CENTER" prefHeight="28.0" prefWidth="400.0" spacing="100.0">
+         <children>
+            <Button fx:id="connectButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#connectAction" style="-fx-background-color: GREEN;" text="Connect" textFill="WHITE" />
+            <Button fx:id="disconnectButton" mnemonicParsing="false" onAction="#disconnectAction" style="-fx-background-color: RED;" text="Disonnect" textFill="WHITE" />
+         </children>
+      </HBox>
+      <Button fx:id="exitButton" mnemonicParsing="false" onAction="#exitAction" text="Exit" />
+   </children>
+</VBox>

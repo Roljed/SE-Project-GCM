@@ -37,6 +37,26 @@ public class ClientConsole implements ChatIF
   //Constructors ****************************************************
 
   /**
+   * Constructs an instance of the ClientConsole UI.
+   *
+   * @param host The host to connect to.
+   * @param port The port to connect on.
+   */
+  public ClientConsole(String host, int port)
+  {
+    try
+    {
+      client= new ChatClient(host, port, this);
+    }
+    catch(IOException exception)
+    {
+      System.out.println("Error: Can't setup connection!"
+              + " Terminating client.");
+      System.exit(1);
+    }
+  }
+
+  /**
    * Constructs an instance of the src.client.ClientConsole UI.
    *
    * @param host The host to connect to.
