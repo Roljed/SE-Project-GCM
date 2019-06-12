@@ -53,7 +53,7 @@ public class ChatClient extends AbstractClient
 
   /**
    * Constructs an instance of the chat client.
-   *  @param loginID The user ID.
+   * @param loginID The user ID.
    * @param host The server to connect to.
    * @param port The port number to connect on.
    * @param clientUI The interface type variable.

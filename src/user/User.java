@@ -27,10 +27,12 @@ public class User
 
 	public UserStatus signIn(String username, String password)
 	{
-		System.out.println("Type your username:");
-		username = in.nextLine();
-		System.out.println("Type your password:");
-		password = in.nextLine();
+
+//		return UserStatus.NOT_EXIST;
+//		System.out.println("Type your username:");
+//		username = in.nextLine();
+//		System.out.println("Type your password:");
+//		password = in.nextLine();
 		signInForm = new SignInForm(username,password);
 		try {
 			chat.sendToServer(signInForm);
