@@ -16,15 +16,16 @@ import user.User;
 import user.member.MemberCard;
 
 import java.io.IOException;
+import java.io.Serializable;
 
 /**
  *  TODO explain class
  * @author Yaad Nahshon
  */
-public class SignIn implements ChatIF
+public class SignIn implements ChatIF, Serializable
 {
     static private final int SERVER_PORT = 5555;
-    ChatClient chat = null;
+    private ChatClient chat = MainClient.getChat();
 
     public TextField usernameText;
     public TextField passwordText;
@@ -45,7 +46,7 @@ public class SignIn implements ChatIF
                 this.chat = new ChatClient(MainClient.getHost(),SERVER_PORT, this);
             }
             User user = new User(chat);
-            Object res = user.signIn(username, password);
+            Object res = user.signIn(chat, username, password);
             messageLabel.setText("Login information sent to Server.");
             if (res instanceof ClientServerStatus)
             {

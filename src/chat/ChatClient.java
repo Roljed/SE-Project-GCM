@@ -34,7 +34,7 @@ public class ChatClient extends AbstractClient
   //Constructors ****************************************************
   
   /**
-   * Constructs an instance of the chat client.
+   * Constructs an instance of the m_chat client.
    *
    * @param host The server to connect to.
    * @param port The port number to connect on.
@@ -48,11 +48,11 @@ public class ChatClient extends AbstractClient
     this.clientUI = clientUI;
     openConnection();
     this.loginID = "ANONYMOUS";
-    sendToServer("#login ANONYMOUS");
+//    sendToServer("#login ANONYMOUS");
   }
 
   /**
-   * Constructs an instance of the chat client.
+   * Constructs an instance of the m_chat client.
    * @param loginID The user ID.
    * @param host The server to connect to.
    * @param port The port number to connect on.

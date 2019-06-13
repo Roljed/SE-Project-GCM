@@ -5,7 +5,6 @@ import user.Permission;
 import chat.ChatClient;
 import user.User;
 
-import java.io.IOException;
 import java.util.List;
 
 public class MemberCard extends User
@@ -22,7 +21,7 @@ public class MemberCard extends User
 	private boolean connencted = false;
 
 	public MemberCard(String namePersonal_, String nameUser_, String password_, int phoneNumber_, String email_, ChatClient client, Permission permission_){
-		super(chat);
+		super(m_chat);
 		namePersonal = namePersonal_;
 		password = password_;
 		nameUser = nameUser_;
@@ -41,7 +40,7 @@ public class MemberCard extends User
 
 	public MemberCard(String id_, String namePersonal_, String nameUser_, String password_, String phoneNumber_, String email_, ChatClient client, String permission_)
 	{
-		super(chat);
+		super(m_chat);
 		memberID = Integer.parseInt(id_);
 		namePersonal = namePersonal_;
 		password = password_;

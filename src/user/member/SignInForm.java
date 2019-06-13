@@ -1,6 +1,9 @@
 package user.member;
 
-public class SignInForm {
+import java.io.Serializable;
+
+public class SignInForm implements Serializable
+{
 	private String userName;
 	private String password;
 
