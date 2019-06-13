@@ -10,7 +10,7 @@ import product.Tour;
 import product.content.Site;
 import user.member.MemberCard;
 import user.member.SignInForm;
-import client.common.*;
+import chat.common.*;
 
 /**
  * This class overrides some of the methods in the abstract
@@ -84,7 +84,7 @@ public class EchoServer extends AbstractServer
         if (msg instanceof MemberCard)
         {
             try {
-                client.sendToClient(ConnectionToDatabase.AddClient(((MemberCard) msg).getNameUser(), ((MemberCard) msg).getNamePersonal(),
+                client.sendToClient(ConnectionToDatabase.AddClient(((MemberCard) msg).getMemberIDByString(),((MemberCard) msg).getNameUser(), ((MemberCard) msg).getNamePersonal(),
                         ((MemberCard) msg).getPassword(), ((MemberCard) msg).getPhoneNumberByString(), ((MemberCard) msg).getEmail(),
                         ((MemberCard) msg).getRoleByString()));
             } catch (IOException e) {
@@ -146,6 +146,22 @@ public class EchoServer extends AbstractServer
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+            }
+            if (message[2].equals("description"))
+            {
+                try {
+                    client.sendToClient(ConnectionToDatabase.SearchByDescription(message[3]));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        if (msg instanceof Integer)
+        {
+            try {
+                client.sendToClient(ConnectionToDatabase.SearchByCityID(msg.toString()));
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
     }

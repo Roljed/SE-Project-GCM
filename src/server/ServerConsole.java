@@ -3,7 +3,7 @@ package server;// "Object Oriented Software Engineering" and is issued under the
 
 import java.io.*;
 
-import client.common.ChatIF;
+import chat.common.ChatIF;
 
 /**
  * This class constructs the UI for a chat server.  It implements the

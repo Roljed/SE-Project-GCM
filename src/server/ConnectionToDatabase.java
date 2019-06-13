@@ -140,7 +140,7 @@ public class ConnectionToDatabase
         return true;
     }
 
-    public static boolean AddClient (String nameUser, String namePersonal, String password, String phoneNumber, String email, String role)
+    public static boolean AddClient (String ID, String nameUser, String namePersonal, String password, String phoneNumber, String email, String role)
     {
         Connection conn = connectToDatabase();
         Statement stmt;
@@ -149,7 +149,7 @@ public class ConnectionToDatabase
         try
         {
             stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
-            stmt.executeUpdate("INSERT INTO User_Database VALUES ('" + nameUser + "' , '" + namePersonal + "' , '" + password + "' , '"
+            stmt.executeUpdate("INSERT INTO User_Database VALUES ('" + ID + "', '" + nameUser + "' , '" + namePersonal + "' , '" + password + "' , '"
                     + phoneNumber + "', '" + email + "', '" + role + "', 'NO')");
             if (stmt != null) {
                 try {
@@ -534,6 +534,107 @@ public class ConnectionToDatabase
                     i++;
                 }
                 return new Tour(rs.getInt("ID"),rs.getString("Name"), rs.getString("Description"),tourSequence,rs.getDouble("Duration"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static List<Object> SearchByDescription(String description){
+        Connection conn= connectToDatabase();
+        Statement stmt;
+        try
+        {
+            List<Object> objects = new ArrayList<Object>();
+            stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
+            ResultSet rs = stmt.executeQuery("SELECT ID FROM City_Database WHERE Description CONTAINS '" + description + "'");
+            while(true)
+            {
+                if(rs.next())
+                {
+                    HashMap<Integer, DigitalMap> cityMaps=new HashMap<>();
+                    String[] digitalMap = rs.getString("Maps").split(",");
+                    int i=0;
+                    for(String d: digitalMap)
+                    {
+                        DigitalMap temp=(DigitalMap) DigitalMapByID(digitalMap[i]);
+                        cityMaps.put(temp.getDigitalMapID(),temp);
+                        i++;
+                    }
+                    i=0;
+                    HashMap<Integer, Tour> cityTours=new HashMap<>();
+                    String[] tour = rs.getString("Tours").split(",");
+                    for(String t: tour)
+                    {
+                        Tour temp=(Tour) TourByID(tour[i]);
+                        cityTours.put(temp.getTourID(),temp);
+                        i++;
+                    }
+                    objects.add(new City(rs.getInt("ID"),rs.getString("Name"),cityMaps, cityTours, rs.getDouble("Price"), rs.getInt("Version"),
+                            rs.getDate("LastUpdatedDate")));
+                }
+                else {
+                    break;
+                }
+            }
+            rs = stmt.executeQuery("SELECT ID FROM Site_Database WHERE Description CONTAINS '" + description + "'");
+            while(true)
+            {
+                if(rs.next())
+                {
+                    String[] coordinates = rs.getString("Coordinate").split(",");
+                    Location local = new Location(Double.parseDouble(coordinates[0]),Double.parseDouble(coordinates[1]));
+                    objects.add(new Site(rs.getInt("ID"),local,rs.getDouble("Duration"),rs.getString("Name"),rs.getString("Type"),
+                            rs.getString("Description"),rs.getInt("Accessibility")));
+                }
+                else {
+                    break;
+                }
+            }
+            return objects;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static List<City> SearchByCityID(String ID)
+    {
+        Connection conn= connectToDatabase();
+        Statement stmt;
+        try
+        {
+            stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
+            ResultSet rs = stmt.executeQuery("SELECT ID FROM City_Database WHERE ID = '" + ID + "'");
+            List<City> cityList = new ArrayList<City>();
+            while(true)
+            {
+                if(rs.next())
+                {
+                    HashMap<Integer, DigitalMap> cityMaps=new HashMap<Integer, DigitalMap>();
+                    HashMap<Integer, Tour> cityTours=new HashMap<Integer, Tour>();
+                    String[] mapsString = rs.getString("Maps").split(",");
+                    String[] toursString = rs.getString("Tours").split(",");
+                    int i=0;
+                    for(String m: mapsString)
+                    {
+                        DigitalMap temp=(DigitalMap) DigitalMapByID(mapsString[i]);
+                        cityMaps.put(temp.getDigitalMapID(),temp);
+                        i++;
+                    }
+                    i=0;
+                    for(String t: toursString)
+                    {
+                        Tour temp=(Tour) TourByID(toursString[i]);
+                        cityTours.put(temp.getTourID(),temp);
+                        i++;
+                    }
+                    cityList.add(new City(rs.getInt("ID"),rs.getString("Name"),cityMaps,cityTours,rs.getDouble("Price"),rs.getInt("Version"),rs.getDate("LastUpdatedDate")));
+                }
+                else{
+                    return cityList;
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
