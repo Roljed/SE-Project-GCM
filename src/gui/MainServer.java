@@ -14,6 +14,10 @@ import server.EchoServer;
 
 import java.io.IOException;
 
+/**
+ *  TODO explain class
+ * @author Yaad Nahshon
+ */
 public class MainServer extends Application
 {
 

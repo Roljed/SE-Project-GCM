@@ -88,7 +88,7 @@ public class MainClient extends Application implements Initializable
             System.out.print("");
         });
 
-        Pane root = loader.load(getClass().getResource("/fxml/main.fxml").openStream());
+        Pane root = loader.load(getClass().getResource("fxml/main.fxml").openStream());
 //        MainController mainController = (MainController) loader.getController();
         Scene mainScene = new Scene(root);
         primaryStage.setScene(mainScene);

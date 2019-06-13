@@ -10,7 +10,11 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class RegisterController
+/**
+ *  TODO explain class
+ * @author Yaad Nahshon
+ */
+public class SingUp
 {
     @FXML
     public void btn_Back(ActionEvent actionEvent) throws IOException
