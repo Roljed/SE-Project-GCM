@@ -1,6 +1,8 @@
 package server;
 
-public enum ClientServerStatus
+import java.io.Serializable;
+
+public enum ClientServerStatus implements Serializable
 {
     CONNECTED,
     NOT_CONNECTED,

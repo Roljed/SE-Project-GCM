@@ -2,13 +2,15 @@ package product.content;
 
 import user.Permission;
 
+import java.io.Serializable;
+
 /**
  * Implements interesting places on the DigitalMap
  *
  * @version 1
  * @author Yaad Nahshon
  */
-public class Site extends Content
+public class Site extends Content implements Serializable
 {
     private String siteName;
     private Classification siteType;

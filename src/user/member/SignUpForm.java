@@ -3,9 +3,10 @@ package user.member;
 import chat.ChatClient;
 import user.Permission;
 
+import java.io.Serializable;
 import java.lang.String;
 
-public class SignUpForm
+public class SignUpForm implements Serializable
 {
 	private String name;
 	private String userName;

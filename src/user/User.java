@@ -32,11 +32,10 @@ public class User implements Serializable
 		m_chat = chat_;
 	}
 
-	public Object signIn(ChatClient chat, String username, String password)
+	public void signIn(ChatClient chat, String username, String password)
 	{
 		signInForm = new SignInForm(username,password);
 		chat.handleMessageFromClientUI(signInForm);
-		return chat.receiveObjectFromServer();
 	}
 
 	public void signUp()

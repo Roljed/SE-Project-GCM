@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.SubScene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
@@ -41,13 +42,20 @@ public class SignIn implements ChatIF, Serializable
             String username = usernameText.getText();
             String password = passwordText.getText();
 
+            MainClient.result = null;
+
             if (this.chat == null)
             {
                 this.chat = new ChatClient(MainClient.getHost(),SERVER_PORT, this);
             }
             User user = new User(chat);
-            Object res = user.signIn(chat, username, password);
-//            messageLabel.setText("Login information sent to Server.");
+            user.signIn(chat, username, password);
+            messageLabel.setText("Login information sent to Server.");
+            while (MainClient.result == null)
+            {
+                System.out.print("");
+            }
+            Object res = MainClient.result;
             if (res instanceof ClientServerStatus)
             {
                 ClientServerStatus clientServerStatus = ((ClientServerStatus) res);

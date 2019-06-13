@@ -6,9 +6,10 @@ import product.Tour;
 import product.content.Content;
 import product.content.Site;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class PublishVersion extends Catalog
+public class PublishVersion extends Catalog implements Serializable
 {
     private boolean versionApproved = false;
 

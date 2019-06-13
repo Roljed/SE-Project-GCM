@@ -5,7 +5,9 @@ import chat.ChatClient;
 import user.Permission;
 import product.pricing.MapCost;
 
-public class ContentManager extends Manager
+import java.io.Serializable;
+
+public class ContentManager extends Manager implements Serializable
 {
 
 	public ContentManager(String namePersonal_, String nameUser_, String password_, int phoneNumber_, String email_, ChatClient chat_)

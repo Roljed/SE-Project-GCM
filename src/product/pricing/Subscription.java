@@ -1,5 +1,6 @@
 package product.pricing;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -10,7 +11,8 @@ import java.util.Date;
 */
 
 
-public class Subscription extends Purchase {
+public class Subscription extends Purchase implements Serializable
+{
 	private Date dateOfExpiration;
 	
 	public Subscription(int[] purchasedCityID, int[] purchasedMapID, int purchasedCost, PurchaseType purchaseType) {

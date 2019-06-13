@@ -90,7 +90,7 @@ public class ConnectionToDatabase
     }
 
     public static Object SignIn (String nameUser, String password) throws SQLException {
-        Connection conn= connectToDatabase();
+        Connection conn = connectToDatabase();
         Statement stmt;
         ResultSet rs = null;
         String name = "";

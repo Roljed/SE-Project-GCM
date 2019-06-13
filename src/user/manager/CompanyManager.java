@@ -3,7 +3,9 @@ package user.manager;
 import product.pricing.MapCost;
 import chat.ChatClient;
 
-public class CompanyManager extends Manager
+import java.io.Serializable;
+
+public class CompanyManager extends Manager implements Serializable
 {
 
 	public CompanyManager(String namePersonal_, String nameUser_, String password_, int phoneNumber_, String email_, ChatClient chat_){

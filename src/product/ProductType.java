@@ -1,6 +1,8 @@
 package product;
 
-public enum ProductType
+import java.io.Serializable;
+
+public enum ProductType implements Serializable
 {
     CONTENT,
     DIGITAL_MAP,

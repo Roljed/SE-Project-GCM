@@ -2,13 +2,15 @@ package product.content;
 
 import user.Permission;
 
+import java.io.Serializable;
+
 /**
  * Abstract class for future proof content classes
  *
  * @version 1
  * @author Yaad Nahshon
  */
-public abstract class Content
+public abstract class Content implements Serializable
 {
 
     private int contendID;

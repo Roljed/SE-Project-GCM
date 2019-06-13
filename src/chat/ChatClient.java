@@ -2,6 +2,7 @@ package chat;// This file contains material supporting section 3.7 of the textbo
 // "Object Oriented Software Engineering" and is issued under the open-source
 // license found at www.lloseng.com 
 
+import gui.MainClient;
 import ocsf.client.AbstractClient;
 import chat.common.*;
 import user.member.SignInForm;
@@ -80,7 +81,7 @@ public class ChatClient extends AbstractClient
    */
   public void handleMessageFromServer(Object msg) 
   {
-    clientUI.display(msg.toString());
+    MainClient.result = msg;
   }
   
   /** ADDED METHOD!!!!!!!
@@ -123,13 +124,7 @@ public class ChatClient extends AbstractClient
    */
   public void handleMessageFromClientUI(Object message)
   {
-    //TODO DELETE
-    if (message instanceof SignInForm)
-    {
-      System.out.println(((SignInForm) message).getUserName() + ((SignInForm) message).getPassword() );
-    }
-
-	try
+   	try
     {
 		sendToServer(message);
     }
