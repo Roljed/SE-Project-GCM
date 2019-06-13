@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="300.0" prefWidth="260.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.LogInController">
+<AnchorPane prefHeight="300.0" prefWidth="260.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.SignIn">
    <children>
       <Label layoutX="100.0" layoutY="38.0" prefHeight="23.0" prefWidth="69.0" text="Sign In" textAlignment="CENTER" AnchorPane.bottomAnchor="239.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="38.0">
          <font>

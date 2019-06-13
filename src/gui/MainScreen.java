@@ -11,12 +11,17 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class MainController
+
+/**
+ *  TODO explain class
+ * @author Yaad Nahshon
+ */
+public class MainScreen
 {
     @FXML
     public void btn_Login(ActionEvent actionEvent) throws IOException
     {
-        Parent loginView = FXMLLoader.load(getClass().getResource("fxml/login.fxml"));
+        Parent loginView = FXMLLoader.load(getClass().getResource("fxml/sign-in.fxml"));
         Scene loginScene = new Scene(loginView);
 
         Stage loginStage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
@@ -27,7 +32,7 @@ public class MainController
     @FXML
     public void btn_Register(ActionEvent actionEvent) throws IOException
     {
-        Parent registerView = FXMLLoader.load(getClass().getResource("fxml/register.fxml"));
+        Parent registerView = FXMLLoader.load(getClass().getResource("fxml/sing-up.fxml"));
         Scene registerScene = new Scene(registerView);
 
         Stage registerStage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();

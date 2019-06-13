@@ -16,7 +16,12 @@ import user.UserStatus;
 
 import java.io.IOException;
 
-public class LogInController
+
+/**
+ *  TODO explain class
+ * @author Yaad Nahshon
+ */
+public class SignIn
 {
     public TextField txtUsername;
     public TextField txtPassword;
