@@ -7,8 +7,17 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="javaFX" level="application" />
-    <orderEntry type="module" module-name="javafx.controls" />
-    <orderEntry type="library" name="lib" level="project" />
+    <orderEntry type="library" exported="" name="javaFX" level="application" />
+    <orderEntry type="module" module-name="javafx.controls" exported="" />
+    <orderEntry type="library" exported="" name="lib" level="project" />
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../SQL/mysql-connector-java-8.0.15.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>

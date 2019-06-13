@@ -47,7 +47,7 @@ public class SignIn implements ChatIF, Serializable
             }
             User user = new User(chat);
             Object res = user.signIn(chat, username, password);
-            messageLabel.setText("Login information sent to Server.");
+//            messageLabel.setText("Login information sent to Server.");
             if (res instanceof ClientServerStatus)
             {
                 ClientServerStatus clientServerStatus = ((ClientServerStatus) res);

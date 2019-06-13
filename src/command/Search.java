@@ -33,7 +33,7 @@ public class Search
 
         try {
             chat.sendToServer("#search product" + type + " " + objectID);
-            return chat.recieveObjectFromServer();
+            return chat.receiveObjectFromServer();
         }
         catch(IOException ex) {
             return null;
@@ -46,7 +46,7 @@ public class Search
         //TODO: duplicated code. Lines 25-41 && 66-82
         try {
             chat.sendToServer("#search city name" + cityName);
-            List<?> objectCities = (List<?>)chat.recieveObjectFromServer();
+            List<?> objectCities = (List<?>)chat.receiveObjectFromServer();
             if(objectCities.isEmpty()) {
                 return null;
             }
@@ -67,7 +67,7 @@ public class Search
     {
         try {
             chat.sendToServer("#search site name" + siteName);
-            List<?> objectSites = (List<?>)chat.recieveObjectFromServer();
+            List<?> objectSites = (List<?>)chat.receiveObjectFromServer();
             if(objectSites.isEmpty()) {
                 return null;
             }
@@ -87,7 +87,7 @@ public class Search
     public Catalog searchByDescription(String description) {
         try {
             chat.sendToServer("#search object description" + description);
-            List<?> objectCities = (List<?>)chat.recieveObjectFromServer();
+            List<?> objectCities = (List<?>)chat.receiveObjectFromServer();
             if(objectCities.isEmpty()) {
                 return null;
             }
@@ -114,7 +114,7 @@ public class Search
     public void displayCityMaps(int cityID) {
         try {
             chat.sendToServer(cityID);
-            List<?> objectCities = (List<?>)chat.recieveObjectFromServer();
+            List<?> objectCities = (List<?>)chat.receiveObjectFromServer();
             if(objectCities.isEmpty()) {
                 return;
             }
