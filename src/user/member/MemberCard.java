@@ -5,9 +5,10 @@ import user.Permission;
 import chat.ChatClient;
 import user.User;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class MemberCard extends User
+public class MemberCard extends User implements Serializable
 {
 	private int memberID;
 	protected static int NextMemberID = 0;

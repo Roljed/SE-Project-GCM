@@ -1,5 +1,6 @@
 package command.catalog;
 
+import java.io.Serializable;
 import java.util.List;
 
 import product.City;
@@ -15,7 +16,7 @@ import user.Permission;
  * @version 1
  * @author Yaad Nahshon
  */
-public class Catalog
+public class Catalog implements Serializable
 {
     private Permission permission = Permission.USER;
 

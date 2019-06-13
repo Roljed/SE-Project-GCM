@@ -3,6 +3,7 @@ import product.content.Content;
 import product.pricing.MapCost;
 import user.Permission;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,7 +13,7 @@ import java.util.Map;
  * @version 1
  * @author Yaad Nahshon
  */
-public class DigitalMap
+public class DigitalMap implements Serializable
 {
     private int digitalMapID;
     private static int digitalMapIDNext = 0;

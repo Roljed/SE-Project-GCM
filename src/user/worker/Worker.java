@@ -4,7 +4,9 @@ import chat.ChatClient;
 import user.Permission;
 import user.member.MemberCard;
 
-public class Worker extends MemberCard
+import java.io.Serializable;
+
+public class Worker extends MemberCard implements Serializable
 {
 	private int workerID;
 	static int NextworkerID = 0;

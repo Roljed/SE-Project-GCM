@@ -1,5 +1,6 @@
 package product.pricing;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -12,7 +13,8 @@ import product.DigitalMap;
 * @author Avi Ayeli
 */
 
-public class Purchase {
+public class Purchase implements Serializable
+{
 	private int purchaseID;
 	private static int purchaseIDNext = 0;
 	private Date dateOfPurchase;

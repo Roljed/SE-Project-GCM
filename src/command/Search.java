@@ -3,6 +3,7 @@ package command;
 import product.ProductType;
 import product.City;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import chat.ChatClient;
@@ -14,7 +15,7 @@ import user.Permission;
 /**
  *
  */
-public class Search
+public class Search implements Serializable
 {
     private ChatClient chat;
     private Catalog catalog;

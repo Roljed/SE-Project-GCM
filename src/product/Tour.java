@@ -1,5 +1,6 @@
 package product;
 
+import java.io.Serializable;
 import java.util.List;
 import product.content.Content;
 import user.Permission;
@@ -10,7 +11,7 @@ import user.Permission;
  * @version 1
  * @author Yaad Nahshon
  */
-public class Tour
+public class Tour implements Serializable
 {
     private int tourID;
     private String tourName;

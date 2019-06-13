@@ -1,5 +1,6 @@
 package product.pricing;
 
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -11,7 +12,7 @@ import user.Permission;
 * @author Avi Ayeli
 */
 
-public class MapCost
+public class MapCost implements Serializable
 {
     private double price;
     private int mapID;

@@ -1,12 +1,14 @@
 package product.content;
 
+import java.io.Serializable;
+
 /**
  * Holds Content location on the DigitalMap
  *
  * @version 1
  * @author Yaad Nahshon
  */
-public class Location
+public class Location implements Serializable
 {
     private double coordinateX;
     private double coordinateY;

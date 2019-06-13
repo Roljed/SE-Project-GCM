@@ -5,7 +5,9 @@ import command.Editor;
 import user.Permission;
 import user.worker.Worker;
 
-abstract class Manager extends Worker implements Editor
+import java.io.Serializable;
+
+abstract class Manager extends Worker implements Editor, Serializable
 {
 	private ReportActivity reporter;
 

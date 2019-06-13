@@ -2,6 +2,7 @@ package product;
 
 import user.Permission;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,7 +13,7 @@ import java.util.Map;
  * @version 1
  * @author Yaad Nahshon
  */
-public class City
+public class City implements Serializable
 {
     private int cityID;
     private static int cityIDNext = 0;
