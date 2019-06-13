@@ -1,7 +1,6 @@
 package gui;
 
 import chat.ChatClient;
-import chat.ClientConsole;
 import chat.common.ChatIF;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -27,6 +26,8 @@ public class MainClient extends Application implements Initializable, ChatIF
     private static ChatClient chat = null;
     final public static int DEFAULT_PORT = 5555;
     private static String host = "";
+
+    public static Object result;    // holds server return message
 
     @FXML
     public TextField serverIPTextField;
