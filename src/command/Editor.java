@@ -5,13 +5,13 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import client.ChatClient;
+import chat.ChatClient;
 import product.City;
 import product.DigitalMap;
 import product.ProductType;
 import product.Tour;
 import product.content.Site;
-import user.UserStatus;
+import user.Permission;
 
 /**
  * Interface of editor capabilities
@@ -35,7 +35,7 @@ public interface Editor
         }
 
         Search search = new Search(chat);
-        Site updateContent = (Site) search.searchByID(oldContentID, ProductType.CONTENT, UserStatus.EDITOR);
+        Site updateContent = (Site) search.searchByID(oldContentID, ProductType.CONTENT, Permission.EDITOR);
         if (updateContent == null)
         {
             return false;
@@ -68,7 +68,7 @@ public interface Editor
         }
 
         Search search = new Search(chat);
-        DigitalMap updateMap  = (DigitalMap) search.searchByID(digitalMapID, ProductType.DIGITAL_MAP, UserStatus.EDITOR);
+        DigitalMap updateMap  = (DigitalMap) search.searchByID(digitalMapID, ProductType.DIGITAL_MAP, Permission.EDITOR);
         if (updateMap == null)
         {
             return false;
@@ -99,7 +99,7 @@ public interface Editor
         }
 
         Search search = new Search(chat);
-        City updateCity  = (City) search.searchByID(cityID, ProductType.CITY, UserStatus.EDITOR);
+        City updateCity  = (City) search.searchByID(cityID, ProductType.CITY, Permission.EDITOR);
         if (updateCity == null)
         {
             return false;
@@ -135,7 +135,7 @@ public interface Editor
         }
 
         Search search = new Search(chat);
-        DigitalMap updateDigitalMap = (DigitalMap) search.searchByID(oldDigitalMapID, ProductType.DIGITAL_MAP, UserStatus.EDITOR);
+        DigitalMap updateDigitalMap = (DigitalMap) search.searchByID(oldDigitalMapID, ProductType.DIGITAL_MAP, Permission.EDITOR);
         if (updateDigitalMap == null)
         {
             return false;
@@ -167,7 +167,7 @@ public interface Editor
         }
 
         Search search = new Search(chat);
-        City updatedCity = (City) search.searchByID(cityID, ProductType.CITY, UserStatus.EDITOR);
+        City updatedCity = (City) search.searchByID(cityID, ProductType.CITY, Permission.EDITOR);
         if (updatedCity == null)
         {
             updatedCity = new City("new_city", new HashMap<>(), new HashMap<>(), 0, 0, new Date());
@@ -200,7 +200,7 @@ public interface Editor
         }
 
         Search search = new Search(chat);
-        Tour updatedTour = (Tour) search.searchByID(oldTour, ProductType.TOUR, UserStatus.EDITOR);
+        Tour updatedTour = (Tour) search.searchByID(oldTour, ProductType.TOUR, Permission.EDITOR);
         if (updatedTour == null)
         {
             return false;
@@ -233,7 +233,7 @@ public interface Editor
         }
 
         Search search = new Search(chat);
-        City updatedCity = (City) search.searchByID(cityID, ProductType.CITY, UserStatus.EDITOR);
+        City updatedCity = (City) search.searchByID(cityID, ProductType.CITY, Permission.EDITOR);
         if (updatedCity == null)
         {
             return null;
@@ -266,7 +266,7 @@ public interface Editor
         }
 
         Search search = new Search(chat);
-        City updatedCity = (City) search.searchByID(cityID, ProductType.CITY, UserStatus.EDITOR);
+        City updatedCity = (City) search.searchByID(cityID, ProductType.CITY, Permission.EDITOR);
         if (updatedCity == null)
         {
             return false;

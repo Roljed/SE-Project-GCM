@@ -1,7 +1,7 @@
 package user.manager;
 
 import product.pricing.MapCost;
-import client.ChatClient;
+import chat.ChatClient;
 
 public class CompanyManager extends Manager
 {
@@ -11,6 +11,6 @@ public class CompanyManager extends Manager
 	}
 
 	public void setMapPrice(MapCost mapCost,double price){
-		mapCost.setPrice(price,nameUser, userStatus);
+		mapCost.setPrice(price,nameUser, permission);
 	}
 }

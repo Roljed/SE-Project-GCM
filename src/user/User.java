@@ -1,56 +1,46 @@
 package user;
 
 import command.catalog.Catalog;
+import server.ClientServerStatus;
 import user.member.MemberCard;
-import user.member.SignInForm;
 import command.Search;
-import client.ChatClient;
+import chat.ChatClient;
+import user.member.SignInForm;
 import user.member.SignUpForm;
 import java.io.IOException;
 import java.util.Scanner;
+
+import static server.ClientServerStatus.*;
+import static user.Permission.*;
 
 
 public class User
 {
 	public boolean registeredUser = false;
-	private SignUpForm signUpForm = null;
-	private SignInForm signInForm = null;
 	private Search search = null;
 	protected static ChatClient chat;
-	protected UserStatus userStatus = UserStatus.USER;
+	protected Permission permission = Permission.USER;
+
+	protected ClientServerStatus clientServerStatus = ClientServerStatus.NOT_EXIST;
 	private Scanner in = new Scanner(System.in);
+	private SignUpForm signUpForm;
+	private SignInForm signInForm;
 
 	public User(ChatClient chat_)
 	{
 		chat = chat_;
 	}
 
-	public UserStatus signIn(String username, String password)
+	public Object signIn(String username, String password)
 	{
-
-//		return UserStatus.NOT_EXIST;
-//		System.out.println("Type your username:");
-//		username = in.nextLine();
-//		System.out.println("Type your password:");
-//		password = in.nextLine();
 		signInForm = new SignInForm(username,password);
 		try {
 			chat.sendToServer(signInForm);
 		}
-		catch(IOException ex) {}
-		String res = (String)chat.recieveObjectFromServer();
-		switch(res) {
-			case("Wrong user name or password"):
-				System.out.println(res);
-				return UserStatus.USER;
-			case("User already connected"):
-				System.out.println(res);
-				return UserStatus.USER;
-			default:
-				registeredUser = true;
-				System.out.println(res);
-				return UserStatus.USER;
+		catch(IOException ex) {
+			System.exit(2);
 		}
+		return chat.recieveObjectFromServer();
 	}
 
 	public void signUp()
@@ -110,14 +100,14 @@ public class User
 		return signUpForm;
 	}
 
-	public UserStatus getUserStatus()
+	public Permission getPermission()
 	{
-		return userStatus;
+		return permission;
 	}
 
-	public String getRoleByString()
+	public String getPermissionByString()
 	{
-		switch(userStatus) {
+		switch(permission) {
 			case MEMBER: return "MEMBER";
 			case WORKER: return "WORKER";
 			case CONTENT_WORKER: return "CONTENT_WORKER";
@@ -126,4 +116,51 @@ public class User
 			default: return "USER";
 		}
 	}
+
+	public  Permission getPermissionFromString(String str)
+	{
+		switch(str) {
+			case "MEMBER": return MEMBER;
+			case "WORKER": return WORKER;
+			case "CONTENT_WORKER": return CONTENT_WORKER;
+			case "MANAGER": return MANAGER;
+			case "CONTENT_MANAGER": return CONTENT_MANAGER;
+			default: return USER;
+		}
+	}
+
+
+	public ClientServerStatus getClientServerStatus()
+	{
+		return clientServerStatus;
+	}
+
+	public String getClientServerStatusToString()
+	{
+		switch(clientServerStatus) {
+			case CONNECTED: return "CONNECTED";
+			case NOT_CONNECTED: return "NOT_CONNECTED";
+			case WRONG_USERNAME_OR_PASSWORD: return "WRONG_USERNAME_OR_PASSWORD";
+			case WRONG_ARGUMENTS: return "WRONG_ARGUMENTS";
+			default: return "NOT_EXIST";
+		}
+	}
+
+	public ClientServerStatus getClientServerStatusFromString(String str)
+	{
+		switch(str) {
+			case "CONNECTED": return CONNECTED;
+			case "NOT_CONNECTED": return NOT_CONNECTED;
+			case "WRONG_USERNAME_OR_PASSWORD": return WRONG_USERNAME_OR_PASSWORD;
+			case "WRONG_ARGUMENTS": return WRONG_ARGUMENTS;
+			default: return NOT_EXIST;
+		}
+	}
+
+	public void setClientServerStatus(ClientServerStatus clientServerStatus)
+	{
+		this.clientServerStatus = clientServerStatus;
+	}
+
+
 }

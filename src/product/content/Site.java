@@ -1,6 +1,6 @@
 package product.content;
 
-import user.UserStatus;
+import user.Permission;
 
 /**
  * Implements interesting places on the DigitalMap
@@ -172,9 +172,9 @@ public class Site extends Content
 
     }
 
-    public void out(UserStatus userStatus)
+    public void out(Permission permission)
     {
-        if (userStatus != UserStatus.USER && userStatus != UserStatus.MEMBER)
+        if (permission != Permission.USER && permission != Permission.MEMBER)
         {
             System.out.println("\tID: " + getContendID());
             System.out.println("\tLocation:");

@@ -7,7 +7,7 @@ import product.DigitalMap;
 import product.Tour;
 import product.content.Content;
 import product.content.Site;
-import user.UserStatus;
+import user.Permission;
 
 /**
  * Catalog of all products that can be accessed directly by all users
@@ -17,7 +17,7 @@ import user.UserStatus;
  */
 public class Catalog
 {
-    private UserStatus userStatus = UserStatus.USER;
+    private Permission permission = Permission.USER;
 
     private List<Site> contents;
     private List<DigitalMap> digitalMaps;
@@ -32,9 +32,9 @@ public class Catalog
         this.cities = cities;
     }
 
-    public void setUserStatus(UserStatus userStatus)
+    public void setPermission(Permission permission)
     {
-        this.userStatus = userStatus;
+        this.permission = permission;
     }
 
     public void viewCatalog()
@@ -44,7 +44,7 @@ public class Catalog
             System.out.println("List of Contents:");
             for (Content content : contents)
             {
-                content.out(this.userStatus);
+                content.out(this.permission);
                 System.out.println("********************");
             }
             System.out.println();
@@ -55,7 +55,7 @@ public class Catalog
             System.out.println("List of Maps:");
             for (DigitalMap map : digitalMaps)
             {
-                map.out(this.userStatus);
+                map.out(this.permission);
                 System.out.println("********************");
             }
             System.out.println();
@@ -66,7 +66,7 @@ public class Catalog
             System.out.println("List of Tours:");
             for (Tour tour : tours)
             {
-                tour.out(this.userStatus);
+                tour.out(this.permission);
                 System.out.println("********************");
             }
             System.out.println();
@@ -77,7 +77,7 @@ public class Catalog
             System.out.println("List of Cities:");
             for (City city : cities)
             {
-                city.out(this.userStatus);
+                city.out(this.permission);
                 System.out.println("********************");
             }
             System.out.println();

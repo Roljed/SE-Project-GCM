@@ -3,7 +3,7 @@ package product.pricing;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import user.UserStatus;
+import user.Permission;
 
 /**
 *
@@ -57,9 +57,9 @@ public class MapCost
         return df.format(lastModifiedDate);
     }
 
-    public boolean setPrice(double price, String approvalName, UserStatus userStatus)
+    public boolean setPrice(double price, String approvalName, Permission permission)
     {
-        if (userStatus == UserStatus.MANAGER)
+        if (permission == Permission.MANAGER)
         {
         	this.price=price;
         	this.lastApproval=approvalName;

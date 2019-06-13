@@ -1,8 +1,8 @@
 package user.manager;
-import client.ChatClient;
+import chat.ChatClient;
 import database.report.ReportActivity;
 import command.Editor;
-import user.UserStatus;
+import user.Permission;
 import user.worker.Worker;
 
 abstract class Manager extends Worker implements Editor
@@ -12,7 +12,7 @@ abstract class Manager extends Worker implements Editor
 	public Manager(String namePersonal_, String nameUser_, String password_, int phoneNumber_, String email_, ChatClient chat_){
 		super(namePersonal_,nameUser_,password_,phoneNumber_,email_,chat_);
 		reporter = new ReportActivity(namePersonal_);
-		userStatus = UserStatus.MANAGER;
+		permission = Permission.MANAGER;
 	}
 
 	public void viewReport(){

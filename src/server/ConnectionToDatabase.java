@@ -17,6 +17,7 @@ import product.content.Content;
 import product.content.Location;
 import product.content.Site;
 import product.pricing.MapCost;
+import user.member.MemberCard;
 
 
 /**
@@ -88,20 +89,20 @@ public class ConnectionToDatabase
         return con;
     }
 
-    public static String SignIn (String nameUser, String password)
-    {
+    public static Object SignIn (String nameUser, String password) throws SQLException {
         Connection conn= connectToDatabase();
         Statement stmt;
+        ResultSet rs = null;
         String name="";
         try
         {
             stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
-            ResultSet rs = stmt.executeQuery("SELECT Password FROM User_Database WHERE UserName = '" + nameUser + "'");
+            rs = stmt.executeQuery("SELECT Password FROM User_Database WHERE UserName = '" + nameUser + "'");
             if((!rs.next()) || (!rs.getString("Password").equals(password)))
-                return "Wrong user name or password";
+                return ClientServerStatus.WRONG_USERNAME_OR_PASSWORD;
             rs=stmt.executeQuery("SELECT SignIn FROM User_Database WHERE UserName = '" + nameUser + "'");
             if ((!rs.next()) || (rs.getString("SignIn").equals("YES")))
-                return "User already connected";
+                return ClientServerStatus.CONNECTED;
             stmt.executeUpdate("UPDATE User_Database SET SignIn = 'YES' WHERE UserName='"+ nameUser +"'");
             rs=stmt.executeQuery("SELECT PersonalName FROM User_Database WHERE UserName = '" + nameUser + "'");
             rs.next();
@@ -114,7 +115,12 @@ public class ConnectionToDatabase
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return "Welcome " + name;
+
+        if (rs != null)
+        {
+            return new MemberCard(rs.getString("ID"), rs.getString("PersonalName"), null, null, null, null, null,  rs.getString("Permission"));
+        }
+        return null;
     }
 
     public static boolean SignOut (String nameUser)

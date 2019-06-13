@@ -1,7 +1,7 @@
 package product;
 import product.content.Content;
 import product.pricing.MapCost;
-import user.UserStatus;
+import user.Permission;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -100,9 +100,9 @@ public class DigitalMap
        return this.digitalMapContents.put(newContent.getContendID(), newContent);
     }
 
-    public void out(UserStatus userStatus)
+    public void out(Permission permission)
     {
-        if (userStatus != null && (userStatus != UserStatus.USER && userStatus != UserStatus.MEMBER))
+        if (permission != null && (permission != Permission.USER && permission != Permission.MEMBER))
         {
             System.out.println("\tID: " + digitalMapID);
         }
@@ -113,7 +113,7 @@ public class DigitalMap
         System.out.println("\tContent");
         for (Map.Entry<Integer, Content> content : digitalMapContents.entrySet())
         {
-            content.getValue().out(userStatus);
+            content.getValue().out(permission);
         }
     }
 }
