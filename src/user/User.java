@@ -36,7 +36,7 @@ public class User implements Serializable
 	{
 		signInForm = new SignInForm(username,password);
 		chat.handleMessageFromClientUI(signInForm);
-		return chat.recieveObjectFromServer();
+		return chat.receiveObjectFromServer();
 	}
 
 	public void signUp()
@@ -57,7 +57,7 @@ public class User implements Serializable
 			m_chat.sendToServer(clientCard);
 		}
 		catch(IOException ex) {}
-		boolean res = (boolean) m_chat.recieveObjectFromServer();
+		boolean res = (boolean) m_chat.receiveObjectFromServer();
 		if(res){
 			System.out.println("You are signed up now. Please sign in using your username and password!");
 		}

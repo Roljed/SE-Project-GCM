@@ -93,7 +93,8 @@ public class ConnectionToDatabase
         Connection conn= connectToDatabase();
         Statement stmt;
         ResultSet rs = null;
-        String name="";
+        String name = "";
+        MemberCard memberCard = null;
         try
         {
             stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
@@ -104,9 +105,8 @@ public class ConnectionToDatabase
             if ((!rs.next()) || (rs.getString("SignIn").equals("YES")))
                 return ClientServerStatus.CONNECTED;
             stmt.executeUpdate("UPDATE User_Database SET SignIn = 'YES' WHERE UserName='"+ nameUser +"'");
-            rs=stmt.executeQuery("SELECT PersonalName FROM User_Database WHERE UserName = '" + nameUser + "'");
-            rs.next();
-            name=rs.getString("PersonalName");
+            memberCard=new MemberCard(rs.getString("ID"), rs.getString("PersonalName"), null, null, null, null, null,  rs.getString("Permission"));
+
             if (stmt != null) {
                 try {
                     stmt.close();
@@ -115,12 +115,7 @@ public class ConnectionToDatabase
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        if (rs != null)
-        {
-            return new MemberCard(rs.getString("ID"), rs.getString("PersonalName"), null, null, null, null, null,  rs.getString("Permission"));
-        }
-        return null;
+        return  memberCard;
     }
 
     public static boolean SignOut (String nameUser)
