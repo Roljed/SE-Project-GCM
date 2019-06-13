@@ -1,6 +1,7 @@
 package user.member;
 
-import client.ChatClient;
+import chat.ChatClient;
+import user.Permission;
 
 import java.lang.String;
 
@@ -24,7 +25,7 @@ public class SignUpForm
 
 	public MemberCard createMemberCard()
 	{
-		return new MemberCard(name, userName, password, phoneNumber, email, chat) {
+		return new MemberCard(name, userName, password, phoneNumber, email, chat, Permission.MEMBER) {
 		};
 	}
 

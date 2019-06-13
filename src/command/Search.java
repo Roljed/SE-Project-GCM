@@ -5,10 +5,10 @@ import product.City;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import client.ChatClient;
+import chat.ChatClient;
 import command.catalog.Catalog;
 import product.content.Site;
-import user.UserStatus;
+import user.Permission;
 
 
 /**
@@ -26,7 +26,7 @@ public class Search
     }
 
 
-    public Object searchByID(int objectID, ProductType productType, UserStatus userStatus)
+    public Object searchByID(int objectID, ProductType productType, Permission permission)
     {
         String type = productTypeToString(productType);
         assert !type.equals("none");

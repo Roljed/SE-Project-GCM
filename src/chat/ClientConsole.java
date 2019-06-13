@@ -1,11 +1,11 @@
-package client;// "Object Oriented Software Engineering" and is issued under the open-source
+package chat;// "Object Oriented Software Engineering" and is issued under the open-source
 // license found at www.lloseng.com 
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import client.common.ChatIF;
+import chat.common.ChatIF;
 
 /**
  * This class constructs the UI for a chat client.  It implements the
@@ -121,10 +121,10 @@ public class ClientConsole implements ChatIF
   
   /**
    * This method is responsible for the creation of the Client UI.
-   *
-   * @param args[0] The user ID.
-   * @param args[1] The host to connect to.
-   * @param args[2] The port to connect to.
+   * @param args holds:
+   * param args[0] The user ID.
+   * param args[1] The host to connect to.
+   * param args[2] The port to connect to.
    */
   public static void main(String[] args) 
   {

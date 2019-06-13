@@ -1,10 +1,11 @@
 package user.member;
 
 import product.pricing.Purchase;
-import user.UserStatus;
-import client.ChatClient;
+import user.Permission;
+import chat.ChatClient;
 import user.User;
 
+import java.io.IOException;
 import java.util.List;
 
 public class MemberCard extends User
@@ -16,19 +17,48 @@ public class MemberCard extends User
 	protected String nameUser;
 	private int phoneNumber;
 	private String email;
+	protected SignInForm signInForm = null;
 	private List<Purchase> purchaseHistory;
 	private boolean connencted = false;
 
-	public MemberCard(String namePersonal_, String nameUser_, String password_, int phoneNumber_, String email_, ChatClient client){
+	public MemberCard(String namePersonal_, String nameUser_, String password_, int phoneNumber_, String email_, ChatClient client, Permission permission_){
 		super(chat);
 		namePersonal = namePersonal_;
 		password = password_;
 		nameUser = nameUser_;
 		phoneNumber = phoneNumber_;
 		email = email_;
-		userStatus = UserStatus.MEMBER;
+		if (permission_ == null)
+		{
+			permission_ = Permission.MEMBER;
+		}
+		else
+		{
+			permission = permission_;
+		}
 		memberID = NextMemberID++;
 	}
+
+	public MemberCard(String id_, String namePersonal_, String nameUser_, String password_, String phoneNumber_, String email_, ChatClient client, String permission_)
+	{
+		super(chat);
+		memberID = Integer.parseInt(id_);
+		namePersonal = namePersonal_;
+		password = password_;
+		nameUser = nameUser_;
+		phoneNumber = Integer.parseInt(phoneNumber_);
+		email = email_;
+		if (permission_ == null)
+		{
+			permission = Permission.MEMBER;
+		}
+		else
+		{
+			permission = getPermissionFromString(permission_);
+		}
+	}
+
+
 
 	public void buyMap(Purchase purchase){
 		purchaseHistory.add(purchase);
@@ -66,4 +96,9 @@ public class MemberCard extends User
 	public String getEmail() {
 		return email;
 	}
+
+    public String getMemberIDByString()
+	{
+		return Integer.toString(memberID);
+    }
 }

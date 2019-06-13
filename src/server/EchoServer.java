@@ -3,6 +3,8 @@ package server;// This file contains material supporting section 3.7 of the text
 // license found at www.lloseng.com 
 
 import java.io.*;
+import java.sql.SQLException;
+
 import ocsf.server.*;
 import product.City;
 import product.DigitalMap;
@@ -10,7 +12,7 @@ import product.Tour;
 import product.content.Site;
 import user.member.MemberCard;
 import user.member.SignInForm;
-import chat.common.*;
+import chat.common.ChatIF;
 
 /**
  * This class overrides some of the methods in the abstract
@@ -79,6 +81,8 @@ public class EchoServer extends AbstractServer
                 client.sendToClient(ConnectionToDatabase.SignIn(((SignInForm) msg).getUserName(),((SignInForm) msg).getPassword()));
             } catch (IOException e) {
                 e.printStackTrace();
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
         }
         if (msg instanceof MemberCard)
@@ -86,7 +90,7 @@ public class EchoServer extends AbstractServer
             try {
                 client.sendToClient(ConnectionToDatabase.AddClient(((MemberCard) msg).getMemberIDByString(),((MemberCard) msg).getNameUser(), ((MemberCard) msg).getNamePersonal(),
                         ((MemberCard) msg).getPassword(), ((MemberCard) msg).getPhoneNumberByString(), ((MemberCard) msg).getEmail(),
-                        ((MemberCard) msg).getRoleByString()));
+                        ((MemberCard) msg).getPermissionByString()));
             } catch (IOException e) {
                 e.printStackTrace();
             }

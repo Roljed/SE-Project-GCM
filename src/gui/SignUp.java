@@ -14,7 +14,7 @@ import java.io.IOException;
  *  TODO explain class
  * @author Yaad Nahshon
  */
-public class SingUp
+public class SignUp
 {
     @FXML
     public void btn_Back(ActionEvent actionEvent) throws IOException

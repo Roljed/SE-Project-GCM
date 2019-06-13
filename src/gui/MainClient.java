@@ -1,6 +1,6 @@
 package gui;
 
-import client.ClientConsole;
+import chat.ClientConsole;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -79,19 +79,18 @@ public class MainClient extends Application implements Initializable
         ClientConsole chat = new ClientConsole(host, DEFAULT_PORT);
 
         ((Node)actionEvent.getSource()).getScene().getWindow().hide();
-        Stage primaryStage = new Stage();
+        Stage mainScreenStage = new Stage();
         FXMLLoader loader = new FXMLLoader();
-        primaryStage.setTitle("GCM Main Screen");
-        primaryStage.setOnCloseRequest(e ->
+        mainScreenStage.setTitle("GCM Main Screen");
+        mainScreenStage.setOnCloseRequest(e ->
         {
             e.consume();
             System.out.print("");
         });
 
         Pane root = loader.load(getClass().getResource("fxml/main.fxml").openStream());
-//        MainController mainController = (MainController) loader.getController();
-        Scene mainScene = new Scene(root);
-        primaryStage.setScene(mainScene);
-        primaryStage.show();
+        Scene mainScreenScene = new Scene(root);
+        mainScreenStage.setScene(mainScreenScene);
+        mainScreenStage.show();
     }
 }
