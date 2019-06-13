@@ -31,24 +31,24 @@
                </font>
             </Label>
             <TextField fx:id="ipText" layoutX="208.0" layoutY="15.0" prefHeight="25.0" prefWidth="160.0" promptText="Enter IP" />
-            <Label layoutX="80.0" layoutY="114.0" text="Database Username">
-               <font>
-                  <Font size="13.0" />
-               </font>
-            </Label>
-            <TextField fx:id="databaseUsernameText" layoutX="208.0" layoutY="111.0" prefHeight="25.0" prefWidth="160.0" promptText="Enter Database Username" />
-            <Label layoutX="80.0" layoutY="83.0" text="Database Name">
-               <font>
-                  <Font size="13.0" />
-               </font>
-            </Label>
-            <TextField fx:id="databaseNameText" layoutX="208.0" layoutY="80.0" prefHeight="25.0" prefWidth="160.0" promptText="Enter Database Name" />
             <Label layoutX="80.0" layoutY="51.0" text="Port">
                <font>
                   <Font size="13.0" />
                </font>
             </Label>
             <TextField fx:id="portText" layoutX="208.0" layoutY="48.0" prefHeight="25.0" prefWidth="160.0" promptText="Enter Port" />
+            <Label layoutX="80.0" layoutY="83.0" text="Database Name">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
+            <TextField fx:id="databaseNameText" layoutX="208.0" layoutY="80.0" prefHeight="25.0" prefWidth="160.0" promptText="Enter Database Name" />
+            <Label layoutX="80.0" layoutY="114.0" text="Database Username">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
+            <TextField fx:id="databaseUsernameText" layoutX="208.0" layoutY="111.0" prefHeight="25.0" prefWidth="160.0" promptText="Enter Database Username" />
             <Label layoutX="80.0" layoutY="145.0" text="Database Password">
                <font>
                   <Font size="13.0" />

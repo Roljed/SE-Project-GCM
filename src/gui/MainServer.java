@@ -10,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import server.ConnectionToDatabase;
 import server.EchoServer;
 
 import java.io.IOException;
@@ -76,6 +77,12 @@ public class MainServer extends Application
         databaseNameText.setDisable(true);
         databaseUsernameText.setDisable(true);
         databasePasswordText.setDisable(true);
+
+        //TODO Avi's - DONE
+        server.setPort(Integer.parseInt(portText.getText()));
+        ConnectionToDatabase.setDatabaseName(databaseNameText.getText());
+        ConnectionToDatabase.setDatabaseUsername(databaseUsernameText.getText());
+        ConnectionToDatabase.setDatabasePassword(databasePasswordText.getText());
 
         try {
             server.listen();
