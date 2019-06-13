@@ -1,6 +1,8 @@
 package gui;
 
+import chat.ChatClient;
 import chat.ClientConsole;
+import chat.common.ChatIF;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,8 +22,9 @@ import java.util.ResourceBundle;
  *  Main class that implements the client side
  * @author Yaad Nahshon
  */
-public class MainClient extends Application implements Initializable
+public class MainClient extends Application implements Initializable, ChatIF
 {
+    private static ChatClient chat = null;
     final public static int DEFAULT_PORT = 5555;
     private static String host = "";
 
@@ -42,8 +45,13 @@ public class MainClient extends Application implements Initializable
             host = "localhost";
         }
         System.out.println("Host: " + host);
-        //  chat.accept();  //Wait for console data
+        //  m_chat.accept();  //Wait for console data
         launch(args);
+    }
+
+    public static ChatClient getChat()
+    {
+        return chat;
     }
 
     @Override
@@ -76,7 +84,7 @@ public class MainClient extends Application implements Initializable
     public void submitButton(ActionEvent actionEvent) throws Exception
     {
         host = serverIPTextField.getText();
-        ClientConsole chat = new ClientConsole(host, DEFAULT_PORT);
+        this.chat = new ChatClient(host, DEFAULT_PORT, this);
 
         ((Node)actionEvent.getSource()).getScene().getWindow().hide();
         Stage mainScreenStage = new Stage();
@@ -93,4 +101,7 @@ public class MainClient extends Application implements Initializable
         mainScreenStage.setScene(mainScreenScene);
         mainScreenStage.show();
     }
+
+    @Override
+    public void display(String message) {}
 }

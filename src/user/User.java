@@ -8,17 +8,18 @@ import chat.ChatClient;
 import user.member.SignInForm;
 import user.member.SignUpForm;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.Scanner;
 
 import static server.ClientServerStatus.*;
 import static user.Permission.*;
 
 
-public class User
+public class User implements Serializable
 {
 	public boolean registeredUser = false;
 	private Search search = null;
-	protected static ChatClient chat;
+	protected static ChatClient m_chat;
 	protected Permission permission = Permission.USER;
 
 	protected ClientServerStatus clientServerStatus = ClientServerStatus.NOT_EXIST;
@@ -28,18 +29,13 @@ public class User
 
 	public User(ChatClient chat_)
 	{
-		chat = chat_;
+		m_chat = chat_;
 	}
 
-	public Object signIn(String username, String password)
+	public Object signIn(ChatClient chat, String username, String password)
 	{
 		signInForm = new SignInForm(username,password);
-		try {
-			chat.sendToServer(signInForm);
-		}
-		catch(IOException ex) {
-			System.exit(2);
-		}
+		chat.handleMessageFromClientUI(signInForm);
 		return chat.recieveObjectFromServer();
 	}
 
@@ -55,13 +51,13 @@ public class User
 		int phoneNumber = Integer.parseInt(in.nextLine());
 		System.out.println("Type your email:");
 		String email = in.nextLine();
-		SignUpForm signUpForm = new SignUpForm(name, username, password, phoneNumber, email, chat);
+		SignUpForm signUpForm = new SignUpForm(name, username, password, phoneNumber, email, m_chat);
 		MemberCard clientCard = signUpForm.createMemberCard();
 		try {
-			chat.sendToServer(clientCard);
+			m_chat.sendToServer(clientCard);
 		}
 		catch(IOException ex) {}
-		boolean res = (boolean)chat.recieveObjectFromServer();
+		boolean res = (boolean) m_chat.recieveObjectFromServer();
 		if(res){
 			System.out.println("You are signed up now. Please sign in using your username and password!");
 		}
@@ -74,7 +70,7 @@ public class User
 	public void viewCatalog()
 	{
 		String request;
-		search = new Search(chat);
+		search = new Search(m_chat);
 		while(true)
 		{
 			System.out.println("Please type which product you are searching:");

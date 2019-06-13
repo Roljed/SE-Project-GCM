@@ -113,11 +113,14 @@ public abstract class AbstractClient implements Runnable
     // All three of the above must be closed when there is a failure
     // to create any of them
     {
+      System.out.println("Failed to open connection");
       try
       {
         closeAll();
       }
-      catch (Exception exc) { }
+      catch (Exception exc) {
+        System.out.println("Failed to close all connections");
+      }
 
       throw ex; // Rethrow the exception.
     }
@@ -136,10 +139,15 @@ public abstract class AbstractClient implements Runnable
    */
   final public void sendToServer(Object msg) throws IOException
   {
+    System.out.println(msg);
     if (clientSocket == null || output == null)
-      throw new SocketException("socket does not exist");
+      throw new SocketException("Error! Socket does not exist");
 
-    output.writeObject(msg);
+    try {
+      output.writeObject(msg);
+    } catch (IOException ex) {
+      System.out.println("Error in write object!");
+    }
   }
 
   /**

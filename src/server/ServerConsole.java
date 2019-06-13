@@ -6,8 +6,8 @@ import java.io.*;
 import chat.common.ChatIF;
 
 /**
- * This class constructs the UI for a chat server.  It implements the
- * chat interface in order to activate the display() method.
+ * This class constructs the UI for a m_chat server.  It implements the
+ * m_chat interface in order to activate the display() method.
  *
  * @author Fran&ccedil;ois B&eacute;langer
  * @author Dr Timothy C. Lethbridge  
