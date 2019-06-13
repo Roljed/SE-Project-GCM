@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,9 +16,7 @@ import product.Tour;
 import product.content.Content;
 import product.content.Location;
 import product.content.Site;
-import product.content.Site.Classification;
 import product.pricing.MapCost;
-import product.content.Site;
 
 
 /**
@@ -31,11 +28,42 @@ import product.content.Site;
 public class ConnectionToDatabase
 {
 
+    static private String databaseName = "xdhLgvyRnN";
+    static private String databaseUsername = "xdhLgvyRnN";
+    static private String databasePassword = "uNtE7bXJvV";
+    static private final String DB_URL = "jdbc:mysql://remotemysql.com/"+ databaseName + "?useSSL=false";
     static private final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
-    static private final String DB = "xdhLgvyRnN";
-    static private final String DB_URL = "jdbc:mysql://remotemysql.com/"+ DB + "?useSSL=false";
-    static private final String USER = "xdhLgvyRnN";
-    static private final String PASS = "uNtE7bXJvV";
+
+    public static String getDatabaseName()
+    {
+        return databaseName;
+    }
+
+    public static void setDatabaseName(String databaseName)
+    {
+        ConnectionToDatabase.databaseName = databaseName;
+    }
+
+    public static String getDatabaseUsername()
+    {
+        return databaseUsername;
+    }
+
+    public static void setDatabaseUsername(String databaseUsername)
+    {
+        ConnectionToDatabase.databaseUsername = databaseUsername;
+    }
+
+    public static String getDatabasePassword()
+    {
+        return databasePassword;
+    }
+
+    public static void setDatabasePassword(String databasePassword)
+    {
+        ConnectionToDatabase.databasePassword = databasePassword;
+    }
+
 
     public static Connection connectToDatabase()
     {
@@ -48,7 +76,7 @@ public class ConnectionToDatabase
 
         try
         {
-            con = DriverManager.getConnection(DB_URL, USER, PASS);
+            con = DriverManager.getConnection(DB_URL, databaseUsername, databasePassword);
 
         } catch (SQLException ex)
         {
