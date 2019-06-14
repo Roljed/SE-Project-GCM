@@ -54,27 +54,17 @@ public class User implements Serializable
 		}
 	}
 
-	public void viewCatalog()
+	public Catalog viewCatalog(String request, int searchType)
 	{
-		String request = "New Town";
 		search = new Search(m_chat);
-		while(true)
-		{
-			System.out.println("Please type which product you are searching:");
-			System.out.println("Please type the name of the city or the content that you are interested in:");
-
-			Catalog resultCatalog = search.searchByCityName(request);
-			if(resultCatalog == null)
-			{
-				resultCatalog = search.searchBySite(request);
-				if(resultCatalog == null){
-					System.out.println("Your request is not found. Please try again.");
-					continue;
-				}
-				resultCatalog.viewCatalog();
-			}
-			break;
+		Catalog resultCatalog = null;
+		switch(searchType){
+			case 1: resultCatalog = search.searchByCityName(request); break;
+			case 2: resultCatalog = search.searchBySite(request); break;
+			case 3: resultCatalog = search.searchByDescription(request); break;
+			default: break;
 		}
+		return resultCatalog;
 	}
 
 	public SignUpForm getSignUpForm()

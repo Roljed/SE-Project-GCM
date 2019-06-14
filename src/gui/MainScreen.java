@@ -61,11 +61,10 @@ public class MainScreen
 
 
     @FXML
-    public void searchButton(ActionEvent actionEvent)
+    public void searchButton(ActionEvent actionEvent) throws IOException
     {
         ((Node)actionEvent.getSource()).getScene().getWindow().hide();
         Stage searchStage = new Stage();
-        FXMLLoader loader = new FXMLLoader();
 
         searchStage.setTitle("Search");
         searchStage.setOnCloseRequest(e -> {
@@ -73,11 +72,10 @@ public class MainScreen
             System.out.print("Main screen closed. Moving to Search screen.");
         });
 
-
-//        Pane root = loader.load(getClass().getResource("fxml/search.fxml").openStream()); // TODO Daniel's Search implementation
-//        Scene SearchScene = new Scene(root);
-//        searchStage.setScene(SearchScene);
-//        searchStage.show();
+        Pane root = FXMLLoader.load(getClass().getResource("fxml/search.fxml"));
+        Scene SearchScene = new Scene(root);
+        searchStage.setScene(SearchScene);
+        searchStage.show();
     }
 
     @FXML
