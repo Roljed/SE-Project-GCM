@@ -80,8 +80,10 @@ public class EchoServer extends AbstractServer
             try {
                 client.sendToClient(ConnectionToDatabase.SignIn(((SignInForm) msg).getUserName(),((SignInForm) msg).getPassword()));
             } catch (IOException e) {
+                System.out.println("Error! EchoServer --> handleMessageFromClient --> SignInForm --> IOException");
                 e.printStackTrace();
             } catch (SQLException e) {
+                System.out.println("Error! EchoServer --> handleMessageFromClient --> SignInForm --> SQLException");
                 e.printStackTrace();
             }
         }

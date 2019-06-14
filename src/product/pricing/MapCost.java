@@ -60,7 +60,7 @@ public class MapCost implements Serializable
 
     public boolean setPrice(double price, String approvalName, Permission permission)
     {
-        if (permission == Permission.MANAGER)
+        if (permission == Permission.CONTENT_MANAGER)
         {
         	this.price=price;
         	this.lastApproval=approvalName;

@@ -82,7 +82,7 @@ public class ChatClient extends AbstractClient
   public void handleMessageFromServer(Object msg) 
   {
     MainClient.result = msg;
-  }
+  } // UPDATED TO RECEIVE OBJECTS
   
   /** ADDED METHOD!!!!!!!
    * This method handles all data that comes in from the server.

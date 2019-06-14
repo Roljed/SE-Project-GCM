@@ -10,9 +10,9 @@ import java.io.Serializable;
 public class ContentManager extends Manager implements Serializable
 {
 
-	public ContentManager(String namePersonal_, String nameUser_, String password_, int phoneNumber_, String email_, ChatClient chat_)
+	public ContentManager(String namePersonal_, String nameUser_, String password_, int phoneNumber_, String email_, Permission permission_, ChatClient chat_)
 	{
-		super(namePersonal_,nameUser_,password_,phoneNumber_,email_,chat_);
+		super(namePersonal_,nameUser_,password_,phoneNumber_,email_, permission_,chat_);
 		permission = Permission.CONTENT_MANAGER;
 	}
 

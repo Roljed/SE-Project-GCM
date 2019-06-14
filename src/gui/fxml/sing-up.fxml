@@ -10,9 +10,9 @@
 
 <AnchorPane prefHeight="300.0" prefWidth="260.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.SignUp">
    <children>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="98.0" layoutY="39.0" text="Sign Up" textAlignment="CENTER" AnchorPane.bottomAnchor="240.0" AnchorPane.topAnchor="37.0">
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="88.0" layoutY="32.0" text="Sign Up" textAlignment="CENTER" AnchorPane.bottomAnchor="245.0" AnchorPane.topAnchor="32.0">
          <font>
-            <Font name="Gisha" size="18.0" />
+            <Font name="Gisha" size="24.0" />
          </font></Label>
       <SplitPane dividerPositions="0.4192139737991266" layoutX="15.0" layoutY="87.0" prefHeight="160.0" prefWidth="231.0">
         <items>

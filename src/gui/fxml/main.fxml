@@ -10,7 +10,7 @@
    <children>
       <Label text="Welcome To GCM" textAlignment="CENTER">
          <font>
-            <Font name="Berlin Sans FB Demi Bold" size="24.0" />
+            <Font name="Gisha" size="24.0" />
          </font>
          <VBox.margin>
             <Insets />
@@ -18,7 +18,7 @@
       </Label>
       <Label text="World Seller of Digital Maps, Interactive Cities And Vacation Tours" textAlignment="CENTER" wrapText="true">
          <font>
-            <Font name="Arial Italic" size="10.0" />
+            <Font name="Arial Italic" size="11.0" />
          </font>
          <VBox.margin>
             <Insets bottom="20.0" top="5.0" />

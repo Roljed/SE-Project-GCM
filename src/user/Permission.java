@@ -8,7 +8,7 @@ public enum Permission implements Serializable
     MEMBER,
     WORKER,
     CONTENT_WORKER,
-    MANAGER,
+    COMPANY_MANAGER,
     CONTENT_MANAGER,
     EDITOR,
 }

@@ -104,8 +104,41 @@ public class ConnectionToDatabase
             rs=stmt.executeQuery("SELECT SignIn FROM User_Database WHERE UserName = '" + nameUser + "'");
             if ((!rs.next()) || (rs.getString("SignIn").equals("YES")))
                 return ClientServerStatus.CONNECTED;
-            stmt.executeUpdate("UPDATE User_Database SET SignIn = 'YES' WHERE UserName='"+ nameUser +"'");
-            memberCard=new MemberCard(rs.getString("ID"), rs.getString("PersonalName"), null, null, null, null, null,  rs.getString("Permission"));
+            rs=stmt.executeQuery("SELECT ID FROM User_Database WHERE UserName = '" + nameUser + "'");
+            if (!rs.next())
+            {
+                return null;
+            }
+            String ID=rs.getString("ID");
+            rs=stmt.executeQuery("SELECT PersonalName FROM User_Database WHERE UserName = '" + nameUser + "'");
+            if (!rs.next())
+            {
+                return null;
+            }
+            String pn=rs.getString("PersonalName");
+            rs=stmt.executeQuery("SELECT Permission FROM User_Database WHERE UserName = '" + nameUser + "'");
+            if (!rs.next())
+            {
+                return null;
+            }
+            String per=rs.getString("Permission");
+            rs=stmt.executeQuery("SELECT Permission FROM User_Database WHERE UserName = '" + nameUser + "'");
+            if (!rs.next())
+            {
+                return null;
+            }
+            rs=stmt.executeQuery("SELECT PhoneNumber FROM User_Database WHERE UserName = '" + nameUser + "'");
+            if (!rs.next())
+            {
+                return null;
+            }
+            String phone=rs.getString("PhoneNumber");
+            System.out.println(ID + " " + pn + " " + per);
+            memberCard = new MemberCard(ID, pn, null, null, phone, null, null,per);
+            if (pn.equals("Tester") == false)
+            {
+                stmt.executeUpdate("UPDATE User_Database SET SignIn = 'YES' WHERE UserName='"+ nameUser +"'");
+            }
 
             if (stmt != null) {
                 try {
@@ -115,7 +148,7 @@ public class ConnectionToDatabase
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return  memberCard;
+        return memberCard;
     }
 
     public static boolean SignOut (String nameUser)
