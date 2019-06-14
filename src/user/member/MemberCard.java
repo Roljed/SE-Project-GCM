@@ -100,4 +100,30 @@ public class MemberCard extends User implements Serializable
 	{
 		return Integer.toString(memberID);
     }
+
+
+	public void setPassword(String password)
+	{
+		this.password = password;
+	}
+
+	public void setnameUser(String nameUser)
+	{
+		this.nameUser = nameUser;
+	}
+
+	public void setPhoneNumber(String phoneNumber)
+	{
+		this.phoneNumber = Integer.parseInt(phoneNumber);
+	}
+
+	public void setNamePersonal(String namePersonal)
+	{
+		this.namePersonal = namePersonal;
+	}
+
+	public void setEmail(String email)
+	{
+		this.email = email;
+	}
 }
