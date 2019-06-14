@@ -67,6 +67,16 @@ public class MainServer extends Application
         primaryStage.show();
     }
 
+    // TODO DELETE before submission
+    public void initialize()
+    {
+        ipText.setText("127.0.0.1");
+        portText.setText("5555");
+        databaseNameText.setText("xdhLgvyRnN");
+        databaseUsernameText.setText("xdhLgvyRnN");
+        databasePasswordText.setText("uNtE7bXJvV");
+    }
+
     public void connectAction(ActionEvent actionEvent)
     {
         connectButton.setDisable(true);
@@ -78,7 +88,6 @@ public class MainServer extends Application
         databaseUsernameText.setDisable(true);
         databasePasswordText.setDisable(true);
 
-        //TODO Avi's - DONE
         server.setPort(Integer.parseInt(portText.getText()));
         ConnectionToDatabase.setDatabaseName(databaseNameText.getText());
         ConnectionToDatabase.setDatabaseUsername(databaseUsernameText.getText());

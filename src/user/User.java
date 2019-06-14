@@ -9,7 +9,6 @@ import user.member.SignInForm;
 import user.member.SignUpForm;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.Scanner;
 
 import static server.ClientServerStatus.*;
 import static user.Permission.*;
@@ -23,7 +22,6 @@ public class User implements Serializable
 	protected Permission permission = Permission.USER;
 
 	protected ClientServerStatus clientServerStatus = ClientServerStatus.NOT_EXIST;
-	private Scanner in = new Scanner(System.in);
 	private SignUpForm signUpForm;
 	private SignInForm signInForm;
 
@@ -38,18 +36,8 @@ public class User implements Serializable
 		chat.handleMessageFromClientUI(signInForm);
 	}
 
-	public void signUp()
+	public void signUp(String name, String username, String password, int phoneNumber, String email)
 	{
-		System.out.println("Type your name:");
-		String name = in.nextLine();
-		System.out.println("Type your username:");
-		String username = in.nextLine();
-		System.out.println("Type your password:");
-		String password = in.nextLine();
-		System.out.println("Type your phone number:");
-		int phoneNumber = Integer.parseInt(in.nextLine());
-		System.out.println("Type your email:");
-		String email = in.nextLine();
 		SignUpForm signUpForm = new SignUpForm(name, username, password, phoneNumber, email, m_chat);
 		MemberCard clientCard = signUpForm.createMemberCard();
 		try {
@@ -58,7 +46,7 @@ public class User implements Serializable
 		catch(IOException ex) {}
 		boolean res = (boolean) m_chat.receiveObjectFromServer();
 		if(res){
-			System.out.println("You are signed up now. Please sign in using your username and password!");
+			System.out.println("You are signed up now. Please sign in using your personalName and password!");
 		}
 		else
 		{
@@ -68,13 +56,12 @@ public class User implements Serializable
 
 	public void viewCatalog()
 	{
-		String request;
+		String request = "New Town";
 		search = new Search(m_chat);
 		while(true)
 		{
 			System.out.println("Please type which product you are searching:");
 			System.out.println("Please type the name of the city or the content that you are interested in:");
-			request = in.nextLine();
 
 			Catalog resultCatalog = search.searchByCityName(request);
 			if(resultCatalog == null)
@@ -106,7 +93,7 @@ public class User implements Serializable
 			case MEMBER: return "MEMBER";
 			case WORKER: return "WORKER";
 			case CONTENT_WORKER: return "CONTENT_WORKER";
-			case MANAGER: return "MANAGER";
+			case COMPANY_MANAGER: return "COMPANY_MANAGER";
 			case CONTENT_MANAGER: return "CONTENT_MANAGER";
 			default: return "USER";
 		}
@@ -118,7 +105,7 @@ public class User implements Serializable
 			case "MEMBER": return MEMBER;
 			case "WORKER": return WORKER;
 			case "CONTENT_WORKER": return CONTENT_WORKER;
-			case "MANAGER": return MANAGER;
+			case "COMPANY_MANAGER": return COMPANY_MANAGER;
 			case "CONTENT_MANAGER": return CONTENT_MANAGER;
 			default: return USER;
 		}

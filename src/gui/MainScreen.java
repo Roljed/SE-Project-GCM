@@ -21,6 +21,7 @@ public class MainScreen
     @FXML
     public void signInButton(ActionEvent actionEvent) throws IOException
     {
+//        MainClient.sceneStack.push(((Node)actionEvent.getSource()).getScene());   TODO after all scenes are build
         ((Node)actionEvent.getSource()).getScene().getWindow().hide();
         Stage signInStage = new Stage();
         FXMLLoader loader = new FXMLLoader();
@@ -30,7 +31,6 @@ public class MainScreen
             e.consume();
             System.out.print("Main screen closed. Moving to Sign In screen.");
         });
-
 
         Pane root = loader.load(getClass().getResource("fxml/sign-in.fxml").openStream());
         Scene signInScene = new Scene(root);

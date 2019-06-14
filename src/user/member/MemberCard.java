@@ -22,7 +22,7 @@ public class MemberCard extends User implements Serializable
 	private boolean connencted = false;
 
 	public MemberCard(String namePersonal_, String nameUser_, String password_, int phoneNumber_, String email_, ChatClient client, Permission permission_){
-		super(m_chat);
+		super(client);
 		namePersonal = namePersonal_;
 		password = password_;
 		nameUser = nameUser_;
@@ -57,7 +57,6 @@ public class MemberCard extends User implements Serializable
 			permission = getPermissionFromString(permission_);
 		}
 	}
-
 
 
 	public void buyMap(Purchase purchase){

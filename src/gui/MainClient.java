@@ -12,9 +12,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import user.Permission;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Stack;
 
 
 /**
@@ -23,10 +25,13 @@ import java.util.ResourceBundle;
  */
 public class MainClient extends Application implements Initializable, ChatIF
 {
+    public static String personalName;
+    public static Permission permission;
     private static ChatClient chat = null;
     final public static int DEFAULT_PORT = 5555;
     private static String host = "";
 
+//    public static Stack<Scene> sceneStack = new Stack<>(); TODO after all scenes are build
     public static Object result;    // holds server return message
 
     @FXML
@@ -72,14 +77,11 @@ public class MainClient extends Application implements Initializable, ChatIF
     {
         primaryStage.setResizable(false);
         primaryStage.setTitle("Connection Configuration");
-        Pane root = FXMLLoader.load(getClass().getResource("fxml/client-connection.fxml"));    //TODO change root fxml
+        Pane root = FXMLLoader.load(getClass().getResource("fxml/client-connection.fxml"));
         Scene scene = new Scene(root);
+        primaryStage.setTitle("GCM Main");
         primaryStage.setScene(scene);
         primaryStage.show();
-
-//        primaryStage.setTitle("GCM Main");
-//        primaryStage.setScene(new Scene(root));
-//        primaryStage.show();
     }
 
     public void submitButton(ActionEvent actionEvent) throws Exception
