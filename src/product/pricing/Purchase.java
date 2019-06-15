@@ -22,7 +22,7 @@ public class Purchase implements Serializable
 	private int userID;
 	private int purchaseID;
 	private static int purchaseIDNext = 0;
-	private LocalDate dateOfPurchase;
+	private Date dateOfPurchase;
 	private int purchasedCityID;
 	private int[] purchasedMapID;
 	private double purchasedCost;
@@ -34,14 +34,14 @@ public class Purchase implements Serializable
 		this.userID = userID;
 		this.purchasedCityID = purchasedCityID;
 		purchaseID = purchaseIDNext++;
-		this.dateOfPurchase = LocalDate.now();
+		this.dateOfPurchase = new Date();
 		this.purchasedMapID=purchasedMapID;
 		this.purchasedCost=purchasedCost;
 		this.purchaseType = purchaseType;
 		this.digitalMap=new ArrayList<DigitalMap>();
 	}
 
-	public Purchase(int userID, int purchaseID, LocalDate dateOfPurchase, int purchasedCityID, int[] purchasedMapID, double purchasedCost, String purchaseType)
+	public Purchase(int userID, int purchaseID, Date dateOfPurchase, int purchasedCityID, int[] purchasedMapID, double purchasedCost, String purchaseType)
 	{
 		this.userID = userID;
 		this.purchaseID = purchaseID;
@@ -87,7 +87,7 @@ public class Purchase implements Serializable
 		return String.valueOf(purchasedCost);
 	}
 
-	public LocalDate getDateOfPurchase() {
+	public Date getDateOfPurchase() {
 		return dateOfPurchase;
 	}
 

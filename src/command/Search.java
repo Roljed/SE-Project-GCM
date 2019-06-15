@@ -1,5 +1,6 @@
 package command;
 
+import gui.MainClient;
 import product.ProductType;
 import product.City;
 import java.io.IOException;
@@ -45,7 +46,7 @@ public class Search implements Serializable
     {
         try {
             chat.sendToServer("#Search city name " + cityName);
-            Object obj = chat.receiveObjectFromServer();
+            Object obj = MainClient.result;
             if (obj instanceof Catalog)
             {
                 return (Catalog)obj;
@@ -95,7 +96,6 @@ public class Search implements Serializable
                 cities.add((City)obj);
             }
             catalog = new Catalog(null,null,null,cities);
-            catalog.viewCatalog();
         }
         catch(IOException ex) {
             return;

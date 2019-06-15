@@ -3,6 +3,7 @@ package product;
 import java.io.Serializable;
 import java.util.List;
 import product.content.Content;
+import product.content.Site;
 import user.Permission;
 
 /**
@@ -16,10 +17,10 @@ public class Tour implements Serializable
     private int tourID;
     private String tourName;
     private String tourDescription;
-    private List<Content> tourSequence;
+    private List<Site> tourSequence;
     private double tourTotalDuration;
 
-    public Tour(int tourID, String tourName, String tourDescription, List<Content> tourSequence) {
+    public Tour(int tourID, String tourName, String tourDescription, List<Site> tourSequence) {
         this.tourID = tourID;
         this.tourName = tourName;
         this.tourDescription = tourDescription;
@@ -27,7 +28,7 @@ public class Tour implements Serializable
         this.tourTotalDuration = calculateTourDuration(tourSequence);
     }
 
-    public Tour(int tourID, String tourName, String tourDescription, List<Content> tourSequence, double tourTotalDuration) {
+    public Tour(int tourID, String tourName, String tourDescription, List<Site> tourSequence, double tourTotalDuration) {
         this.tourID = tourID;
         this.tourName = tourName;
         this.tourDescription = tourDescription;
@@ -35,12 +36,12 @@ public class Tour implements Serializable
         this.tourTotalDuration = tourTotalDuration;
     }
 
-    private double calculateTourDuration(List<Content> tourSequence)
+    private double calculateTourDuration(List<Site> tourSequence)
     {
         double duration = 0;
-        for (Content content : tourSequence)
+        for (Site site : tourSequence)
         {
-            duration += content.getContentDuration();
+            duration += site.getContentDuration();
         }
         return duration;
     }
@@ -73,11 +74,11 @@ public class Tour implements Serializable
         this.tourDescription = tourDescription;
     }
 
-    public List<Content> getTourSequence() {
+    public List<Site> getTourSequence() {
         return tourSequence;
     }
 
-    public void setTourSequence(List<Content> tourSequence) {
+    public void setTourSequence(List<Site> tourSequence) {
         this.tourSequence = tourSequence;
     }
 
@@ -93,18 +94,18 @@ public class Tour implements Serializable
         this.tourTotalDuration = tourTotalDuration;
     }
 
-    public void out(Permission permission)
-    {
-        if (permission != null && (permission != Permission.USER && permission != Permission.MEMBER))
-        {
-            System.out.println("\tID: " + tourID);
-        }
-        System.out.println("\tTour Name: " + tourName);
-        System.out.println("\tDescription: " + tourDescription);
-        System.out.println("\tDuration: " + tourTotalDuration);
-        for (Content content : tourSequence)
-        {
-            content.out(permission);
-        }
-    }
+//    public void out(Permission permission)
+//    {
+//        if (permission != null && (permission != Permission.USER && permission != Permission.MEMBER))
+//        {
+//            System.out.println("\tID: " + tourID);
+//        }
+//        System.out.println("\tTour Name: " + tourName);
+//        System.out.println("\tDescription: " + tourDescription);
+//        System.out.println("\tDuration: " + tourTotalDuration);
+//        for (Content content : tourSequence)
+//        {
+//            content.out(permission);
+//        }
+//    }
 }

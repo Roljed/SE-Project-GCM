@@ -18,18 +18,6 @@ public class PublishVersion extends Catalog implements Serializable
         super(contents, digitalMaps, tours, cities);
     }
 
-    public void viewCatalog()
-    {
-        if (versionApproved == false)
-        {
-            System.out.println("This version not approved and will not be displayed");
-        }
-        else
-        {
-            super.viewCatalog();
-        }
-    }
-
     public void approveVersion()
     {
         this.versionApproved = true;

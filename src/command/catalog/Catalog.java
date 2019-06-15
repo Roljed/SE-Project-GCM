@@ -25,14 +25,8 @@ public class Catalog implements Serializable
     private List<Tour> tours;
     private List<City> cities;
 
-    private boolean empty = false;
-
     public Catalog(List<Site> contents, List<DigitalMap> digitalMaps, List<Tour> tours, List<City> cities)
     {
-        if (!contents.isEmpty() || !digitalMaps.isEmpty() || !tours.isEmpty() || !cities.isEmpty())
-        {
-            empty = true;
-        }
         this.contents = contents;
         this.digitalMaps = digitalMaps;
         this.tours = tours;
@@ -71,63 +65,55 @@ public class Catalog implements Serializable
         this.cities = cities;
     }
 
-    public boolean isEmpty() {
-        return empty;
-    }
-
-    public void setEmpty(boolean empty) {
-        this.empty = empty;
-    }
-
     public void setPermission(Permission permission)
     {
         this.permission = permission;
     }
 
-    public void viewCatalog()
-    {
-        if (contents.isEmpty() == false)
-        {
-            System.out.println("List of Contents:");
-            for (Content content : contents)
-            {
-                content.out(this.permission);
-                System.out.println("********************");
-            }
-            System.out.println();
-        }
-
-        if (digitalMaps.isEmpty() == false)
-        {
-            System.out.println("List of Maps:");
-            for (DigitalMap map : digitalMaps)
-            {
-                map.out(this.permission);
-                System.out.println("********************");
-            }
-            System.out.println();
-        }
-
-        if (tours.isEmpty() == false)
-        {
-            System.out.println("List of Tours:");
-            for (Tour tour : tours)
-            {
-                tour.out(this.permission);
-                System.out.println("********************");
-            }
-            System.out.println();
-        }
-
-        if (cities.isEmpty() == false)
-        {
-            System.out.println("List of Cities:");
-            for (City city : cities)
-            {
-                city.out(this.permission);
-                System.out.println("********************");
-            }
-            System.out.println();
-        }
-    }
+//    public void viewCatalog()
+//    {
+//        if (contents.isEmpty() == false)
+//        {
+//            System.out.println("List of Contents:");
+//            for (Content content : contents)
+//            {
+//                content.out(this.permission);
+//                System.out.println("********************");
+//            }
+//            System.out.println();
+//        }
+//
+//        if (digitalMaps.isEmpty() == false)
+//        {
+//            System.out.println("List of Maps:");
+//            for (DigitalMap map : digitalMaps)
+//            {
+//                map.out(this.permission);
+//                System.out.println("********************");
+//            }
+//            System.out.println();
+//        }
+//
+//        if (tours.isEmpty() == false)
+//        {
+//            System.out.println("List of Tours:");
+//            for (Tour tour : tours)
+//            {
+//                tour.out(this.permission);
+//                System.out.println("********************");
+//            }
+//            System.out.println();
+//        }
+//
+//        if (cities.isEmpty() == false)
+//        {
+//            System.out.println("List of Cities:");
+//            for (City city : cities)
+//            {
+//                city.out(this.permission);
+//                System.out.println("********************");
+//            }
+//            System.out.println();
+//        }
+//    }
 }

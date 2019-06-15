@@ -5,7 +5,6 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.*;
 
@@ -142,7 +141,6 @@ public class ConnectionToDatabase
 
                 // Parse to LocalDate
                 Date date=rs.getDate("DateOfPurchase");
-                LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
                 rs=stmt.executeQuery("SELECT Cost FROM Purchase_Database WHERE ID = '" + s + "'");
                 if (!rs.next()){break;}
@@ -161,7 +159,7 @@ public class ConnectionToDatabase
                 int i=0;
                 for (String m : tmpMaps)
                     purchasedMapID[i++]=Integer.parseInt(m);
-                purchaseHistory.add(new Purchase(Integer.parseInt(ID), id, localDate, purchasedCityID, purchasedMapID, cost, type));
+                purchaseHistory.add(new Purchase(Integer.parseInt(ID), id, date, purchasedCityID, purchasedMapID, cost, type));
             }
             memberCard = new MemberCard(ID, pn, un, ps, phone, email, null,per);
             memberCard.setPurchaseHistory(purchaseHistory);
@@ -433,7 +431,7 @@ public class ConnectionToDatabase
         }
     }
 
-    public static void UpdateTour(String ID,String name,String description,String duration,List<Content> tourSequence)
+    public static void UpdateTour(String ID,String name,String description,String duration,List<Site> tourSequence)
     {
         Connection conn= connectToDatabase();
         Statement stmt = null;
@@ -448,7 +446,7 @@ public class ConnectionToDatabase
             stmt.executeUpdate("UPDATE Tour_Database SET Description = '" + description + "' WHERE ID='"+ ID +"'");
             stmt.executeUpdate("UPDATE Tour_Database SET Duration = '" + duration + "' WHERE ID='"+ ID +"'");
             String temp = "";
-            for(Content content : tourSequence){
+            for(Site content : tourSequence){
                 temp+=content.getContendIDToString();
                 temp+=",";
             }
@@ -481,25 +479,32 @@ public class ConnectionToDatabase
         try
         {
             stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
-            ResultSet rs = stmt.executeQuery("SELECT ID FROM City_Database WHERE Name = '" + cityName + "'");
-            if(!rs.next()) return null;
+            ResultSet rs = stmt.executeQuery("SELECT Name FROM City_Database WHERE Name = '" + cityName + "'");
+            if(!rs.next())  return null;
             List<City> cityList = new ArrayList<City>();
             HashMap<Integer, DigitalMap> cityMaps=new HashMap<Integer, DigitalMap>();
             HashMap<Integer, Tour> cityTours=new HashMap<Integer, Tour>();
             rs = stmt.executeQuery("SELECT Maps FROM City_Database WHERE Name = '" + cityName + "'");
+            if(!rs.next()) return null;
             String[] mapsString = rs.getString("Maps").split(",");
             rs = stmt.executeQuery("SELECT Tours FROM City_Database WHERE Name = '" + cityName + "'");
+            if(!rs.next()) return null;
             String[] toursString = rs.getString("Tours").split(",");
-
             for(String m : mapsString)
             {
-                List<DigitalMap> temp_digitalMap_lsit = DigitalMapByID(m).getDigitalMaps();
-                for (DigitalMap temp_map : temp_digitalMap_lsit)
+                List<DigitalMap> temp_digitalMap_list = DigitalMapByID(m).getDigitalMaps();
+                if (temp_digitalMap_list != null)
                 {
-                    cityMaps.put(temp_map.getDigitalMapID() ,temp_map);
+                    for (DigitalMap temp_map : temp_digitalMap_list)
+                    {
+                        cityMaps.put(temp_map.getDigitalMapID() ,temp_map);
+                    }
                 }
-            }
+                else {
+                    cityMaps = null;
+                }
 
+            }
             for(String t: toursString)
             {
                 List<Tour> temp_tour_list = TourByID(t).getTours();
@@ -522,14 +527,14 @@ public class ConnectionToDatabase
             int Version=rs.getInt("Version");
             rs = stmt.executeQuery("SELECT LastUpdatedDate FROM City_Database WHERE Name = '" + cityName + "'");
             if(!rs.next()) return null;
-            Date date=rs.getDate("Date");
-            LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-            cityList.add(new City(id,name,cityMaps,cityTours,price,Version,localDate));
+            Date date = rs.getDate("LastUpdatedDate");
+            cityList.add(new City(id,name,cityMaps,cityTours,price,Version, date));
+
             if(cityList.isEmpty()) {
                 return null;
             }
             Catalog catalog = new Catalog(null,null,null,cityList);
-            catalog.viewCatalog();
+            System.out.println("Done");
             return catalog;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -572,7 +577,6 @@ public class ConnectionToDatabase
                 return null;
             }
             Catalog catalog = new Catalog(SiteList,null,null,null);
-            catalog.viewCatalog();
             return catalog;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -615,7 +619,6 @@ public class ConnectionToDatabase
                 return null;
             }
             Catalog catalog = new Catalog(SiteList,null,null,null);
-            catalog.viewCatalog();
             return catalog;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -647,7 +650,7 @@ public class ConnectionToDatabase
 
             for(String c: contents)
             {
-                List<Site> temp_site_list = Objects.requireNonNull(SiteByID(c)).getContents();
+                List<Site> temp_site_list = (SiteByID(c)).getContents();
                for (Site site : temp_site_list)
                {
                     digitalMapContents.put(site.getContendID(),site);
@@ -667,7 +670,6 @@ public class ConnectionToDatabase
                 return null;
             }
             Catalog catalog = new Catalog(null,DigitalMapList,null,null);
-            catalog.viewCatalog();
             return catalog;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -695,11 +697,18 @@ public class ConnectionToDatabase
             String[] toursString = rs.getString("Tours").split(",");
             for(String m : mapsString)
             {
-                List<DigitalMap> temp_digitalMap_lsit = DigitalMapByID(m).getDigitalMaps();
-                for (DigitalMap temp_map : temp_digitalMap_lsit)
+                List<DigitalMap> temp_digitalMap_list = DigitalMapByID(m).getDigitalMaps();
+                if (temp_digitalMap_list != null)
                 {
-                    cityMaps.put(temp_map.getDigitalMapID() ,temp_map);
+                    for (DigitalMap temp_map : temp_digitalMap_list)
+                    {
+                        cityMaps.put(temp_map.getDigitalMapID() ,temp_map);
+                    }
                 }
+                else {
+                    cityMaps = null;
+                }
+
             }
 
             for(String t: toursString)
@@ -725,14 +734,12 @@ public class ConnectionToDatabase
             int Version=rs.getInt("Version");
             rs = stmt.executeQuery("SELECT LastUpdatedDate FROM City_Database WHERE ID = '" + ID + "'");
             if(!rs.next()) return null;
-            Date date=rs.getDate("Date");
-            LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-            cityList.add(new City(id,name,cityMaps,cityTours,price,Version,localDate));
+            Date date=rs.getDate("LastUpdatedDate");
+            cityList.add(new City(id,name,cityMaps,cityTours,price,Version,date));
             if(cityList.isEmpty()) {
                 return null;
             }
             Catalog catalog = new Catalog(null,null,null,cityList);
-            catalog.viewCatalog();
             return catalog;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -763,21 +770,24 @@ public class ConnectionToDatabase
             rs = stmt.executeQuery("SELECT Contents FROM Tour_Database WHERE ID = '" + ID + "'");
             if(!rs.next()) return null;
             String[] contents=rs.getString("Contents").split(",");
-            List<Content> tourSequence=new ArrayList();
+            List<Site> tourSequence = new ArrayList();
             for(String c: contents)
             {
-                List<Site> temp_site_list = Objects.requireNonNull(SiteByID(c)).getContents();
-                for (Site site : temp_site_list)
+                List<Site> temp_site_list = (SiteByID(c)).getContents();
+                if (temp_site_list != null)
                 {
-                    tourSequence.add(site.getContendID(),site);
+                    tourSequence.addAll(temp_site_list);
+                }
+                else {
+                    tourSequence = null;
                 }
             }
+
             tourList.add(new Tour(id,name,description,tourSequence,duration));
             if(tourList.isEmpty()) {
                 return null;
             }
             Catalog catalog = new Catalog(null,null,tourList,null);
-            catalog.viewCatalog();
             return catalog;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -785,7 +795,7 @@ public class ConnectionToDatabase
         return null;
     }
 
-    public static Catalog SearchByDescription(String description){
+    static Catalog SearchByDescription(String description){
         Connection conn= connectToDatabase();
         List<City> cityList = new ArrayList<City>();
         List<Site> siteList = new ArrayList<Site>();
@@ -804,11 +814,18 @@ public class ConnectionToDatabase
 
                     for(String m : digitalMap)
                     {
-                        List<DigitalMap> temp_digitalMap_lsit = DigitalMapByID(m).getDigitalMaps();
-                        for (DigitalMap temp_map : temp_digitalMap_lsit)
+                        List<DigitalMap> temp_digitalMap_list = DigitalMapByID(m).getDigitalMaps();
+                        if (temp_digitalMap_list != null)
                         {
-                            cityMaps.put(temp_map.getDigitalMapID() ,temp_map);
+                            for (DigitalMap temp_map : temp_digitalMap_list)
+                            {
+                                cityMaps.put(temp_map.getDigitalMapID() ,temp_map);
+                            }
                         }
+                        else {
+                            cityMaps = null;
+                        }
+
                     }
 
                     HashMap<Integer, Tour> cityTours=new HashMap<>();
@@ -833,9 +850,8 @@ public class ConnectionToDatabase
                     int version=rs2.getInt("Version");
                     rs2 = stmt.executeQuery("SELECT LastUpdatedDate FROM City_Database WHERE ID = '" + id + "'");
                     if(!rs2.next()) return null;
-                    Date lastUpdatedDate = rs2.getDate("LastUpdatedDate");
-                    LocalDate localDate = lastUpdatedDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                    cityList.add(new City(Integer.parseInt(id),name,cityMaps, cityTours,price, version,localDate));
+                    Date date = rs2.getDate("LastUpdatedDate");
+                    cityList.add(new City(Integer.parseInt(id),name,cityMaps, cityTours,price, version,date));
                 }
                 else {
                     break;
@@ -899,11 +915,18 @@ public class ConnectionToDatabase
 
                     for(String m : mapsString)
                     {
-                        List<DigitalMap> temp_digitalMap_lsit = DigitalMapByID(m).getDigitalMaps();
-                        for (DigitalMap temp_map : temp_digitalMap_lsit)
+                        List<DigitalMap> temp_digitalMap_list = DigitalMapByID(m).getDigitalMaps();
+                        if (temp_digitalMap_list != null)
                         {
-                            cityMaps.put(temp_map.getDigitalMapID() ,temp_map);
+                            for (DigitalMap temp_map : temp_digitalMap_list)
+                            {
+                                cityMaps.put(temp_map.getDigitalMapID() ,temp_map);
+                            }
                         }
+                        else {
+                            cityMaps = null;
+                        }
+
                     }
 
                     for(String t : toursString)
@@ -914,8 +937,8 @@ public class ConnectionToDatabase
                             cityTours.put(temp_tour.getTourID(),temp_tour);
                         }
                     }
-                    LocalDate localDate = rs.getDate("LastUpdatedDate").toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                    cityList.add(new City(rs.getInt("ID"),rs.getString("Name"),cityMaps,cityTours,rs.getDouble("Price"),rs.getInt("Version"),localDate));
+                    Date date = rs.getDate("LastUpdatedDate");
+                    cityList.add(new City(rs.getInt("ID"),rs.getString("Name"),cityMaps,cityTours,rs.getDouble("Price"),rs.getInt("Version"),date));
                 }
                 else{
                     return cityList;

@@ -24,10 +24,10 @@ public class City implements Serializable
     private HashMap<Integer, Tour> cityTours;
     private double cityPrice;
     private int cityVersion;
-    private LocalDate updateVersionDate;
+    private Date updateVersionDate;
     private int countContent = 0;
 
-    public City(int cityID, String cityName, HashMap<Integer, DigitalMap> cityMaps, HashMap<Integer, Tour> cityTours, double cityPrice, int cityVersion, LocalDate updateVersionDate)
+    public City(int cityID, String cityName, HashMap<Integer, DigitalMap> cityMaps, HashMap<Integer, Tour> cityTours, double cityPrice, int cityVersion, Date updateVersionDate)
     {
         this.cityID = cityID;
         this.cityName = cityName;
@@ -46,7 +46,7 @@ public class City implements Serializable
         this.updateVersionDate = updateVersionDate; //TODO make function to find last update
     }
 
-    public City(String cityName, HashMap<Integer, DigitalMap> cityMaps, HashMap<Integer, Tour> cityTours, double cityPrice, int cityVersion, LocalDate updateVersionDate)
+    public City(String cityName, HashMap<Integer, DigitalMap> cityMaps, HashMap<Integer, Tour> cityTours, double cityPrice, int cityVersion, Date updateVersionDate)
     {
         this.cityID = cityIDNext++;
         this.cityName = cityName;
@@ -140,7 +140,7 @@ public class City implements Serializable
         this.cityPrice = cityPrice;
     }
 
-    public LocalDate getUpdateVersionDate()
+    public Date getUpdateVersionDate()
     {
         return updateVersionDate;
     }
@@ -151,7 +151,7 @@ public class City implements Serializable
     }
 
 
-    public void setUpdateVersionDate(LocalDate updateVersionDate)
+    public void setUpdateVersionDate(Date updateVersionDate)
     {
         this.updateVersionDate = updateVersionDate;
     }
@@ -169,7 +169,7 @@ public class City implements Serializable
     public void setCityVersionVersion(int cityVersion)
     {
         this.cityVersion = cityVersion;
-        setUpdateVersionDate(LocalDate.now());
+        setUpdateVersionDate(new Date());
     }
 
     public int getCountContent() {
@@ -181,23 +181,23 @@ public class City implements Serializable
         this.cityVersion += 1;
     }
 
-    public void out(Permission permission)
-    {
-        if (permission != null && (permission != Permission.USER && permission != Permission.MEMBER))
-        {
-            System.out.println("\tID: " + cityID);
-        }
-        System.out.println("\tCity Name: " + cityName);
-        System.out.println("\tMap Count:" + cityMaps.size());
-
-        int countContent = 0;
-        for (Map.Entry<Integer, DigitalMap> map : cityMaps.entrySet())
-        {
-            System.out.println("\t\tMap Description" + map.getValue().getDigitalMapDescription());
-            countContent += map.getValue().getDigitalMapContents().size();
-        }
-
-        System.out.println("\tNumber Of Contents: " + countContent);
-        System.out.println("\tNumber Of Tours: " + cityTours.size());
-    }
+//    public void out(Permission permission)
+//    {
+//        if (permission != null && (permission != Permission.USER && permission != Permission.MEMBER))
+//        {
+//            System.out.println("\tID: " + cityID);
+//        }
+//        System.out.println("\tCity Name: " + cityName);
+//        System.out.println("\tMap Count:" + cityMaps.size());
+//
+//        int countContent = 0;
+//        for (Map.Entry<Integer, DigitalMap> map : cityMaps.entrySet())
+//        {
+//            System.out.println("\t\tMap Description" + map.getValue().getDigitalMapDescription());
+//            countContent += map.getValue().getDigitalMapContents().size();
+//        }
+//
+//        System.out.println("\tNumber Of Contents: " + countContent);
+//        System.out.println("\tNumber Of Tours: " + cityTours.size());
+//    }
 }
