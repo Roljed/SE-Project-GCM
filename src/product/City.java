@@ -3,6 +3,7 @@ package product;
 import user.Permission;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -23,10 +24,10 @@ public class City implements Serializable
     private HashMap<Integer, Tour> cityTours;
     private double cityPrice;
     private int cityVersion;
-    private Date updateVersionDate;
+    private LocalDate updateVersionDate;
     private int countContent = 0;
 
-    public City(int cityID, String cityName, HashMap<Integer, DigitalMap> cityMaps, HashMap<Integer, Tour> cityTours, double cityPrice, int cityVersion, Date updateVersionDate)
+    public City(int cityID, String cityName, HashMap<Integer, DigitalMap> cityMaps, HashMap<Integer, Tour> cityTours, double cityPrice, int cityVersion, LocalDate updateVersionDate)
     {
         this.cityID = cityID;
         this.cityName = cityName;
@@ -45,7 +46,7 @@ public class City implements Serializable
         this.updateVersionDate = updateVersionDate; //TODO make function to find last update
     }
 
-    public City(String cityName, HashMap<Integer, DigitalMap> cityMaps, HashMap<Integer, Tour> cityTours, double cityPrice, int cityVersion, Date updateVersionDate)
+    public City(String cityName, HashMap<Integer, DigitalMap> cityMaps, HashMap<Integer, Tour> cityTours, double cityPrice, int cityVersion, LocalDate updateVersionDate)
     {
         this.cityID = cityIDNext++;
         this.cityName = cityName;
@@ -139,7 +140,7 @@ public class City implements Serializable
         this.cityPrice = cityPrice;
     }
 
-    public Date getUpdateVersionDate()
+    public LocalDate getUpdateVersionDate()
     {
         return updateVersionDate;
     }
@@ -150,7 +151,7 @@ public class City implements Serializable
     }
 
 
-    public void setUpdateVersionDate(Date updateVersionDate)
+    public void setUpdateVersionDate(LocalDate updateVersionDate)
     {
         this.updateVersionDate = updateVersionDate;
     }
@@ -168,7 +169,7 @@ public class City implements Serializable
     public void setCityVersionVersion(int cityVersion)
     {
         this.cityVersion = cityVersion;
-        setUpdateVersionDate(new Date());
+        setUpdateVersionDate(LocalDate.now());
     }
 
     public int getCountContent() {

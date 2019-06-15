@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.*;
 
 import command.catalog.Catalog;
@@ -87,6 +89,9 @@ public class ConnectionToDatabase
         return con;
     }
 
+
+    // TODO make getVersion
+
     public static Object SignIn (String nameUser, String password) throws SQLException {
         Connection conn = connectToDatabase();
         Statement stmt;
@@ -134,7 +139,11 @@ public class ConnectionToDatabase
                 int id=Integer.parseInt(rs.getString("ID"));
                 rs=stmt.executeQuery("SELECT DateOfPurchase FROM Purchase_Database WHERE ID = '" + s + "'");
                 if (!rs.next()){break;}
+
+                // Parse to LocalDate
                 Date date=rs.getDate("DateOfPurchase");
+                LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
                 rs=stmt.executeQuery("SELECT Cost FROM Purchase_Database WHERE ID = '" + s + "'");
                 if (!rs.next()){break;}
                 int cost=rs.getInt("Cost");
@@ -152,7 +161,7 @@ public class ConnectionToDatabase
                 int i=0;
                 for (String m : tmpMaps)
                     purchasedMapID[i++]=Integer.parseInt(m);
-                purchaseHistory.add(new Purchase(Integer.parseInt(ID), id,date,purchasedCityID,purchasedMapID,cost,type));
+                purchaseHistory.add(new Purchase(Integer.parseInt(ID), id, localDate, purchasedCityID, purchasedMapID, cost, type));
             }
             memberCard = new MemberCard(ID, pn, un, ps, phone, email, null,per);
             memberCard.setPurchaseHistory(purchaseHistory);
@@ -514,7 +523,8 @@ public class ConnectionToDatabase
             rs = stmt.executeQuery("SELECT LastUpdatedDate FROM City_Database WHERE Name = '" + cityName + "'");
             if(!rs.next()) return null;
             Date date=rs.getDate("Date");
-            cityList.add(new City(id,name,cityMaps,cityTours,price,Version,date));
+            LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            cityList.add(new City(id,name,cityMaps,cityTours,price,Version,localDate));
             if(cityList.isEmpty()) {
                 return null;
             }
@@ -716,7 +726,8 @@ public class ConnectionToDatabase
             rs = stmt.executeQuery("SELECT LastUpdatedDate FROM City_Database WHERE ID = '" + ID + "'");
             if(!rs.next()) return null;
             Date date=rs.getDate("Date");
-            cityList.add(new City(id,name,cityMaps,cityTours,price,Version,date));
+            LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            cityList.add(new City(id,name,cityMaps,cityTours,price,Version,localDate));
             if(cityList.isEmpty()) {
                 return null;
             }
@@ -822,8 +833,9 @@ public class ConnectionToDatabase
                     int version=rs2.getInt("Version");
                     rs2 = stmt.executeQuery("SELECT LastUpdatedDate FROM City_Database WHERE ID = '" + id + "'");
                     if(!rs2.next()) return null;
-                    Date lastUpdatedDate=rs2.getDate("LastUpdatedDate");
-                    cityList.add(new City(Integer.parseInt(id),name,cityMaps, cityTours,price, version,lastUpdatedDate));
+                    Date lastUpdatedDate = rs2.getDate("LastUpdatedDate");
+                    LocalDate localDate = lastUpdatedDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                    cityList.add(new City(Integer.parseInt(id),name,cityMaps, cityTours,price, version,localDate));
                 }
                 else {
                     break;
@@ -902,7 +914,8 @@ public class ConnectionToDatabase
                             cityTours.put(temp_tour.getTourID(),temp_tour);
                         }
                     }
-                    cityList.add(new City(rs.getInt("ID"),rs.getString("Name"),cityMaps,cityTours,rs.getDouble("Price"),rs.getInt("Version"),rs.getDate("LastUpdatedDate")));
+                    LocalDate localDate = rs.getDate("LastUpdatedDate").toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                    cityList.add(new City(rs.getInt("ID"),rs.getString("Name"),cityMaps,cityTours,rs.getDouble("Price"),rs.getInt("Version"),localDate));
                 }
                 else{
                     return cityList;

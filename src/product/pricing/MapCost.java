@@ -3,6 +3,8 @@ package product.pricing;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import user.Permission;
 
@@ -17,14 +19,14 @@ public class MapCost implements Serializable
     private double price;
     private int mapID;
     private String lastApproval;
-    private Date lastModifiedDate;
+    private LocalDate lastModifiedDate;
     
     public MapCost(double price,int mapID,String lastApproval)
     {
     	this.price=price;
     	this.mapID=mapID;
     	this.lastApproval=lastApproval;
-    	this.lastModifiedDate=new Date();
+    	this.lastModifiedDate = LocalDate.now();
     }
 
     public double getPrice()
@@ -47,15 +49,14 @@ public class MapCost implements Serializable
     	return lastApproval;
     }
     
-    public Date getLastModifiedDate()
+    public LocalDate getLastModifiedDate()
     {
     	return lastModifiedDate;
     }
 
     public String getLastModifiedDateToString() {
-        String pattern = "dd/MM/yyyy";
-        DateFormat df = new SimpleDateFormat(pattern);
-        return df.format(lastModifiedDate);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        return formatter.format(lastModifiedDate);
     }
 
     public boolean setPrice(double price, String approvalName, Permission permission)
@@ -64,7 +65,7 @@ public class MapCost implements Serializable
         {
         	this.price=price;
         	this.lastApproval=approvalName;
-        	this.lastModifiedDate=new Date();
+        	this.lastModifiedDate = LocalDate.now();
         	return true;
         }
         return false;

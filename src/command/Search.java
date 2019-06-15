@@ -43,21 +43,16 @@ public class Search implements Serializable
 
     public Catalog searchByCityName(String cityName)
     {
-
-        //TODO: duplicated code. Lines 25-41 && 66-82
         try {
             chat.sendToServer("#Search city name " + cityName);
-            List<?> objectCities = (List<?>)chat.receiveObjectFromServer();
-            if(objectCities.isEmpty()) {
+            Object obj = chat.receiveObjectFromServer();
+            if (obj instanceof Catalog)
+            {
+                return (Catalog)obj;
+            }
+            else {
                 return null;
             }
-            List<City> cities = new ArrayList<>();
-            for (Object obj : objectCities) {
-                cities.add((City)obj);
-            }
-            catalog = new Catalog(null,null,null,cities);
-            catalog.viewCatalog();
-            return catalog;
         }
         catch(IOException ex) {
             return null;
