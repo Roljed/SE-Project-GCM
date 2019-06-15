@@ -101,15 +101,11 @@ public class EchoServer extends AbstractServer
             }
         }
 
-        if (msg instanceof List)
+        if (msg instanceof List<?>)
         {
-            try {
-                client.sendToClient(ConnectionToDatabase.UpdateClient(((MemberCard) msg).getMemberIDByString(),((MemberCard) msg).getUserName(), ((MemberCard) msg).getPersonalName(),
-                        ((MemberCard) msg).getPassword(), ((MemberCard) msg).getPhoneNumberByString(), ((MemberCard) msg).getEmail(),
-                        ((MemberCard) msg).getPermissionByString()));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            MemberCard memberCard=(MemberCard) ((List<?>) msg).get(0);
+            ConnectionToDatabase.UpdateClient(memberCard.getMemberIDByString(),memberCard.getUserName(),memberCard.getPersonalName(),
+                    memberCard.getPassword(),memberCard.getPhoneNumberByString(),memberCard.getEmail(),memberCard.getPermissionByString());
         }
 
         if (msg instanceof Site)
@@ -139,58 +135,57 @@ public class EchoServer extends AbstractServer
                     ((Tour)msg).getTourTotalDurationToString(),	((Tour)msg).getTourSequence());
         }
 
-        if (msg instanceof String)
-        {
+        if (msg instanceof String) {
             String[] message = ((String) msg).split(" ");
-            if (message[0].equals("#SignOut"))
-            {
+            if (message[0].equals("userID")) {
                 try {
-                    client.sendToClient(ConnectionToDatabase.SignOut(message[1]));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            {
-                try {
-                    client.sendToClient(ConnectionToDatabase.SignOut(message[1]));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (message[1].equals("product"))
-            {
-                try {
-                    client.sendToClient(ConnectionToDatabase.SearchByID(message[2],message[3]));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (message[1].equals("city"))
-            {
-                try {
-                    client.sendToClient(ConnectionToDatabase.SearchByCityName(message[3]));
+                    client.sendToClient(ConnectionToDatabase.ReturnMemberCardByID(message[1]));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
 
-            if (message[1].equals("content"))
-            {
+            if (message[0].equals("#SignOut")) {
                 try {
-                    client.sendToClient(ConnectionToDatabase.SearchBySite(message[3]));
+                    client.sendToClient(ConnectionToDatabase.SignOut(message[1]));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
-            if (message[2].equals("description"))
-            {
-                try {
-                    client.sendToClient(ConnectionToDatabase.SearchByDescription(message[3]));
-                } catch (IOException e) {
-                    e.printStackTrace();
+
+            if (message[0].equals("#Search")) {
+                if (message[1].equals("product")) {
+                    try {
+                        client.sendToClient(ConnectionToDatabase.SearchByID(message[2], message[3]));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                if (message[1].equals("city")) {
+                    try {
+                        client.sendToClient(ConnectionToDatabase.SearchByCityName(message[3]));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                if (message[1].equals("content")) {
+                    try {
+                        client.sendToClient(ConnectionToDatabase.SearchBySite(message[3]));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                if (message[2].equals("description")) {
+                    try {
+                        client.sendToClient(ConnectionToDatabase.SearchByDescription(message[3]));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         }
+
         if (msg instanceof Integer)
         {
             try {
