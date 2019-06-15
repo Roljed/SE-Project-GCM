@@ -45,9 +45,9 @@ public class MemberPurchaseScreen implements ChatIF, Serializable
         }
     }
 
-    static private final int SERVER_PORT = 5555;
+    private String host = MainClient.getHost();
+    private int port = MainClient.getPort();
     private ChatClient chat = MainClient.getChat();
-    private MemberCard memberCard;
 
     @FXML // fx:id="PurchaseType"
     private TableColumn<PurchaseForDisplay, String> PurchaseType; // Value injected by FXMLLoader
@@ -67,28 +67,43 @@ public class MemberPurchaseScreen implements ChatIF, Serializable
     @FXML // fx:id="table"
     private TableView<PurchaseForDisplay> table; // Value injected by FXMLLoader
 
-    public MemberPurchaseScreen(MemberCard memberCard) {
-        this.memberCard=memberCard;
-    }
-
-    public void initialize(){
+    public void initialize() throws IOException{
         PurchaseType.setCellValueFactory(new PropertyValueFactory<PurchaseForDisplay, String>("type"));
         PurchaseMaps.setCellValueFactory(new PropertyValueFactory<PurchaseForDisplay, String>("map"));
         PurchaseCities.setCellValueFactory(new PropertyValueFactory<PurchaseForDisplay, String>("city"));
         DateOfPurchase.setCellValueFactory(new PropertyValueFactory<PurchaseForDisplay, Date>("dateOfPurchase"));
         Cost.setCellValueFactory(new PropertyValueFactory<PurchaseForDisplay, String>("cost"));
-        List<Purchase> purchaseHistory = memberCard.getPurchaseHistory();
-        for (Purchase p : purchaseHistory)
+        if (this.chat == null)
         {
-            int[] purchaseCityIDs = p.getPurchasedCityID();
-            for (int cityID : purchaseCityIDs)
-            {
-                String city = ((City) Objects.requireNonNull(Search.searchByID(cityID, ProductType.CITY, Permission.COMPANY_MANAGER))).getCityName();
-
-                PurchaseForDisplay temp = new PurchaseForDisplay(p.getDateOfPurchase(),p.getCostByString(),p.getPurchaseTypeInString()
-                        ,city,p.getPurchasedMapNumberByString());
-            }
+            this.chat = new ChatClient(host, port, this);
         }
+		/*List<Purchase> purchaseHistory = MainClient.getPurchaseHistory();
+		for (Purchase p : purchaseHistory)
+		{
+			int[] purchaseCityIDs = p.getPurchasedCityID();
+			for (int cityID : purchaseCityIDs)
+			{
+				String city = ((City) Objects.requireNonNull(Search.searchByID(cityID, ProductType.CITY, Permission.COMPANY_MANAGER))).getCityName();
+
+				PurchaseForDisplay temp = new PurchaseForDisplay(p.getDateOfPurchase(),p.getCostByString(),p.getPurchaseTypeInString()
+						,city,p.getPurchasedMapNumberByString());
+			}
+		}*/
+    }
+
+    public void start(Stage primaryStage) throws Exception
+    {
+        primaryStage.setTitle("Purchase History");
+        primaryStage.setOnCloseRequest(e -> {
+            e.consume();
+            System.out.print("");
+        });
+
+        FXMLLoader loader = new FXMLLoader();
+        Pane root = loader.load(getClass().getResource("fxml/member-purchase.fxml").openStream());
+        Scene scene = new Scene(root);
+        primaryStage.setScene(scene);
+        primaryStage.show();
     }
 
     @FXML

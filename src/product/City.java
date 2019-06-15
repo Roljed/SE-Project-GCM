@@ -3,6 +3,7 @@ package product;
 import user.Permission;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -23,6 +24,7 @@ public class City implements Serializable
     private double cityPrice;
     private int cityVersion;
     private Date updateVersionDate;
+    private int countContent = 0;
 
     public City(int cityID, String cityName, HashMap<Integer, DigitalMap> cityMaps, HashMap<Integer, Tour> cityTours, double cityPrice, int cityVersion, Date updateVersionDate)
     {
@@ -39,6 +41,7 @@ public class City implements Serializable
         {
             this.cityPrice = cityPrice;
         }
+        countContent = countCityContent();
         this.updateVersionDate = updateVersionDate; //TODO make function to find last update
     }
 
@@ -108,6 +111,7 @@ public class City implements Serializable
     public void setCityMaps(HashMap<Integer, DigitalMap> cityMaps)
     {
         this.cityMaps = cityMaps;
+        countContent = countCityContent();
     }
 
     public HashMap<Integer, Tour> getCityTours()
@@ -165,6 +169,10 @@ public class City implements Serializable
     {
         this.cityVersion = cityVersion;
         setUpdateVersionDate(new Date());
+    }
+
+    public int getCountContent() {
+        return countContent;
     }
 
     public void updateVersion()

@@ -25,12 +25,58 @@ public class Catalog implements Serializable
     private List<Tour> tours;
     private List<City> cities;
 
+    private boolean empty = false;
+
     public Catalog(List<Site> contents, List<DigitalMap> digitalMaps, List<Tour> tours, List<City> cities)
     {
+        if (!contents.isEmpty() || !digitalMaps.isEmpty() || !tours.isEmpty() || !cities.isEmpty())
+        {
+            empty = true;
+        }
         this.contents = contents;
         this.digitalMaps = digitalMaps;
         this.tours = tours;
         this.cities = cities;
+    }
+
+    public List<Site> getContents() {
+        return contents;
+    }
+
+    public void setContents(List<Site> contents) {
+        this.contents = contents;
+    }
+
+    public List<DigitalMap> getDigitalMaps() {
+        return digitalMaps;
+    }
+
+    public void setDigitalMaps(List<DigitalMap> digitalMaps) {
+        this.digitalMaps = digitalMaps;
+    }
+
+    public List<Tour> getTours() {
+        return tours;
+    }
+
+    public void setTours(List<Tour> tours) {
+        this.tours = tours;
+    }
+
+    public List<City> getCities() {
+        return cities;
+    }
+
+    public void setCities(List<City> cities) {
+        this.cities = cities;
+    }
+
+    public boolean isEmpty() {
+        return empty;
+    }
+
+    public void setEmpty(boolean empty) {
+        this.empty = empty;
     }
 
     public void setPermission(Permission permission)

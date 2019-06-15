@@ -1,14 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="gui.EditorScreen"
-            prefHeight="400.0" prefWidth="600.0">
 
+<AnchorPane prefHeight="900.0" prefWidth="912.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.EditorScreen">
+    <children>
+        <RadioButton fx:id="updateTourRadioBtn" layoutX="26.0" layoutY="224.0" mnemonicParsing="false" text="Update tour">
+            <toggleGroup>
+                <ToggleGroup fx:id="group" />
+            </toggleGroup>
+        </RadioButton>
+        <RadioButton fx:id="addCityRadionBtn" layoutX="26.0" layoutY="146.0" mnemonicParsing="false" text="Add city" toggleGroup="$group" />
+        <RadioButton fx:id="updateCityRadionBtn" layoutX="26.0" layoutY="295.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="110.0" text="Update city" toggleGroup="$group" />
+        <RadioButton fx:id="addTourToCityRadionBtn" layoutX="26.0" layoutY="378.0" mnemonicParsing="false" text="Add tour to city" toggleGroup="$group" />
+        <RadioButton fx:id="addMapToCityRadionBtn" layoutX="26.0" layoutY="458.0" mnemonicParsing="false" text="Add map to city" toggleGroup="$group" />
+        <RadioButton fx:id="updateMapRadionBtn" layoutX="26.0" layoutY="528.0" mnemonicParsing="false" text="Update map" toggleGroup="$group" />
+        <RadioButton fx:id="addContentToMapRadionBtn" layoutX="26.0" layoutY="675.0" mnemonicParsing="false" text="Add content to map" toggleGroup="$group" />
+        <RadioButton fx:id="updateContentRadionBtn" layoutX="26.0" layoutY="744.0" mnemonicParsing="false" text="Update content" toggleGroup="$group" />
+        <RadioButton fx:id="addContentToCityRadionBtn" layoutX="26.0" layoutY="603.0" mnemonicParsing="false" text="Add content to city" toggleGroup="$group" />
+        <TextField fx:id="addCity_cityName" layoutX="63.0" layoutY="177.0" text="Type the name of the city" />
+        <TextField fx:id="addCity_price" layoutX="332.0" layoutY="177.0" text="Type the price of the city" />
+        <TextField fx:id="updateCity_oldID" layoutX="63.0" layoutY="333.0" text="Type the old city ID" />
+        <TextField fx:id="updateCity_newID" layoutX="332.0" layoutY="333.0" text="Type the new city ID" />
+        <TextField fx:id="addTourToCity_tourID" layoutX="332.0" layoutY="413.0" text="Type the tour ID" />
+        <TextField fx:id="addTourToCity_cityID" layoutX="63.0" layoutY="413.0" text="Type the city ID" />
+        <TextField fx:id="updateTour_oldID" layoutX="63.0" layoutY="259.0" text="Type the old tour ID" />
+        <TextField fx:id="updateTour_newID" layoutX="332.0" layoutY="259.0" text="Type the new your ID" />
+        <TextField fx:id="addMapToCity_cityID" layoutX="63.0" layoutY="486.0" text="Type the city ID" />
+        <TextField fx:id="addMapToCity_mapID" layoutX="332.0" layoutY="486.0" text="Type the map ID" />
+        <TextField fx:id="updateMap_oldID" layoutX="63.0" layoutY="558.0" text="Type the old map ID" />
+        <TextField fx:id="updateMap_newID" layoutX="332.0" layoutY="558.0" text="Type the new map ID" />
+        <TextField fx:id="addContentToCity_cityID" layoutX="63.0" layoutY="633.0" text="Type the city ID" />
+        <TextField fx:id="addContentToCity_contentID" layoutX="332.0" layoutY="633.0" text="Type the content ID" />
+        <TextField fx:id="addContentToMap_mapID" layoutX="63.0" layoutY="702.0" text="Type the map ID" />
+        <TextField fx:id="addContentToMap_contentID" layoutX="332.0" layoutY="702.0" text="Type the content ID" />
+        <TextField fx:id="updateContent_oldID" layoutX="63.0" layoutY="771.0" text="Type the old content ID" />
+        <TextField fx:id="updateContent_newIDID" layoutX="332.0" layoutY="771.0" text="Type the new content ID" />
+        <Label fx:id="instructions" layoutX="28.0" layoutY="71.0" prefHeight="70.0" prefWidth="868.0" text="Choose the requested operation and fill in the requested fields">
+            <font>
+                <Font size="31.0" />
+            </font>
+        </Label>
+        <Button fx:id="backBtn" layoutX="776.0" layoutY="855.0" mnemonicParsing="false" onAction="#back" prefHeight="31.0" prefWidth="82.0" text="back" />
+        <Label fx:id="welcome" layoutX="277.0" prefHeight="96.0" prefWidth="580.0" text="Welcome to GCM editor" textFill="#fc0303">
+            <font>
+                <Font size="38.0" />
+            </font>
+        </Label>
+        <Button fx:id="submitBtn" layoutX="426.0" layoutY="816.0" mnemonicParsing="false" onAction="#submit" prefHeight="79.0" prefWidth="100.0" text="+">
+            <font>
+                <Font size="32.0" />
+            </font>
+        </Button>
+    </children>
 </AnchorPane>

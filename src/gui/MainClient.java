@@ -2,6 +2,7 @@ package gui;
 
 import chat.ChatClient;
 import chat.common.ChatIF;
+import command.catalog.Catalog;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -32,8 +33,9 @@ public class MainClient extends Application implements Initializable, ChatIF
     private static String host = "";
 
 //    public static Stack<Scene> sceneStack = new Stack<>(); TODO after all scenes are build
-    public static Object result;    // holds server return message
-    public static MemberCard memberSignedIn = null;
+    public static Object result = null;    // holds server return message
+    static MemberCard memberSignedIn = null;
+    public static Catalog catalog = null;
 
     @FXML
     public TextField serverIPTextField;

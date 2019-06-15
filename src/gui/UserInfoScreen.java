@@ -2,8 +2,6 @@ package gui;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import chat.ChatClient;
 import chat.common.ChatIF;
@@ -16,7 +14,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import user.member.MemberCard;
 
 /**
  * User Info screen
@@ -27,9 +24,9 @@ import user.member.MemberCard;
 public class UserInfoScreen implements ChatIF, Serializable
 {
 
-    static private final int SERVER_PORT = 5555;
+    private String host = MainClient.getHost();
+    private int port = MainClient.getPort();
     private ChatClient chat = MainClient.getChat();
-    private MemberCard memberCard;
 
     @FXML // fx:id="UpadatePassword"
     private TextField UpadatePassword; // Value injected by FXMLLoader
@@ -64,21 +61,42 @@ public class UserInfoScreen implements ChatIF, Serializable
     @FXML // fx:id="Password"
     private Label Password; // Value injected by FXMLLoader
 
-    public UserInfoScreen(MemberCard memberCard) {
-        this.memberCard=memberCard;
-        Username.setText(memberCard.getUserName());
-        Password.setText(memberCard.getPassword());
-        FullName.setText(memberCard.getPersonalName());
-        PhoneNumber.setText(memberCard.getPhoneNumberByString());
-        Email.setText(memberCard.getEmail());
+
+    public void start(Stage primaryStage) throws Exception
+    {
+        primaryStage.setTitle("User Info");
+        primaryStage.setOnCloseRequest(e -> {
+            e.consume();
+            System.out.print("");
+        });
+
+        FXMLLoader loader = new FXMLLoader();
+        Pane root = loader.load(getClass().getResource("fxml/user-info.fxml").openStream());
+        Scene scene = new Scene(root);
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+
+    public void initialize()
+    {
+        //Username.setText("");
+        //Password.setText("");
+        FullName.setText(MainClient.personalName);
+        //PhoneNumber.setText("");
+        //Email.setText("");
     }
 
     @FXML
-    void btn_Update(ActionEvent event) {
+    void btn_Update(ActionEvent event) throws IOException {
         if (UpadatePassword.getText().isEmpty() && UpdateUsername.getText().isEmpty() &&
                 UpdatePhoneNumber.getText().isEmpty() && UpadateFullName.getText().isEmpty() && UpdateEmail.getText().isEmpty())
             messageLabel.setText("There's nothing to update!");
-        else {
+        if (this.chat == null)
+        {
+            this.chat = new ChatClient(host, port, this);
+        }
+
+		/* else {
             if (!UpadatePassword.getText().isEmpty())
                 memberCard.setPassword(UpadatePassword.getText());
             if (!UpdateUsername.getText().isEmpty())
@@ -100,7 +118,7 @@ public class UserInfoScreen implements ChatIF, Serializable
                 messageLabel.setText("Updated successfully!");
             else
                 messageLabel.setText("Something went worng, please try again");
-        }
+        }*/
     }
 
     @FXML
