@@ -126,4 +126,21 @@ public class MemberCard extends User implements Serializable
 	{
 		this.email = email;
 	}
+
+	public List<Purchase> getPurchaseHistory() {
+		return purchaseHistory;
+	}
+
+	public void setPurchaseHistory(List<Purchase> purchaseHistory) {
+		this.purchaseHistory = purchaseHistory;
+	}
+
+	public boolean isConnencted() {
+		return connencted;
+	}
+
+	public void setConnencted(boolean connencted) {
+		this.connencted = connencted;
+	}
+
 }

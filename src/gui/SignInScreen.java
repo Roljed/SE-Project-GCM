@@ -22,7 +22,7 @@ import java.io.Serializable;
  *  TODO explain class
  * @author Yaad Nahshon
  */
-public class SignIn implements ChatIF, Serializable
+public class SignInScreen implements ChatIF, Serializable
 {
     static private final int SERVER_PORT = 5555;
     private ChatClient chat = MainClient.getChat();

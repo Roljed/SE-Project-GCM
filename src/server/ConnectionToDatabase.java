@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +18,7 @@ import product.content.Content;
 import product.content.Location;
 import product.content.Site;
 import product.pricing.MapCost;
+import product.pricing.Purchase;
 import user.member.MemberCard;
 
 
@@ -101,45 +103,63 @@ public class ConnectionToDatabase
             rs = stmt.executeQuery("SELECT Password FROM User_Database WHERE UserName = '" + nameUser + "'");
             if((!rs.next()) || (!rs.getString("Password").equals(password)))
                 return ClientServerStatus.WRONG_USERNAME_OR_PASSWORD;
-            rs=stmt.executeQuery("SELECT SignIn FROM User_Database WHERE UserName = '" + nameUser + "'");
-            if ((!rs.next()) || (rs.getString("SignIn").equals("YES")))
+            rs=stmt.executeQuery("SELECT Registered FROM User_Database WHERE UserName = '" + nameUser + "'");
+            if ((!rs.next()) || (rs.getString("Registered").equals("YES")))
                 return ClientServerStatus.CONNECTED;
             rs=stmt.executeQuery("SELECT ID FROM User_Database WHERE UserName = '" + nameUser + "'");
-            if (!rs.next())
-            {
-                return null;
-            }
+            if (!rs.next()){return null;}
             String ID=rs.getString("ID");
+            rs=stmt.executeQuery("SELECT UserName FROM User_Database WHERE UserName = '" + nameUser + "'");
+            if (!rs.next()){return null;}
+            String un=rs.getString("UserName");
             rs=stmt.executeQuery("SELECT PersonalName FROM User_Database WHERE UserName = '" + nameUser + "'");
-            if (!rs.next())
-            {
-                return null;
-            }
+            if (!rs.next()){return null;}
             String pn=rs.getString("PersonalName");
-            rs=stmt.executeQuery("SELECT Permission FROM User_Database WHERE UserName = '" + nameUser + "'");
-            if (!rs.next())
-            {
-                return null;
-            }
-            String per=rs.getString("Permission");
-            rs=stmt.executeQuery("SELECT Permission FROM User_Database WHERE UserName = '" + nameUser + "'");
-            if (!rs.next())
-            {
-                return null;
-            }
+            rs=stmt.executeQuery("SELECT Password FROM User_Database WHERE UserName = '" + nameUser + "'");
+            if (!rs.next()){return null;}
+            String ps=rs.getString("Password");
             rs=stmt.executeQuery("SELECT PhoneNumber FROM User_Database WHERE UserName = '" + nameUser + "'");
-            if (!rs.next())
-            {
-                return null;
-            }
+            if (!rs.next()){return null;}
             String phone=rs.getString("PhoneNumber");
-            System.out.println(ID + " " + pn + " " + per);
-            memberCard = new MemberCard(ID, pn, null, null, phone, null, null,per);
-            if (pn.equals("Tester") == false)
-            {
-                stmt.executeUpdate("UPDATE User_Database SET SignIn = 'YES' WHERE UserName='"+ nameUser +"'");
+            rs=stmt.executeQuery("SELECT Email FROM User_Database WHERE UserName = '" + nameUser + "'");
+            if (!rs.next()){return null;}
+            String email=rs.getString("Email");
+            rs=stmt.executeQuery("SELECT Permission FROM User_Database WHERE UserName = '" + nameUser + "'");
+            if (!rs.next()){return null;}
+            String per=rs.getString("Permission");
+            List<Purchase> purchaseHistory = null;
+            rs=stmt.executeQuery("SELECT PurchaseID FROM User_Database WHERE UserName = '" + nameUser + "'");
+            if (!rs.next()){return null;}
+            String purchaseID=rs.getString("PurchaseID");
+            String[] message = purchaseID.split(",");
+            for (String s : message) {
+                rs=stmt.executeQuery("SELECT ID FROM Purchase_Database WHERE ID = '" + s + "'");
+                int id=Integer.parseInt(rs.getString("ID"));
+                rs=stmt.executeQuery("SELECT DateOfPurchase FROM Purchase_Database WHERE ID = '" + s + "'");
+                Date date=rs.getDate("DateOfPurchase");
+                rs=stmt.executeQuery("SELECT Cost FROM Purchase_Database WHERE ID = '" + s + "'");
+                int cost=rs.getInt("Cost");
+                rs=stmt.executeQuery("SELECT PurchaseType FROM Purchase_Database WHERE ID = '" + s + "'");
+                String type=rs.getString("PurchaseType");
+                rs=stmt.executeQuery("SELECT PurchaseCities FROM Purchase_Database WHERE ID = '" + s + "'");
+                String stringcities=rs.getString("PurchaseCities");
+                int[] purchasedCityID = null;
+                String[] tmpCity=stringcities.split(",");
+                int i=0;
+                for (String c : tmpCity)
+                    purchasedCityID[i++]=Integer.parseInt(c);
+                rs=stmt.executeQuery("SELECT PurchaseMaps FROM Purchase_Database WHERE ID = '" + s + "'");
+                String stringmaps=rs.getString("PurchaseMaps");
+                int[] purchasedMapID = null;
+                String[] tmpMaps=stringmaps.split(",");
+                i=0;
+                for (String m : tmpMaps)
+                    purchasedMapID[i++]=Integer.parseInt(m);
+                purchaseHistory.add(new Purchase(id,date,purchasedCityID,purchasedMapID,cost,type));
             }
-
+            memberCard=new MemberCard(ID, pn, un, ps, phone, email, null,per);
+            memberCard.setPurchaseHistory(purchaseHistory);
+            stmt.executeUpdate("UPDATE User_Database SET Registered = 'YES' WHERE UserName='"+ nameUser +"'");
             if (stmt != null) {
                 try {
                     stmt.close();
@@ -148,7 +168,39 @@ public class ConnectionToDatabase
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return memberCard;
+        return  memberCard;
+    }
+
+    public static boolean UpdateClient(String ID, String nameUser, String namePersonal, String password, String phoneNumber, String email, String permission)
+    {
+        Connection conn= connectToDatabase();
+        Statement stmt = null;
+        try {
+            stmt = conn.createStatement();
+        } catch (SQLException e1) {
+            e1.printStackTrace();
+        }
+        try
+        {
+            stmt.executeUpdate("UPDATE User_Database SET UserName = '" + nameUser + "' WHERE ID='"+ ID +"'");
+            stmt.executeUpdate("UPDATE User_Database SET PersonalName = '" + namePersonal + "' WHERE ID='"+ ID +"'");
+            stmt.executeUpdate("UPDATE User_Database SET Password = '" + password + "' WHERE ID='"+ ID +"'");
+            stmt.executeUpdate("UPDATE User_Database SET PhoneNumber = '" + phoneNumber + "' WHERE ID='"+ ID +"'");
+            stmt.executeUpdate("UPDATE User_Database SET Email = '" + email + "' WHERE ID='"+ ID +"'");
+            stmt.executeUpdate("UPDATE User_Database SET Permission = '" + permission + "' WHERE ID='"+ ID +"'");
+
+            if (stmt != null) {
+                try {
+                    stmt.close();
+                } catch (SQLException e) {
+                    return false;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 
     public static boolean SignOut (String nameUser)
@@ -162,7 +214,7 @@ public class ConnectionToDatabase
         }
         try
         {
-            stmt.executeUpdate("UPDATE User_Database SET SignIn = 'NO' WHERE UserName='"+ nameUser +"'");
+            stmt.executeUpdate("UPDATE User_Database SET Registered = 'NO' WHERE UserName='"+ nameUser +"'");
             if (stmt != null) {
                 try {
                     stmt.close();
@@ -174,7 +226,7 @@ public class ConnectionToDatabase
         return true;
     }
 
-    public static boolean AddClient (String ID, String nameUser, String namePersonal, String password, String phoneNumber, String email, String role)
+    public static boolean AddClient (String ID,String permission,String nameUser,String password,String namePersonal, String email, String phoneNumber)
     {
         Connection conn = connectToDatabase();
         Statement stmt;
@@ -183,8 +235,8 @@ public class ConnectionToDatabase
         try
         {
             stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
-            stmt.executeUpdate("INSERT INTO User_Database VALUES ('" + ID + "', '" + nameUser + "' , '" + namePersonal + "' , '" + password + "' , '"
-                    + phoneNumber + "', '" + email + "', '" + role + "', 'NO')");
+            stmt.executeUpdate("INSERT INTO User_Database VALUES ('" + ID + "','NO','" + permission +"','" + nameUser + "','" + password + "','"
+                    + namePersonal + "','" + email + "','" + phoneNumber + "','','')");
             if (stmt != null) {
                 try {
                     stmt.close();

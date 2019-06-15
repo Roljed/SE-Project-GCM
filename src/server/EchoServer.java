@@ -4,6 +4,7 @@ package server;// This file contains material supporting section 3.7 of the text
 
 import java.io.*;
 import java.sql.SQLException;
+import java.util.List;
 
 import ocsf.server.*;
 import product.City;
@@ -90,7 +91,18 @@ public class EchoServer extends AbstractServer
         if (msg instanceof MemberCard)
         {
             try {
-                client.sendToClient(ConnectionToDatabase.AddClient(((MemberCard) msg).getMemberIDByString(),((MemberCard) msg).getNameUser(), ((MemberCard) msg).getNamePersonal(),
+                client.sendToClient(ConnectionToDatabase.AddClient(((MemberCard) msg).getMemberIDByString(),((MemberCard) msg).getPermissionByString(),
+                        ((MemberCard) msg).getNameUser(),((MemberCard) msg).getPassword(),((MemberCard) msg).getNamePersonal(),((MemberCard) msg).getEmail(),
+                        ((MemberCard) msg).getPhoneNumberByString()));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (msg instanceof List)
+        {
+            try {
+                client.sendToClient(ConnectionToDatabase.UpdateClient(((MemberCard) msg).getMemberIDByString(),((MemberCard) msg).getNameUser(), ((MemberCard) msg).getNamePersonal(),
                         ((MemberCard) msg).getPassword(), ((MemberCard) msg).getPhoneNumberByString(), ((MemberCard) msg).getEmail(),
                         ((MemberCard) msg).getPermissionByString()));
             } catch (IOException e) {
@@ -128,6 +140,21 @@ public class EchoServer extends AbstractServer
         if (msg instanceof String)
         {
             String[] message = ((String) msg).split(" ");
+            if (message[0].equals("signout"))
+            {
+                try {
+                    client.sendToClient(ConnectionToDatabase.SignOut(message[1]));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            {
+                try {
+                    client.sendToClient(ConnectionToDatabase.SignOut(message[1]));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
             if (message[1].equals("product"))
             {
                 try {

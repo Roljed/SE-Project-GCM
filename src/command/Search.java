@@ -17,7 +17,7 @@ import user.Permission;
  */
 public class Search implements Serializable
 {
-    private ChatClient chat;
+    private static ChatClient chat;
     private Catalog catalog;
 
     public Search(ChatClient chat_)
@@ -26,8 +26,7 @@ public class Search implements Serializable
         catalog = null;
     }
 
-
-    public Object searchByID(int objectID, ProductType productType, Permission permission)
+    public static Object searchByID(int objectID, ProductType productType, Permission permission)
     {
         String type = productTypeToString(productType);
         assert !type.equals("none");
@@ -131,7 +130,7 @@ public class Search implements Serializable
         }
     }
 
-    private String productTypeToString(ProductType productType)
+    private static String productTypeToString(ProductType productType)
     {
         switch (productType)
         {
