@@ -2,47 +2,58 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="300.0" prefWidth="260.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.SignUpScreen">
    <children>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="88.0" layoutY="32.0" text="Sign Up" textAlignment="CENTER" AnchorPane.bottomAnchor="245.0" AnchorPane.topAnchor="32.0">
-         <font>
-            <Font name="Gisha" size="24.0" />
-         </font></Label>
-      <SplitPane dividerPositions="0.4192139737991266" layoutX="15.0" layoutY="87.0" prefHeight="160.0" prefWidth="231.0">
-        <items>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="158.0" prefWidth="98.0">
+      <VBox alignment="CENTER" prefHeight="74.0" prefWidth="260.0">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" text="Sign Up" textAlignment="CENTER">
+               <font>
+                  <Font name="Gisha" size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="messageLabel" alignment="CENTER" contentDisplay="CENTER" textFill="RED" />
+         </children>
+      </VBox>
+      <VBox alignment="CENTER" layoutX="20.0" layoutY="70.0" prefHeight="180.0" prefWidth="220.0">
+         <children>
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                <children>
-                  <VBox alignment="BASELINE_LEFT" layoutX="5.0" layoutY="2.0" prefHeight="158.0" prefWidth="88.0" spacing="10.0">
-                     <children>
-                        <Label text="Username" />
-                        <Label text="Password" />
-                        <Label text="Full Name" />
-                        <Label prefHeight="17.0" prefWidth="82.0" text="Phone Number" />
-                        <Label text="Email" />
-                     </children></VBox>
+                  <Label text="Username" />
+                  <TextField fx:id="usernameText" promptText="Enter Username" />
                </children>
-            </AnchorPane>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="158.0" prefWidth="121.0">
+            </HBox>
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                <children>
-                  <VBox prefHeight="158.0" prefWidth="136.0" spacing="3.0">
-                     <children>
-                        <TextField promptText="Enter Username" />
-                        <TextField promptText="Enter Password" />
-                        <TextField promptText="Enter Full Name" />
-                        <TextField promptText="Enter Phone Number" />
-                        <TextField promptText="Enter Email" />
-                     </children></VBox>
+                  <Label text="Password" />
+                  <TextField fx:id="passwordText" promptText="Enter Password" />
                </children>
-            </AnchorPane>
-        </items>
-      </SplitPane>
-      <Button layoutX="205.0" layoutY="261.0" mnemonicParsing="false" onAction="#btn_Back" text="Back" />
-      <Button layoutX="104.0" layoutY="261.0" mnemonicParsing="false" text="Submit" />
+            </HBox>
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+               <children>
+                  <Label text="Name" />
+                  <TextField fx:id="nameText" promptText="Enter Full Name" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+               <children>
+                  <Label text="Phone" />
+                  <TextField fx:id="phoneText" promptText="Enter Phone Number" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+               <children>
+                  <Label text="Email" />
+                  <TextField fx:id="emailText" promptText="Enter Email" />
+               </children>
+            </HBox>
+         </children></VBox>
+      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="103.0" layoutY="261.0" mnemonicParsing="false" onAction="#submitButton" style="-fx-background-color: green;" text="Submit" textFill="WHITE" />
+      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="199.0" layoutY="261.0" mnemonicParsing="false" onAction="#backButton" style="-fx-background-color: red;" text="Back" textFill="WHITE" />
    </children>
 </AnchorPane>

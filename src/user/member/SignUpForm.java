@@ -15,26 +15,17 @@ public class SignUpForm implements Serializable
 	private String email;
 	private ChatClient chat;
 
-	public SignUpForm(String name_,String userName_,String password_,int phoneNumber_,String email_, ChatClient chat_){
-		name = name_;
-		userName = userName_;
-		password = password_;
-		phoneNumber = phoneNumber_;
-		email = email_;
-		setChat(chat_);
+	public SignUpForm(String name,String userName,String password,int phoneNumber,String email, ChatClient chat){
+		this.name = name;
+		this.userName = userName;
+		this.password = password;
+		this.phoneNumber = phoneNumber;
+		this.email = email;
+		this.chat = chat;
 	}
 
 	public MemberCard createMemberCard()
 	{
-		return new MemberCard(name, userName, password, phoneNumber, email, chat, Permission.MEMBER) {
-		};
-	}
-
-	public ChatClient getChat() {
-		return chat;
-	}
-
-	public void setChat(ChatClient chat) {
-		this.chat = chat;
+		return new MemberCard(name, userName, password, phoneNumber, email, chat, Permission.MEMBER);
 	}
 }

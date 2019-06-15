@@ -5,7 +5,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -73,9 +74,17 @@ public class MainScreen
         });
 
         Pane root = FXMLLoader.load(getClass().getResource("fxml/search.fxml"));
-        Scene SearchScene = new Scene(root);
-        searchStage.setScene(SearchScene);
+
+//        TODO set background images
+//        BackgroundImage myBI= new BackgroundImage(new Image("background/minecraft.jpg",32,32,false,true),
+//                BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+//                BackgroundSize.DEFAULT);
+//        root.setBackground(new Background(myBI));
+
+        Scene searchScene = new Scene(root);
+        searchStage.setScene(searchScene);
         searchStage.show();
+
     }
 
     @FXML

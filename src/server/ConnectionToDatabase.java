@@ -226,7 +226,7 @@ public class ConnectionToDatabase
         return true;
     }
 
-    public static boolean AddClient (String ID,String permission,String nameUser,String password,String namePersonal, String email, String phoneNumber)
+    public static boolean AddClient (String ID, String permission,String nameUser,String password,String namePersonal, String email, String phoneNumber)
     {
         Connection conn = connectToDatabase();
         Statement stmt;

@@ -32,26 +32,15 @@ public class User implements Serializable
 
 	public void signIn(ChatClient chat, String username, String password)
 	{
-		signInForm = new SignInForm(username,password);
+		this.signInForm = new SignInForm(username,password);
 		chat.handleMessageFromClientUI(signInForm);
 	}
 
-	public void signUp(String name, String username, String password, int phoneNumber, String email)
+	public void signUp(ChatClient chat, String name, String username, String password, int phoneNumber, String email)
 	{
-		SignUpForm signUpForm = new SignUpForm(name, username, password, phoneNumber, email, m_chat);
+		this.signUpForm = new SignUpForm(name, username, password, phoneNumber, email, chat);
 		MemberCard clientCard = signUpForm.createMemberCard();
-		try {
-			m_chat.sendToServer(clientCard);
-		}
-		catch(IOException ex) {}
-		boolean res = (boolean) m_chat.receiveObjectFromServer();
-		if(res){
-			System.out.println("You are signed up now. Please sign in using your personalName and password!");
-		}
-		else
-		{
-			System.out.println("Something went wrong. Please try again.");
-		}
+		chat.handleMessageFromClientUI(clientCard);
 	}
 
 	public Catalog viewCatalog(String request, int searchType)

@@ -46,6 +46,12 @@ public class SearchScreen implements ChatIF, Serializable{
     private Label messageLabel;
 
     @FXML
+    public void initialize()
+    {
+
+    }
+
+    @FXML
     void SearchByCity(ActionEvent event) throws IOException{
         if (requestField.getText().isEmpty()) {
             messageLabel.setText("Please enter your search request");
