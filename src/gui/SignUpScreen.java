@@ -8,6 +8,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
@@ -34,7 +36,6 @@ public class SignUpScreen implements ChatIF, Serializable
     public TextField nameText;
     public TextField phoneText;
     public TextField emailText;
-    public Label messageLabel;
 
     @FXML
     public void submitButton(ActionEvent actionEvent) throws IOException
@@ -42,7 +43,8 @@ public class SignUpScreen implements ChatIF, Serializable
         if (usernameText.getText().isEmpty() || passwordText.getText().isEmpty() || nameText.getText().isEmpty() ||
             phoneText.getText().isEmpty() || emailText.getText().isEmpty())
         {
-            messageLabel.setText("Please fill again, some fields are empty");
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Please fill again, some fields are empty.", ButtonType.OK);
+            alert.showAndWait();
         }
         else {
             MainClient.result = null;
@@ -66,6 +68,8 @@ public class SignUpScreen implements ChatIF, Serializable
                 boolean signedUp = ((boolean) res);
                 if (signedUp)
                 {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION, "You have signed up! Please login in the next screen", ButtonType.OK);
+                    alert.showAndWait();
                     ((Node)actionEvent.getSource()).getScene().getWindow().hide();
                     Stage signInStage = new Stage();
 
@@ -81,11 +85,13 @@ public class SignUpScreen implements ChatIF, Serializable
                     signInStage.show();
                 }
                 else {
-                    messageLabel.setText("Try different username");
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "This Username is taken. Try different one.", ButtonType.OK);
+                    alert.showAndWait();
                 }
             }
             else {
-                messageLabel.setText("Server error, please try again");
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Server error, please try again", ButtonType.OK);
+                alert.showAndWait();
             }
         }
     }
