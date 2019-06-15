@@ -1,6 +1,6 @@
 package user.manager;
 import chat.ChatClient;
-import database.report.ReportActivity;
+import command.ReportActivity;
 import command.Editor;
 import user.Permission;
 import user.worker.Worker;
@@ -11,10 +11,16 @@ abstract class Manager extends Worker implements Editor, Serializable
 {
 	private ReportActivity reporter;
 
-	public Manager(String namePersonal_, String nameUser_, String password_, int phoneNumber_, String email_, Permission permission_, ChatClient chat_){
+	public Manager(String namePersonal_, String nameUser_, String password_, int phoneNumber_, String email_, ChatClient chat_, Permission permission_){
 		super(namePersonal_,nameUser_,password_,phoneNumber_,email_,chat_);
 		reporter = new ReportActivity(namePersonal_);
 		this.permission = permission_;
+	}
+
+	public Manager(String id ,String namePersonal_, String nameUser_, String password_, String phoneNumber_, String email_, ChatClient chat_, String permission_)
+	{
+		super(id, namePersonal_,nameUser_,password_,phoneNumber_,email_,chat_, permission_);
+		reporter = new ReportActivity(namePersonal_);
 	}
 
 	public void viewReport(){
@@ -23,7 +29,7 @@ abstract class Manager extends Worker implements Editor, Serializable
 
 	public ReportActivity getReportActivity()
 	{
-		return new ReportActivity(namePersonal);
+		return new ReportActivity(personalName);
 	}
 
 }

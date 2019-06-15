@@ -13,7 +13,11 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import server.ClientServerStatus;
 import user.User;
+import user.manager.CompanyManager;
+import user.manager.ContentManager;
 import user.member.MemberCard;
+import user.worker.ContentWorker;
+import user.worker.Worker;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -73,16 +77,15 @@ public class SignInScreen implements ChatIF, Serializable
                         break;
 
                 }
-                usernameText.clear();
-                usernameText.setPromptText("Enter Username");
-                passwordText.clear();
-                passwordText.setPromptText("Enter Password");
+//                usernameText.clear();
+//                usernameText.setPromptText("Enter Username");
+//                passwordText.clear();
+//                passwordText.setPromptText("Enter Password");
             }
 
             else if (res instanceof MemberCard)
             {
                 memberSignedIn = ((MemberCard) res);
-                MainClient.personalName = memberSignedIn.getNamePersonal();
                 MainClient.permission = memberSignedIn.getPermission();
 
                 switch (memberSignedIn.getPermission())
@@ -117,37 +120,41 @@ public class SignInScreen implements ChatIF, Serializable
                         memberStage.show();
                         break;
 
-                    case CONTENT_WORKER:
                     case WORKER:
-                        // Goto Worker Menu screen TODO Daniel's
-                        ((Node)actionEvent.getSource()).getScene().getWindow().hide();
-                        Stage workerStage = new Stage();
-                        workerStage.setTitle("Worker Page");
-                        workerStage.setOnCloseRequest(e -> {
-                            e.consume();
-                            System.out.print("");
-                        });
-                        Pane rootWorker = FXMLLoader.load(getClass().getResource("fxml/worker-screen.fxml"));
-                        Scene workerScene = new Scene(rootWorker);
-                        workerStage.setScene(workerScene);
-                        workerStage.show();
+                        // Goto Worker Menu screen
+                        Worker worker = new Worker(memberSignedIn.getMemberIDByString(), memberSignedIn.getPersonalName(),
+                                memberSignedIn.getUserName(), memberSignedIn.getPassword(),
+                                memberSignedIn.getPhoneNumberByString(), memberSignedIn.getEmail(), null,
+                                memberSignedIn.getPermissionByString());
+                        MainClient.memberSignedIn = worker;
+                        workerPage(actionEvent);
+                        break;
+
+                    case CONTENT_WORKER:
+                        ContentWorker contentWorker = new ContentWorker(memberSignedIn.getMemberIDByString(), memberSignedIn.getPersonalName(),
+                            memberSignedIn.getUserName(), memberSignedIn.getPassword(),
+                            memberSignedIn.getPhoneNumberByString(), memberSignedIn.getEmail(), null,
+                            memberSignedIn.getPermissionByString());
+                        MainClient.memberSignedIn = contentWorker;
+                        workerPage(actionEvent);
+                        break;
+
+                    case CONTENT_MANAGER:
+                        ContentManager contentManager = new ContentManager(memberSignedIn.getMemberIDByString(), memberSignedIn.getPersonalName(),
+                                memberSignedIn.getUserName(), memberSignedIn.getPassword(),
+                                memberSignedIn.getPhoneNumberByString(), memberSignedIn.getEmail(), null,
+                                memberSignedIn.getPermissionByString());
+                        MainClient.memberSignedIn = contentManager;
+                        managerPage(actionEvent);
                         break;
 
                     case COMPANY_MANAGER:
-                    case CONTENT_MANAGER:
-                        // Goto Manager Menu screen TODO Daniel's
-                        ((Node)actionEvent.getSource()).getScene().getWindow().hide();
-                        Stage managerStage = new Stage();
-                        managerStage.setTitle("Manager Page");
-                        managerStage.setOnCloseRequest(e -> {
-                            e.consume();
-                            System.out.print("");
-                        });
-                        Pane rootManager = FXMLLoader.load(getClass().getResource("fxml/manager-screen.fxml"));
-                        Scene managerScene = new Scene(rootManager);
-                        managerStage.setScene(managerScene);
-                        managerStage.show();
-                        break;
+                        CompanyManager companyManager = new CompanyManager(memberSignedIn.getMemberIDByString(), memberSignedIn.getPersonalName(),
+                                memberSignedIn.getUserName(), memberSignedIn.getPassword(),
+                                memberSignedIn.getPhoneNumberByString(), memberSignedIn.getEmail(), null,
+                                memberSignedIn.getPermissionByString());
+                        MainClient.memberSignedIn = companyManager;
+                        managerPage(actionEvent);
                 }
             }
 
@@ -157,6 +164,36 @@ public class SignInScreen implements ChatIF, Serializable
                 messageLabel.setText("Server Error!");
             }
         }
+    }
+
+    private void workerPage(ActionEvent actionEvent) throws IOException
+    {
+        ((Node)actionEvent.getSource()).getScene().getWindow().hide();
+        Stage workerStage = new Stage();
+        workerStage.setTitle("Worker Page");
+        workerStage.setOnCloseRequest(e -> {
+            e.consume();
+            System.out.print("");
+        });
+        Pane rootWorker = FXMLLoader.load(getClass().getResource("fxml/worker-screen.fxml"));
+        Scene workerScene = new Scene(rootWorker);
+        workerStage.setScene(workerScene);
+        workerStage.show();
+    }
+
+    private void managerPage(ActionEvent actionEvent) throws IOException
+    {
+        ((Node)actionEvent.getSource()).getScene().getWindow().hide();
+        Stage managerStage = new Stage();
+        managerStage.setTitle("Manager Page");
+        managerStage.setOnCloseRequest(e -> {
+            e.consume();
+            System.out.print("");
+        });
+        Pane rootManager = FXMLLoader.load(getClass().getResource("fxml/manager-screen.fxml"));
+        Scene managerScene = new Scene(rootManager);
+        managerStage.setScene(managerScene);
+        managerStage.show();
     }
 
     @FXML

@@ -16,6 +16,10 @@ public class Worker extends MemberCard implements Serializable
 		workerID = NextworkerID++;
 	}
 
+	public Worker(String id, String namePersonal_, String nameUser_, String password_, String phoneNumber_, String email_, ChatClient chat_, String permission){
+		super(id, namePersonal_,nameUser_,password_,phoneNumber_,email_,chat_ , permission);
+	}
+
 	public int getWorkerID() {
 		return workerID;
 	}

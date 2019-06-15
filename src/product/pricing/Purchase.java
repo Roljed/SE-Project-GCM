@@ -1,6 +1,8 @@
 package product.pricing;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -53,12 +55,36 @@ public class Purchase implements Serializable
 		return purchaseID;
 	}
 
+	public String getPurchaseIDByString() {
+		return String.valueOf(purchaseID);
+	}
+
 	public String getCostByString() {
 		return String.valueOf(purchasedCost);
 	}
 
 	public Date getDateOfPurchase() {
 		return dateOfPurchase;
+	}
+
+	public String getPurchasedCityIDByString() {
+		String tmp="";
+		for(int i=0; i<purchasedCityID.length; i++)
+			tmp=tmp+","+String.valueOf(purchasedCityID[i]);
+		return tmp;
+	}
+
+	public String getPurchasedMapIDByString() {
+		String tmp="";
+		for(int i=0; i<purchasedMapID.length; i++)
+			tmp=tmp+","+String.valueOf(purchasedMapID[i]);
+		return tmp;
+	}
+	public String getDateOfPurchaseByString() {
+		String pattern = "dd/MM/yyyy";
+		DateFormat df = new SimpleDateFormat(pattern);
+		String date = df.format(dateOfPurchase);
+		return date;
 	}
 
 	public int[] getPurchasedCityID() {
