@@ -7,10 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import server.ClientServerStatus;
@@ -39,21 +36,13 @@ public class SignInScreen implements ChatIF, Serializable
     public TextField usernameText;
     public TextField passwordText;
 
-    @FXML
-    public Label messageLabel;
-
-    @FXML
-    private void initialize()
-    {
-        messageLabel.setText("");
-    }
-
 
     @FXML
     public void submitButton(ActionEvent actionEvent) throws IOException
     {
         if (usernameText.getText().isEmpty() || passwordText.getText().isEmpty()) {
-            messageLabel.setText("Please enter Username and Password");
+           Alert alert = new Alert(Alert.AlertType.ERROR, "Please Enter Username and Password.", ButtonType.OK);
+           alert.showAndWait();
         }
         else {
             String username = usernameText.getText();
@@ -68,7 +57,6 @@ public class SignInScreen implements ChatIF, Serializable
 
             User user = new User(chat);
             user.signIn(chat, username, password);
-            messageLabel.setText("Login information sent to Server.");
             while (MainClient.result == null)
             {
                 System.out.print("");
@@ -81,23 +69,38 @@ public class SignInScreen implements ChatIF, Serializable
                 switch (clientServerStatus)
                 {
                     case WRONG_USERNAME_OR_PASSWORD:
-                        messageLabel.setText("Wrong Username or Password.");
-                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Wrong Username or Password." , ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
-                        alert.showAndWait();
+                        System.out.println("Wrong Username or Password");
+                        Alert error = new Alert(Alert.AlertType.ERROR, "Wrong Username or Password." , ButtonType.OK);
+                        error.showAndWait();
 
-                        if (alert.getResult() == ButtonType.YES) {
-                            System.out.println("YES");
+                        if (error.getResult() == ButtonType.OK) {
+                            usernameText.clear();
+                            usernameText.setPromptText("Enter Username");
+                            passwordText.clear();
+                            passwordText.setPromptText("Enter Password");
                         }
+
                         break;
                     case CONNECTED:
-                        messageLabel.setText("User already connected");
-                        break;
+                        System.out.println("User already connected");
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION, "User already connected. Want to login with different username?" , ButtonType.YES, ButtonType.NO);
+                        alert.showAndWait();
 
+                        if (alert.getResult() == ButtonType.YES)
+                        {
+                            usernameText.clear();
+                            usernameText.setPromptText("Enter Username");
+                            passwordText.clear();
+                            passwordText.setPromptText("Enter Password");
+                        }
+
+                        if (alert.getResult() == ButtonType.NO)
+                        {
+                            System.out.println("Going to main screen");
+                            mainPage(actionEvent);
+                        }
+                        break;
                 }
-//                usernameText.clear();
-//                usernameText.setPromptText("Enter Username");
-//                passwordText.clear();
-//                passwordText.setPromptText("Enter Password");
             }
 
             else if (res instanceof MemberCard)
@@ -179,7 +182,8 @@ public class SignInScreen implements ChatIF, Serializable
             else
             {
                 System.out.println("Error! Returned message from server didn't matched.");
-                messageLabel.setText("Server Error!");
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Returned message from server didn't matched.", ButtonType.OK);
+                alert.showAndWait();
             }
         }
     }
@@ -214,14 +218,8 @@ public class SignInScreen implements ChatIF, Serializable
         managerStage.show();
     }
 
-    @FXML
-    public void backButton(ActionEvent actionEvent) throws IOException
+    private void mainPage(ActionEvent actionEvent) throws  IOException
     {
-        // TODO after all scenes are build
-//        Stage mainScreenStage = new Stage();
-//        mainScreenStage.setScene(MainClient.sceneStack.peek());
-//        mainScreenStage.show();
-
         ((Node)actionEvent.getSource()).getScene().getWindow().hide();
         Stage mainScreenStage = new Stage();
         FXMLLoader loader = new FXMLLoader();
@@ -236,6 +234,17 @@ public class SignInScreen implements ChatIF, Serializable
         Scene mainScreenScene = new Scene(root);
         mainScreenStage.setScene(mainScreenScene);
         mainScreenStage.show();
+    }
+
+    @FXML
+    public void backButton(ActionEvent actionEvent) throws IOException
+    {
+        // TODO after all scenes are build
+//        Stage mainScreenStage = new Stage();
+//        mainScreenStage.setScene(MainClient.sceneStack.peek());
+//        mainScreenStage.show();
+
+        mainPage(actionEvent);
     }
 
     @Override
