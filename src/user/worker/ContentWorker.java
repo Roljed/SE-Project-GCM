@@ -12,4 +12,8 @@ public class ContentWorker extends Worker implements Editor, Serializable
 		super(namePersonal_, nameUser_, password_, phoneNumber_, email_, chat_);
 		permission = Permission.CONTENT_WORKER;
 	}
+
+	public ContentWorker(String id, String namePersonal_, String nameUser_, String password_, String phoneNumber_, String email_, ChatClient chat_, String permission){
+		super(id, namePersonal_, nameUser_, password_, phoneNumber_, email_, chat_, permission);
+	}
 }

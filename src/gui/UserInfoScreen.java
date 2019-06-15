@@ -66,9 +66,9 @@ public class UserInfoScreen implements ChatIF, Serializable
 
     public UserInfoScreen(MemberCard memberCard) {
         this.memberCard=memberCard;
-        Username.setText(memberCard.getNameUser());
+        Username.setText(memberCard.getUserName());
         Password.setText(memberCard.getPassword());
-        FullName.setText(memberCard.getNamePersonal());
+        FullName.setText(memberCard.getPersonalName());
         PhoneNumber.setText(memberCard.getPhoneNumberByString());
         Email.setText(memberCard.getEmail());
     }
@@ -86,7 +86,7 @@ public class UserInfoScreen implements ChatIF, Serializable
             if (!UpdatePhoneNumber.getText().isEmpty())
                 memberCard.setPhoneNumber(UpdatePhoneNumber.getText());
             if (!UpadateFullName.getText().isEmpty())
-                memberCard.setNamePersonal(UpadateFullName.getText());
+                memberCard.setPersonalName(UpadateFullName.getText());
             if (!UpdateEmail.getText().isEmpty())
                 memberCard.setEmail(UpdateEmail.getText());
             List<MemberCard> update= new ArrayList<>();

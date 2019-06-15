@@ -10,7 +10,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import server.ClientServerStatus;
 import user.User;
 
 import java.io.IOException;
@@ -58,6 +60,33 @@ public class SignUpScreen implements ChatIF, Serializable
                 System.out.print("");
             }
             Object res = MainClient.result;
+
+            if (res instanceof Boolean)
+            {
+                boolean signedUp = ((boolean) res);
+                if (signedUp)
+                {
+                    ((Node)actionEvent.getSource()).getScene().getWindow().hide();
+                    Stage signInStage = new Stage();
+
+                    signInStage.setTitle("Sign In");
+                    signInStage.setOnCloseRequest(e -> {
+                        e.consume();
+                        System.out.print("SignUp screen closed. Moving to Sign In screen.");
+                    });
+
+                    Pane root = FXMLLoader.load(getClass().getResource("fxml/sign-in.fxml"));
+                    Scene signInScene = new Scene(root);
+                    signInStage.setScene(signInScene);
+                    signInStage.show();
+                }
+                else {
+                    messageLabel.setText("Try different username");
+                }
+            }
+            else {
+                messageLabel.setText("Server error, please try again");
+            }
         }
     }
 

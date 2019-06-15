@@ -1,5 +1,6 @@
-package database.report;
+package command;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 
 /**

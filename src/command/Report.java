@@ -1,5 +1,6 @@
-package database.report;
+package command;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -8,7 +9,7 @@ import java.util.Date;
 * @author Avi Ayeli
 */
 
-public abstract class Report
+public abstract class Report implements Serializable
 {
 	private String activeManager;
 	private Date date;

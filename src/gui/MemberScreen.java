@@ -1,5 +1,6 @@
 package gui;
 
+import chat.ChatClient;
 import chat.common.ChatIF;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,6 +21,8 @@ import java.io.Serializable;
  */
 public class MemberScreen implements ChatIF, Serializable
 {
+    protected ChatClient chat = MainClient.getChat();
+
     @FXML
     protected Label welcomeMessage;
 
@@ -83,20 +86,20 @@ public class MemberScreen implements ChatIF, Serializable
     @FXML
     protected void logoutButton(ActionEvent actionEvent) throws IOException
     {
+        chat.handleMessageFromClientUI("#SignOut " + MainClient.memberSignedIn.getUserName());
         ((Node)actionEvent.getSource()).getScene().getWindow().hide();
-        Stage signInStage = new Stage();
-        FXMLLoader loader = new FXMLLoader();
-
-        signInStage.setTitle("Sign In");
-        signInStage.setOnCloseRequest(e -> {
+        Stage mainScreenStage = new Stage();
+        mainScreenStage.setTitle("GCM Main Screen");
+        mainScreenStage.setOnCloseRequest(e ->
+        {
             e.consume();
-            System.out.print("Main screen closed. Moving to Sign In screen.");
+            System.out.print("");
         });
 
-        Pane root = FXMLLoader.load(getClass().getResource("fxml/sign-in.fxml"));
-        Scene signInScene = new Scene(root);
-        signInStage.setScene(signInScene);
-        signInStage.show();
+        Pane root = FXMLLoader.load(getClass().getResource("fxml/main.fxml"));
+        Scene mainScreenScene = new Scene(root);
+        mainScreenStage.setScene(mainScreenScene);
+        mainScreenStage.show();
     }
 
     @FXML

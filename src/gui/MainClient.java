@@ -17,7 +17,6 @@ import user.member.MemberCard;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.Stack;
 
 
 /**
@@ -94,11 +93,10 @@ public class MainClient extends Application implements Initializable, ChatIF
     public void submitButton(ActionEvent actionEvent) throws Exception
     {
         host = serverIPTextField.getText();
-        this.chat = new ChatClient(host, DEFAULT_PORT, this);
+        chat = new ChatClient(host, DEFAULT_PORT, this);
 
         ((Node)actionEvent.getSource()).getScene().getWindow().hide();
         Stage mainScreenStage = new Stage();
-        FXMLLoader loader = new FXMLLoader();
         mainScreenStage.setTitle("GCM Main Screen");
         mainScreenStage.setOnCloseRequest(e ->
         {
@@ -106,7 +104,7 @@ public class MainClient extends Application implements Initializable, ChatIF
             System.out.print("");
         });
 
-        Pane root = loader.load(getClass().getResource("fxml/main.fxml").openStream());
+        Pane root = FXMLLoader.load(getClass().getResource("fxml/main.fxml"));
         Scene mainScreenScene = new Scene(root);
         mainScreenStage.setScene(mainScreenScene);
         mainScreenStage.show();

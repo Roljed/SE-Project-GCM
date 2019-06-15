@@ -12,9 +12,9 @@ public class MemberCard extends User implements Serializable
 {
 	private int memberID;
 	protected static int NextMemberID = 0;
-	protected String namePersonal;
+	protected String personalName;
 	private String password;
-	protected String nameUser;
+	protected String userName;
 	private int phoneNumber;
 	private String email;
 	protected SignInForm signInForm = null;
@@ -23,9 +23,9 @@ public class MemberCard extends User implements Serializable
 
 	public MemberCard(String namePersonal_, String nameUser_, String password_, int phoneNumber_, String email_, ChatClient client, Permission permission_){
 		super(client);
-		namePersonal = namePersonal_;
+		personalName = namePersonal_;
 		password = password_;
-		nameUser = nameUser_;
+		userName = nameUser_;
 		phoneNumber = phoneNumber_;
 		email = email_;
 		if (permission_ == null)
@@ -43,9 +43,9 @@ public class MemberCard extends User implements Serializable
 	{
 		super(m_chat);
 		memberID = Integer.parseInt(id_);
-		namePersonal = namePersonal_;
+		personalName = namePersonal_;
 		password = password_;
-		nameUser = nameUser_;
+		userName = nameUser_;
 		phoneNumber = Integer.parseInt(phoneNumber_);
 		email = email_;
 		if (permission_ == null)
@@ -71,16 +71,16 @@ public class MemberCard extends User implements Serializable
 		return memberID;
 	}
 
-	public String getNamePersonal() {
-		return namePersonal;
+	public String getPersonalName() {
+		return personalName;
 	}
 
 	public String getPassword() {
 		return password;
 	}
 
-	public String getNameUser() {
-		return nameUser;
+	public String getUserName() {
+		return userName;
 	}
 
 	public int getPhoneNumber() {
@@ -109,7 +109,7 @@ public class MemberCard extends User implements Serializable
 
 	public void setnameUser(String nameUser)
 	{
-		this.nameUser = nameUser;
+		this.userName = nameUser;
 	}
 
 	public void setPhoneNumber(String phoneNumber)
@@ -117,9 +117,9 @@ public class MemberCard extends User implements Serializable
 		this.phoneNumber = Integer.parseInt(phoneNumber);
 	}
 
-	public void setNamePersonal(String namePersonal)
+	public void setPersonalName(String personalName)
 	{
-		this.namePersonal = namePersonal;
+		this.personalName = personalName;
 	}
 
 	public void setEmail(String email)

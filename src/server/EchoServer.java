@@ -11,6 +11,7 @@ import product.City;
 import product.DigitalMap;
 import product.Tour;
 import product.content.Site;
+import product.pricing.Purchase;
 import user.member.MemberCard;
 import user.member.SignInForm;
 import chat.common.ChatIF;
@@ -88,11 +89,12 @@ public class EchoServer extends AbstractServer
                 e.printStackTrace();
             }
         }
+
         if (msg instanceof MemberCard)
         {
             try {
-                client.sendToClient(ConnectionToDatabase.AddClient(((MemberCard) msg).getMemberIDByString(),((MemberCard) msg).getPermissionByString(),
-                        ((MemberCard) msg).getNameUser(),((MemberCard) msg).getPassword(),((MemberCard) msg).getNamePersonal(),((MemberCard) msg).getEmail(),
+                client.sendToClient(ConnectionToDatabase.SignUp(((MemberCard) msg).getMemberIDByString(),((MemberCard) msg).getPermissionByString(),
+                        ((MemberCard) msg).getUserName(),((MemberCard) msg).getPassword(),((MemberCard) msg).getPersonalName(),((MemberCard) msg).getEmail(),
                         ((MemberCard) msg).getPhoneNumberByString()));
             } catch (IOException e) {
                 e.printStackTrace();
@@ -102,7 +104,7 @@ public class EchoServer extends AbstractServer
         if (msg instanceof List)
         {
             try {
-                client.sendToClient(ConnectionToDatabase.UpdateClient(((MemberCard) msg).getMemberIDByString(),((MemberCard) msg).getNameUser(), ((MemberCard) msg).getNamePersonal(),
+                client.sendToClient(ConnectionToDatabase.UpdateClient(((MemberCard) msg).getMemberIDByString(),((MemberCard) msg).getUserName(), ((MemberCard) msg).getPersonalName(),
                         ((MemberCard) msg).getPassword(), ((MemberCard) msg).getPhoneNumberByString(), ((MemberCard) msg).getEmail(),
                         ((MemberCard) msg).getPermissionByString()));
             } catch (IOException e) {
@@ -140,7 +142,7 @@ public class EchoServer extends AbstractServer
         if (msg instanceof String)
         {
             String[] message = ((String) msg).split(" ");
-            if (message[0].equals("signout"))
+            if (message[0].equals("#SignOut"))
             {
                 try {
                     client.sendToClient(ConnectionToDatabase.SignOut(message[1]));
@@ -193,6 +195,17 @@ public class EchoServer extends AbstractServer
         {
             try {
                 client.sendToClient(ConnectionToDatabase.SearchByCityID(msg.toString()));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (msg instanceof Purchase)
+        {
+            try {
+                client.sendToClient(ConnectionToDatabase.AddPurchase(((Purchase) msg).getPurchaseIDByString(),((Purchase) msg).getDateOfPurchaseByString(),
+                        ((Purchase) msg).getCostByString(),((Purchase) msg).getPurchaseTypeInString(),((Purchase) msg).getPurchasedCityIDByString(),
+                        ((Purchase) msg).getPurchasedMapIDByString()));
             } catch (IOException e) {
                 e.printStackTrace();
             }

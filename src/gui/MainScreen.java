@@ -45,7 +45,6 @@ public class MainScreen
 
         ((Node)actionEvent.getSource()).getScene().getWindow().hide();
         Stage signUpStage = new Stage();
-        FXMLLoader loader = new FXMLLoader();
 
         signUpStage.setTitle("Sign Up");
         signUpStage.setOnCloseRequest(e -> {
@@ -54,7 +53,7 @@ public class MainScreen
         });
 
 
-        Pane root = loader.load(getClass().getResource("fxml/sign-up.fxml").openStream());
+        Pane root = FXMLLoader.load(getClass().getResource("fxml/sign-up.fxml"));
         Scene SignUpScene = new Scene(root);
         signUpStage.setScene(SignUpScene);
         signUpStage.show();

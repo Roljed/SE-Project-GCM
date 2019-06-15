@@ -19,7 +19,10 @@ import product.content.Location;
 import product.content.Site;
 import product.pricing.MapCost;
 import product.pricing.Purchase;
+import user.manager.CompanyManager;
 import user.member.MemberCard;
+import user.worker.ContentWorker;
+import user.worker.Worker;
 
 
 /**
@@ -134,14 +137,19 @@ public class ConnectionToDatabase
             String[] message = purchaseID.split(",");
             for (String s : message) {
                 rs=stmt.executeQuery("SELECT ID FROM Purchase_Database WHERE ID = '" + s + "'");
+                if (!rs.next()){break;}
                 int id=Integer.parseInt(rs.getString("ID"));
                 rs=stmt.executeQuery("SELECT DateOfPurchase FROM Purchase_Database WHERE ID = '" + s + "'");
+                if (!rs.next()){break;}
                 Date date=rs.getDate("DateOfPurchase");
                 rs=stmt.executeQuery("SELECT Cost FROM Purchase_Database WHERE ID = '" + s + "'");
+                if (!rs.next()){break;}
                 int cost=rs.getInt("Cost");
                 rs=stmt.executeQuery("SELECT PurchaseType FROM Purchase_Database WHERE ID = '" + s + "'");
+                if (!rs.next()){break;}
                 String type=rs.getString("PurchaseType");
                 rs=stmt.executeQuery("SELECT PurchaseCities FROM Purchase_Database WHERE ID = '" + s + "'");
+                if (!rs.next()){break;}
                 String stringcities=rs.getString("PurchaseCities");
                 int[] purchasedCityID = null;
                 String[] tmpCity=stringcities.split(",");
@@ -157,9 +165,13 @@ public class ConnectionToDatabase
                     purchasedMapID[i++]=Integer.parseInt(m);
                 purchaseHistory.add(new Purchase(id,date,purchasedCityID,purchasedMapID,cost,type));
             }
-            memberCard=new MemberCard(ID, pn, un, ps, phone, email, null,per);
+            memberCard = new MemberCard(ID, pn, un, ps, phone, email, null,per);
             memberCard.setPurchaseHistory(purchaseHistory);
-            stmt.executeUpdate("UPDATE User_Database SET Registered = 'YES' WHERE UserName='"+ nameUser +"'");
+            if (pn.equals("Tester") == false)
+            {
+                stmt.executeUpdate("UPDATE User_Database SET Registered = 'YES' WHERE UserName='"+ nameUser +"'");
+            }
+
             if (stmt != null) {
                 try {
                     stmt.close();
@@ -226,7 +238,7 @@ public class ConnectionToDatabase
         return true;
     }
 
-    public static boolean AddClient (String ID, String permission,String nameUser,String password,String namePersonal, String email, String phoneNumber)
+    public static boolean SignUp (String ID, String permission,String nameUser,String password,String namePersonal, String email, String phoneNumber)
     {
         Connection conn = connectToDatabase();
         Statement stmt;
@@ -726,5 +738,25 @@ public class ConnectionToDatabase
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static boolean AddPurchase (String ID, String date,String cost,String purchasedType,String purchasedCities, String purchasedMaps)
+    {
+        Connection conn = connectToDatabase();
+        Statement stmt;
+        try
+        {
+            stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
+            stmt.executeUpdate("INSERT INTO Purchase_Database VALUES ('" + ID +"','" + date + "','" + cost + "','" + purchasedType + "','" +
+                    purchasedCities +"','" + purchasedMaps + "')");
+            if (stmt != null) {
+                try {
+                    stmt.close();
+                } catch (SQLException e) {}
+            }
+        } catch (SQLException e) {
+            return false;
+        }
+        return true;
     }
 }
