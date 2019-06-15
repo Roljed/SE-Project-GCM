@@ -24,7 +24,7 @@ import user.member.MemberCard;
  * @author Avi Ayeli
  */
 
-public class UserInfo implements ChatIF, Serializable
+public class UserInfoScreen implements ChatIF, Serializable
 {
 
     static private final int SERVER_PORT = 5555;
@@ -64,7 +64,7 @@ public class UserInfo implements ChatIF, Serializable
     @FXML // fx:id="Password"
     private Label Password; // Value injected by FXMLLoader
 
-    public UserInfo(MemberCard memberCard) {
+    public UserInfoScreen(MemberCard memberCard) {
         this.memberCard=memberCard;
         Username.setText(memberCard.getNameUser());
         Password.setText(memberCard.getPassword());

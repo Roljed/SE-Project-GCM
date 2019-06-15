@@ -1,5 +1,5 @@
-/**
- * Sample Skeleton for 'search.fxml' Controller Class
+/*
+  Sample Skeleton for 'search.fxml' Controller Class
  */
 
 package gui;
@@ -22,7 +22,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import user.User;
 
-public class Search implements ChatIF, Serializable{
+public class SearchScreen implements ChatIF, Serializable{
 
     static private final int SERVER_PORT = 5555;
     private ChatClient chat = MainClient.getChat();
@@ -43,7 +43,7 @@ public class Search implements ChatIF, Serializable{
     @FXML // fx:id="searchByCityName"
     private Button searchByCityName; // Value injected by FXMLLoader
 
-    public Label messageLabel;
+    private Label messageLabel;
 
     @FXML
     void SearchByCity(ActionEvent event) throws IOException{
