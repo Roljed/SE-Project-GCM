@@ -7,12 +7,15 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  *  Member screen for all sign up users of the system
@@ -30,6 +33,11 @@ public class MemberScreen implements ChatIF, Serializable
     public void initialize()
     {
         welcomeMessage.setText("Welcome " + MainClient.personalName);
+        Date thisDate = new Date();
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, "testing", ButtonType.OK);
+        alert.showAndWait();
+
     }
 
     @FXML

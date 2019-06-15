@@ -3,6 +3,7 @@ package product;
 import user.Permission;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -180,23 +181,23 @@ public class City implements Serializable
         this.cityVersion += 1;
     }
 
-    public void out(Permission permission)
-    {
-        if (permission != null && (permission != Permission.USER && permission != Permission.MEMBER))
-        {
-            System.out.println("\tID: " + cityID);
-        }
-        System.out.println("\tCity Name: " + cityName);
-        System.out.println("\tMap Count:" + cityMaps.size());
-
-        int countContent = 0;
-        for (Map.Entry<Integer, DigitalMap> map : cityMaps.entrySet())
-        {
-            System.out.println("\t\tMap Description" + map.getValue().getDigitalMapDescription());
-            countContent += map.getValue().getDigitalMapContents().size();
-        }
-
-        System.out.println("\tNumber Of Contents: " + countContent);
-        System.out.println("\tNumber Of Tours: " + cityTours.size());
-    }
+//    public void out(Permission permission)
+//    {
+//        if (permission != null && (permission != Permission.USER && permission != Permission.MEMBER))
+//        {
+//            System.out.println("\tID: " + cityID);
+//        }
+//        System.out.println("\tCity Name: " + cityName);
+//        System.out.println("\tMap Count:" + cityMaps.size());
+//
+//        int countContent = 0;
+//        for (Map.Entry<Integer, DigitalMap> map : cityMaps.entrySet())
+//        {
+//            System.out.println("\t\tMap Description" + map.getValue().getDigitalMapDescription());
+//            countContent += map.getValue().getDigitalMapContents().size();
+//        }
+//
+//        System.out.println("\tNumber Of Contents: " + countContent);
+//        System.out.println("\tNumber Of Tours: " + cityTours.size());
+//    }
 }

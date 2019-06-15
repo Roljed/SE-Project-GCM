@@ -1,7 +1,7 @@
 package command;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 
 /**
 *
@@ -12,18 +12,18 @@ import java.util.Date;
 public abstract class Report implements Serializable
 {
 	private String activeManager;
-	private Date date;
+	private LocalDate date;
 	
 	Report(String activeManager){
 		this.activeManager=activeManager;
-		date=new Date();
+		date = LocalDate.now();
 	}
 	
 	public String getActiveManager() {
 		return activeManager;
 	}
 	
-	public Date getDate() {
+	public LocalDate getDate() {
 		return date;
 	}
 	

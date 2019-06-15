@@ -3,6 +3,7 @@ package product.pricing;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -33,7 +34,7 @@ public class Purchase implements Serializable
 		this.userID = userID;
 		this.purchasedCityID = purchasedCityID;
 		purchaseID = purchaseIDNext++;
-		this.dateOfPurchase=new Date();
+		this.dateOfPurchase = new Date();
 		this.purchasedMapID=purchasedMapID;
 		this.purchasedCost=purchasedCost;
 		this.purchaseType = purchaseType;
@@ -44,7 +45,7 @@ public class Purchase implements Serializable
 	{
 		this.userID = userID;
 		this.purchaseID = purchaseID;
-		this.dateOfPurchase=dateOfPurchase;
+		this.dateOfPurchase = dateOfPurchase;
 		this.purchasedCityID=purchasedCityID;
 		this.purchasedMapID=purchasedMapID;
 		this.purchasedCost=purchasedCost;

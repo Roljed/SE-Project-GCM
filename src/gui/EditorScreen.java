@@ -5,6 +5,7 @@
 package gui;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.Date;
 
 import chat.ChatClient;
@@ -244,7 +245,7 @@ public class EditorScreen {
                 resultLbl.setText("Please enter the required fields");
             }
             else {
-                City newCity = new City(addCity_cityName.getText(),null,null,Double.parseDouble(addCity_price.getText()),1,new Date());
+                City newCity = new City(addCity_cityName.getText(),null,null,Double.parseDouble(addCity_price.getText()),1, new Date());
                 boolean res = ((Editor)(MainClient.memberSignedIn)).addCity(newCity,chat);
                 if (res) {
                     resultLbl.setText("The information was updated");
