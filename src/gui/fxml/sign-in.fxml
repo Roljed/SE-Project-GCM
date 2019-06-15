@@ -13,11 +13,6 @@
             <Font name="Gisha" size="24.0" />
          </font>
       </Label>
-      <Label fx:id="messageLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="84.0" layoutY="71.0" prefHeight="29.0" prefWidth="92.0" text="Label" textAlignment="CENTER" textFill="#078d1f">
-         <font>
-            <Font name="Consolas" size="14.0" />
-         </font>
-      </Label>
       <Label layoutX="20.0" layoutY="104.0" text="Username" AnchorPane.bottomAnchor="179.0" />
       <TextField fx:id="usernameText" layoutX="90.0" layoutY="82.0" promptText="Enter username" AnchorPane.bottomAnchor="175.0" />
       <Label layoutX="22.0" layoutY="142.0" text="Password" AnchorPane.bottomAnchor="141.0" />

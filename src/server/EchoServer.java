@@ -200,7 +200,7 @@ public class EchoServer extends AbstractServer
             try {
                 client.sendToClient(ConnectionToDatabase.AddPurchase(((Purchase) msg).getPurchaseIDByString(),((Purchase) msg).getDateOfPurchaseByString(),
                         ((Purchase) msg).getCostByString(),((Purchase) msg).getPurchaseTypeInString(),((Purchase) msg).getPurchasedCityIDByString(),
-                        ((Purchase) msg).getPurchasedMapIDByString()));
+                        ((Purchase) msg).getPurchasedMapIDByString(), ((Purchase) msg).getUserIDByString()));
             } catch (IOException e) {
                 e.printStackTrace();
             }

@@ -8,7 +8,6 @@ import java.sql.Statement;
 import java.util.*;
 
 import command.catalog.Catalog;
-import gui.MainClient;
 import product.City;
 import product.DigitalMap;
 import product.Tour;
@@ -17,11 +16,7 @@ import product.content.Location;
 import product.content.Site;
 import product.pricing.MapCost;
 import product.pricing.Purchase;
-import user.manager.CompanyManager;
 import user.member.MemberCard;
-import user.worker.ContentWorker;
-import user.worker.Worker;
-
 
 /**
  *
@@ -938,7 +933,7 @@ public class ConnectionToDatabase
         }
         try
         {
-            stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
+
             stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
             ResultSet rs = stmt.executeQuery("SELECT PurchaseID FROM User_Database WHERE ID = '" + userID + "'");
             String purchaseID=rs.getString("PurchaseID");
