@@ -13,6 +13,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import user.Permission;
+import user.member.MemberCard;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -33,6 +34,7 @@ public class MainClient extends Application implements Initializable, ChatIF
 
 //    public static Stack<Scene> sceneStack = new Stack<>(); TODO after all scenes are build
     public static Object result;    // holds server return message
+    public static MemberCard memberSignedIn = null;
 
     @FXML
     public TextField serverIPTextField;
@@ -58,6 +60,11 @@ public class MainClient extends Application implements Initializable, ChatIF
     public static ChatClient getChat()
     {
         return chat;
+    }
+
+    public static int getPort()
+    {
+        return DEFAULT_PORT;
     }
 
     @Override

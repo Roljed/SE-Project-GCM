@@ -18,13 +18,16 @@ import user.member.MemberCard;
 import java.io.IOException;
 import java.io.Serializable;
 
+import static gui.MainClient.memberSignedIn;
+
 /**
  *  TODO explain class
  * @author Yaad Nahshon
  */
 public class SignInScreen implements ChatIF, Serializable
 {
-    static private final int SERVER_PORT = 5555;
+    private String host = MainClient.getHost();
+    private int port = MainClient.getPort();
     private ChatClient chat = MainClient.getChat();
 
     public TextField usernameText;
@@ -45,8 +48,9 @@ public class SignInScreen implements ChatIF, Serializable
 
             if (this.chat == null)
             {
-                this.chat = new ChatClient(MainClient.getHost(),SERVER_PORT, this);
+                this.chat = new ChatClient(host, port, this);
             }
+
             User user = new User(chat);
             user.signIn(chat, username, password);
             messageLabel.setText("Login information sent to Server.");
@@ -77,11 +81,11 @@ public class SignInScreen implements ChatIF, Serializable
 
             else if (res instanceof MemberCard)
             {
-                MemberCard member = ((MemberCard) res);
-                MainClient.personalName = member.getNamePersonal();
-                MainClient.permission = member.getPermission();
+                memberSignedIn = ((MemberCard) res);
+                MainClient.personalName = memberSignedIn.getNamePersonal();
+                MainClient.permission = memberSignedIn.getPermission();
 
-                switch (member.getPermission())
+                switch (memberSignedIn.getPermission())
                 {
                     case USER:
                         // Goto Search screen
