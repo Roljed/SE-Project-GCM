@@ -26,18 +26,19 @@ public class Search implements Serializable
         catalog = null;
     }
 
-    public static Catalog searchByID(int objectID, ProductType productType, Permission permission)
+    public static Object searchByID(int objectID, ProductType productType, Permission permission)
     {
         String type = productTypeToString(productType);
         assert !type.equals("none");
 
         try {
-            chat.sendToServer("#Search product" + type + " " + objectID);
-            return chat.receiveObjectFromServer();
+            chat.sendToServer("#Search product " + type + " " + objectID);
+//            return chat.receiveObjectFromServer();
         }
         catch(IOException ex) {
             return null;
         }
+        return null;
     }
 
     public Catalog searchByCityName(String cityName)
@@ -45,7 +46,7 @@ public class Search implements Serializable
 
         //TODO: duplicated code. Lines 25-41 && 66-82
         try {
-            chat.sendToServer("#Search city" + cityName);
+            chat.sendToServer("#Search city name " + cityName);
             List<?> objectCities = (List<?>)chat.receiveObjectFromServer();
             if(objectCities.isEmpty()) {
                 return null;
@@ -66,22 +67,24 @@ public class Search implements Serializable
     public Catalog searchBySite(String siteName)
     {
         try {
-            chat.sendToServer("#Search site" + siteName);
-            return chat.receiveObjectFromServer();
+            chat.sendToServer("#Search site name " + siteName);
+//            return chat.receiveObjectFromServer();
         }
         catch(IOException ex) {
             return null;
         }
+        return null;
     }
 
     public Catalog searchByDescription(String description) {
         try {
-            chat.sendToServer("#Search object" + description);
-            return chat.receiveObjectFromServer();
+            chat.sendToServer("#Search object " + description);
+//            return chat.receiveObjectFromServer();
         }
         catch(IOException ex) {
             return null;
         }
+        return null;
     }
 
 

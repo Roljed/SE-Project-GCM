@@ -59,11 +59,7 @@ public class MemberCard extends User implements Serializable
 	}
 
 
-	public void buyMap(Purchase purchase){
-		purchaseHistory.add(purchase);
-	}
-
-	public void buySubscription(Purchase purchase){
+	public void addPurchase(Purchase purchase){
 		purchaseHistory.add(purchase);
 	}
 
@@ -107,7 +103,7 @@ public class MemberCard extends User implements Serializable
 		this.password = password;
 	}
 
-	public void setnameUser(String nameUser)
+	public void setUserName(String nameUser)
 	{
 		this.userName = nameUser;
 	}

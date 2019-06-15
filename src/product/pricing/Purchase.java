@@ -17,28 +17,32 @@ import product.DigitalMap;
 
 public class Purchase implements Serializable
 {
+
+	private int userID;
 	private int purchaseID;
 	private static int purchaseIDNext = 0;
 	private Date dateOfPurchase;
-	private int[] purchasedCityID;
+	private int purchasedCityID;
 	private int[] purchasedMapID;
-	private int purchasedCost;
+	private double purchasedCost;
 	private PurchaseType purchaseType;
 	private List<DigitalMap> digitalMap;
 
-	public Purchase(int[] purchasedCityID, int[] purchasedMapID, int purchasedCost, PurchaseType purchaseType)
+	public Purchase(int userID, int purchasedCityID, int[] purchasedMapID, double purchasedCost, PurchaseType purchaseType)
 	{
+		this.userID = userID;
+		this.purchasedCityID = purchasedCityID;
 		purchaseID = purchaseIDNext++;
 		this.dateOfPurchase=new Date();
-		this.purchasedCityID=purchasedCityID;
 		this.purchasedMapID=purchasedMapID;
 		this.purchasedCost=purchasedCost;
 		this.purchaseType = purchaseType;
 		this.digitalMap=new ArrayList<DigitalMap>();
 	}
 
-	public Purchase(int purchaseID, Date dateOfPurchase, int[] purchasedCityID, int[] purchasedMapID, int purchasedCost, String purchaseType)
+	public Purchase(int userID, int purchaseID, Date dateOfPurchase, int purchasedCityID, int[] purchasedMapID, double purchasedCost, String purchaseType)
 	{
+		this.userID = userID;
 		this.purchaseID = purchaseID;
 		this.dateOfPurchase=dateOfPurchase;
 		this.purchasedCityID=purchasedCityID;
@@ -50,6 +54,25 @@ public class Purchase implements Serializable
 			this.purchaseType=PurchaseType.SUBSCRIPTION;
 		this.digitalMap=new ArrayList<DigitalMap>();
 	}
+
+	public int getUserID() {
+		return userID;
+	}
+
+	public String getUserIDByString()
+	{
+		return Integer.toString(this.userID);
+	}
+
+	public void setUserID(int userID) {
+		this.userID = userID;
+	}
+
+	public void setUserIDFromString(String userID)
+	{
+		this.userID = Integer.parseInt(userID);
+	}
+
 
 	public int getPurchaseID() {
 		return purchaseID;
@@ -68,10 +91,7 @@ public class Purchase implements Serializable
 	}
 
 	public String getPurchasedCityIDByString() {
-		String tmp="";
-		for(int i=0; i<purchasedCityID.length; i++)
-			tmp=tmp+","+String.valueOf(purchasedCityID[i]);
-		return tmp;
+		return String.valueOf(purchasedCityID);
 	}
 
 	public String getPurchasedMapIDByString() {
@@ -87,7 +107,7 @@ public class Purchase implements Serializable
 		return date;
 	}
 
-	public int[] getPurchasedCityID() {
+	public int getPurchasedCityID() {
 		return purchasedCityID;
 	}
 
@@ -99,7 +119,7 @@ public class Purchase implements Serializable
 		return String.valueOf(purchasedMapID.length);
 	}
 
-	public int getPurchasedCost() {
+	public double getPurchasedCost() {
 		return purchasedCost;
 	}
 

@@ -106,7 +106,7 @@ public class UserInfoScreen implements ChatIF, Serializable
             if (!UpadatePassword.getText().isEmpty())
                 memberSignedIn.setPassword(UpadatePassword.getText());
             if (!UpdateUsername.getText().isEmpty())
-                memberSignedIn.setnameUser(UpdateUsername.getText());
+                memberSignedIn.setUserName(UpdateUsername.getText());
             if (!UpdatePhoneNumber.getText().isEmpty())
                 memberSignedIn.setPhoneNumber(UpdatePhoneNumber.getText());
             if (!UpadateFullName.getText().isEmpty())

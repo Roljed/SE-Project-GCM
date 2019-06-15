@@ -15,8 +15,8 @@ public class Subscription extends Purchase implements Serializable
 {
 	private Date dateOfExpiration;
 	
-	public Subscription(int[] purchasedCityID, int[] purchasedMapID, int purchasedCost, PurchaseType purchaseType) {
-		super(purchasedCityID,purchasedMapID,purchasedCost, purchaseType);
+	public Subscription(int userID, int purchasedCityID, int[] purchasedMapID, int purchasedCost, PurchaseType purchaseType) {
+		super(userID, purchasedCityID,purchasedMapID,purchasedCost, purchaseType);
 		dateOfExpiration=new Date();
 		if (purchaseType == PurchaseType.SUBSCRIPTION)
 		{

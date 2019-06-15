@@ -7,6 +7,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
@@ -36,7 +38,16 @@ public class SignInScreen implements ChatIF, Serializable
 
     public TextField usernameText;
     public TextField passwordText;
+
+    @FXML
     public Label messageLabel;
+
+    @FXML
+    private void initialize()
+    {
+        messageLabel.setText("");
+    }
+
 
     @FXML
     public void submitButton(ActionEvent actionEvent) throws IOException
@@ -70,7 +81,13 @@ public class SignInScreen implements ChatIF, Serializable
                 switch (clientServerStatus)
                 {
                     case WRONG_USERNAME_OR_PASSWORD:
-                        messageLabel.setText("Wrong personalName or password.");
+                        messageLabel.setText("Wrong Username or Password.");
+                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Wrong Username or Password." , ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
+                        alert.showAndWait();
+
+                        if (alert.getResult() == ButtonType.YES) {
+                            System.out.println("YES");
+                        }
                         break;
                     case CONNECTED:
                         messageLabel.setText("User already connected");

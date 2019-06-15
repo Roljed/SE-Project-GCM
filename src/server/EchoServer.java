@@ -161,7 +161,7 @@ public class EchoServer extends AbstractServer
                         e.printStackTrace();
                     }
                 }
-                if (message[1].equals("city")) {
+                else if (message[1].equals("city")) {
                     try {
                         client.sendToClient(ConnectionToDatabase.SearchByCityName(message[3]));
                     } catch (IOException e) {
@@ -169,14 +169,14 @@ public class EchoServer extends AbstractServer
                     }
                 }
 
-                if (message[1].equals("content")) {
+                else if (message[1].equals("content")) {
                     try {
                         client.sendToClient(ConnectionToDatabase.SearchBySite(message[3]));
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
-                if (message[2].equals("description")) {
+                else if (message[1].equals("description")) {
                     try {
                         client.sendToClient(ConnectionToDatabase.SearchByDescription(message[3]));
                     } catch (IOException e) {

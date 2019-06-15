@@ -48,12 +48,12 @@ public class Site extends Content implements Serializable
         this.siteAccessibility = siteAccessibility;
     }
 
-    public Site(int newContentID,Location newLocationCoordinate, double newDuration, String siteName, String siteType, String siteDescription, int siteAccessibility)
+    public Site(int newContentID, Location newLocationCoordinate, double newDuration, String siteName, String siteType, String siteDescription, boolean siteAccessibility)
     {
         super(newContentID,newLocationCoordinate, newDuration);
         this.siteName = siteName;
         this.siteDescription = siteDescription;
-        this.siteAccessibility = siteAccessibility == 1;
+        this.siteAccessibility = siteAccessibility;
         this.siteType = getSiteTypeStringToClassification(siteType);
     }
 
