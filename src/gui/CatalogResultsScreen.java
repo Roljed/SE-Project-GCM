@@ -9,10 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -28,6 +25,8 @@ import java.util.Map;
  */
 public class CatalogResultsScreen
 {
+
+
 
     private static class CityToDisplay
     {
@@ -81,9 +80,11 @@ public class CatalogResultsScreen
 
         for (City city : catalog.getCities())
         {
+            // City details and firs map description
             Map.Entry<Integer, DigitalMap> firstMap = city.getCityMaps().entrySet().iterator().next();
             cityToDisplay.add(new CityToDisplay(city.getCityName(), Integer.toString(city.getCityMaps().size()),
                     Integer.toString(city.getCountContent()), Integer.toString(city.getCityTours().size()), Double.toString(city.getCityPrice()), firstMap.getValue().getDigitalMapDescription()));
+            // Descriptions of the the rest city maps
             for (Map.Entry<Integer, DigitalMap> cityMap : city.getCityMaps().entrySet())
             {
                 cityToDisplay.add(new CityToDisplay(null,null,null, null ,null , cityMap.getValue().getDigitalMapDescription()));
@@ -94,18 +95,19 @@ public class CatalogResultsScreen
 
     public void makePurchaseButton(ActionEvent actionEvent)
     {
-        if (purchaseOption.hasProperties())
-        {
-            if (purchaseOption.getSelectedToggle().equals(oneTimePurchaseRadioButton))
-            {
-
-            }
-            else
-            {
-
-            }
+        if (tableView.getSelectionModel().getSelectedItem() == null) {
+            messageLabel.setText("No selection made");
+            return;
         }
 
+        if (purchaseOption.getSelectedToggle().equals(oneTimePurchaseRadioButton))
+        {
+            System.out.println("One Time Purchase");
+        }
+        else
+        {
+            System.out.println("Subscription");
+        }
     }
 
     public void backButton(ActionEvent actionEvent) throws IOException
@@ -192,6 +194,9 @@ public class CatalogResultsScreen
 
     @FXML
     public RadioButton subscriptionRadioButton;
+
+    @FXML
+    public Label messageLabel;
 
     private ToggleGroup purchaseOption;
 }

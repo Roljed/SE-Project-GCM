@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import command.catalog.Catalog;
 import gui.MainClient;
 import product.City;
 import product.DigitalMap;
@@ -477,7 +478,7 @@ public class ConnectionToDatabase
         return TourByID(ID);
     }
 
-    public static List<City> SearchByCityName(String cityName)
+    public static Catalog SearchByCityName(String cityName)
     {
         Connection conn= connectToDatabase();
         Statement stmt;
@@ -485,30 +486,50 @@ public class ConnectionToDatabase
         {
             stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
             ResultSet rs = stmt.executeQuery("SELECT ID FROM City_Database WHERE Name = '" + cityName + "'");
+            if(!rs.next()) return null;
             List<City> cityList = new ArrayList<City>();
-            if(rs.next())
+            HashMap<Integer, DigitalMap> cityMaps=new HashMap<Integer, DigitalMap>();
+            HashMap<Integer, Tour> cityTours=new HashMap<Integer, Tour>();
+            rs = stmt.executeQuery("SELECT Maps FROM City_Database WHERE Name = '" + cityName + "'");
+            String[] mapsString = rs.getString("Maps").split(",");
+            rs = stmt.executeQuery("SELECT Tours FROM City_Database WHERE Name = '" + cityName + "'");
+            String[] toursString = rs.getString("Tours").split(",");
+            int i=0;
+            for(String m: mapsString)
             {
-                HashMap<Integer, DigitalMap> cityMaps=new HashMap<Integer, DigitalMap>();
-                HashMap<Integer, Tour> cityTours=new HashMap<Integer, Tour>();
-                String[] mapsString = rs.getString("Maps").split(",");
-                String[] toursString = rs.getString("Tours").split(",");
-                int i=0;
-                for(String m: mapsString)
-                {
-                    DigitalMap temp=(DigitalMap) DigitalMapByID(mapsString[i]);
-                    cityMaps.put(temp.getDigitalMapID(),temp);
-                    i++;
-                }
-                i=0;
-                for(String t: toursString)
-                {
-                    Tour temp=(Tour) TourByID(toursString[i]);
-                    cityTours.put(temp.getTourID(),temp);
-                    i++;
-                }
-                cityList.add(new City(rs.getInt("ID"),rs.getString("Name"),cityMaps,cityTours,rs.getDouble("Price"),rs.getInt("Version"),rs.getDate("LastUpdatedDate")));
-                return cityList;
+                DigitalMap temp=(DigitalMap) DigitalMapByID(mapsString[i]);
+                cityMaps.put(temp.getDigitalMapID(),temp);
+                i++;
             }
+            i=0;
+            for(String t: toursString)
+            {
+                Tour temp=(Tour) TourByID(toursString[i]);
+                cityTours.put(temp.getTourID(),temp);
+                i++;
+            }
+            rs = stmt.executeQuery("SELECT ID FROM City_Database WHERE Name = '" + cityName + "'");
+            if(!rs.next()) return null;
+            int id=rs.getInt("ID");
+            rs = stmt.executeQuery("SELECT Name FROM City_Database WHERE Name = '" + cityName + "'");
+            if(!rs.next()) return null;
+            String name=rs.getString("Name");
+            rs = stmt.executeQuery("SELECT Price FROM City_Database WHERE Name = '" + cityName + "'");
+            if(!rs.next()) return null;
+            double price=rs.getDouble("Price");
+            rs = stmt.executeQuery("SELECT Version FROM City_Database WHERE Name = '" + cityName + "'");
+            if(!rs.next()) return null;
+            int Version=rs.getInt("Version");
+            rs = stmt.executeQuery("SELECT LastUpdatedDate FROM City_Database WHERE Name = '" + cityName + "'");
+            if(!rs.next()) return null;
+            Date date=rs.getDate("Date");
+            cityList.add(new City(id,name,cityMaps,cityTours,price,Version,date));
+            if(cityList.isEmpty()) {
+                return null;
+            }
+            Catalog catalog = new Catalog(null,null,null,cityList);
+            catalog.viewCatalog();
+            return catalog;
         } catch (SQLException e) {
             e.printStackTrace();
         }
