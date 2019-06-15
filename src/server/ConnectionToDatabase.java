@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import gui.MainClient;
 import product.City;
 import product.DigitalMap;
 import product.Tour;
@@ -183,7 +184,7 @@ public class ConnectionToDatabase
         return  memberCard;
     }
 
-    public static boolean UpdateClient(String ID, String nameUser, String namePersonal, String password, String phoneNumber, String email, String permission)
+    public static void UpdateClient(String ID, String nameUser, String namePersonal, String password, String phoneNumber, String email, String permission)
     {
         Connection conn= connectToDatabase();
         Statement stmt = null;
@@ -204,15 +205,11 @@ public class ConnectionToDatabase
             if (stmt != null) {
                 try {
                     stmt.close();
-                } catch (SQLException e) {
-                    return false;
-                }
+                } catch (SQLException e) {}
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
         }
-        return true;
     }
 
     public static boolean SignOut (String nameUser)
@@ -758,5 +755,39 @@ public class ConnectionToDatabase
             return false;
         }
         return true;
+    }
+
+    public static Object ReturnMemberCardByID(String ID)
+    {
+        Connection conn = connectToDatabase();
+        Statement stmt;
+        ResultSet rs = null;
+        String name = "";
+        MemberCard memberCard = null;
+        try
+        {
+            stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
+            rs = stmt.executeQuery("SELECT Password FROM User_Database WHERE ID = '" + ID + "'");
+            if(!rs.next()){return null;}
+            String password=rs.getString("Password");
+            rs = stmt.executeQuery("SELECT UserName FROM User_Database WHERE ID = '" + ID + "'");
+            if(!rs.next()){return null;}
+            String userName=rs.getString("UserName");
+            rs = stmt.executeQuery("SELECT PhoneNumber FROM User_Database WHERE ID = '" + ID + "'");
+            if(!rs.next()){return null;}
+            String phone=rs.getString("PhoneNumber");
+            rs = stmt.executeQuery("SELECT Email FROM User_Database WHERE ID = '" + ID + "'");
+            if(!rs.next()){return null;}
+            String email=rs.getString("Email");
+            memberCard = new MemberCard(ID, null, userName, password, phone, email, null,null);
+            if (stmt != null) {
+                try {
+                    stmt.close();
+                } catch (SQLException e) {}
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return  memberCard;
     }
 }

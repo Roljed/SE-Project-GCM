@@ -26,13 +26,13 @@ public class Search implements Serializable
         catalog = null;
     }
 
-    public static Object searchByID(int objectID, ProductType productType, Permission permission)
+    public static Catalog searchByID(int objectID, ProductType productType, Permission permission)
     {
         String type = productTypeToString(productType);
         assert !type.equals("none");
 
         try {
-            chat.sendToServer("#search product" + type + " " + objectID);
+            chat.sendToServer("#Search product" + type + " " + objectID);
             return chat.receiveObjectFromServer();
         }
         catch(IOException ex) {
@@ -45,7 +45,7 @@ public class Search implements Serializable
 
         //TODO: duplicated code. Lines 25-41 && 66-82
         try {
-            chat.sendToServer("#search city name" + cityName);
+            chat.sendToServer("#Search city" + cityName);
             List<?> objectCities = (List<?>)chat.receiveObjectFromServer();
             if(objectCities.isEmpty()) {
                 return null;
@@ -66,18 +66,8 @@ public class Search implements Serializable
     public Catalog searchBySite(String siteName)
     {
         try {
-            chat.sendToServer("#search site name" + siteName);
-            List<?> objectSites = (List<?>)chat.receiveObjectFromServer();
-            if(objectSites.isEmpty()) {
-                return null;
-            }
-            List<Site> sites = new ArrayList<>();
-            for (Object obj : objectSites) {
-                sites.add((Site)obj);
-            }
-            catalog = new Catalog(sites,null,null,null);
-            catalog.viewCatalog();
-            return catalog;
+            chat.sendToServer("#Search site" + siteName);
+            return chat.receiveObjectFromServer();
         }
         catch(IOException ex) {
             return null;
@@ -86,24 +76,8 @@ public class Search implements Serializable
 
     public Catalog searchByDescription(String description) {
         try {
-            chat.sendToServer("#search object description" + description);
-            List<?> objectCities = (List<?>)chat.receiveObjectFromServer();
-            if(objectCities.isEmpty()) {
-                return null;
-            }
-            List<City> cities = new ArrayList<>();
-            List<Site> sites = new ArrayList<>();
-            for (Object obj : objectCities) {
-                if(obj instanceof City)
-                {
-                    cities.add((City)obj);
-                }
-                else {
-                    sites.add((Site)obj);
-                }
-            }
-            catalog = new Catalog(sites,null,null,cities);
-            return catalog;
+            chat.sendToServer("#Search object" + description);
+            return chat.receiveObjectFromServer();
         }
         catch(IOException ex) {
             return null;

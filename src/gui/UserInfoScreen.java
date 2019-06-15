@@ -1,7 +1,11 @@
 package gui;
 
+import static gui.MainClient.memberSignedIn;
+
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import chat.ChatClient;
 import chat.common.ChatIF;
@@ -14,6 +18,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import user.member.MemberCard;
 
 /**
  * User Info screen
@@ -76,49 +81,47 @@ public class UserInfoScreen implements ChatIF, Serializable
         primaryStage.setScene(scene);
         primaryStage.show();
     }
-
-    public void initialize()
+    @FXML
+    public void initialize() throws IOException
     {
-        //Username.setText("");
-        //Password.setText("");
-        FullName.setText(MainClient.personalName);
-        //PhoneNumber.setText("");
-        //Email.setText("");
+        Username.setText(memberSignedIn.getUserName());
+        Password.setText(memberSignedIn.getPassword());
+        FullName.setText(memberSignedIn.getPersonalName());
+        PhoneNumber.setText(memberSignedIn.getPhoneNumberByString());
+        Email.setText(memberSignedIn.getEmail());
     }
 
     @FXML
     void btn_Update(ActionEvent event) throws IOException {
-        if (UpadatePassword.getText().isEmpty() && UpdateUsername.getText().isEmpty() &&
-                UpdatePhoneNumber.getText().isEmpty() && UpadateFullName.getText().isEmpty() && UpdateEmail.getText().isEmpty())
+        if (UpadatePassword.getText().equals("") && UpdateUsername.getText().equals("") &&
+                UpdatePhoneNumber.getText().equals("") && UpadateFullName.getText().equals("") && UpdateEmail.getText().equals(""))
             messageLabel.setText("There's nothing to update!");
-        if (this.chat == null)
-        {
-            this.chat = new ChatClient(host, port, this);
-        }
 
-		/* else {
+        else {
+            if (this.chat == null)
+            {
+                this.chat = new ChatClient(host, port, this);
+            }
+
             if (!UpadatePassword.getText().isEmpty())
-                memberCard.setPassword(UpadatePassword.getText());
+                memberSignedIn.setPassword(UpadatePassword.getText());
             if (!UpdateUsername.getText().isEmpty())
-                memberCard.setnameUser(UpdateUsername.getText());
+                memberSignedIn.setnameUser(UpdateUsername.getText());
             if (!UpdatePhoneNumber.getText().isEmpty())
-                memberCard.setPhoneNumber(UpdatePhoneNumber.getText());
+                memberSignedIn.setPhoneNumber(UpdatePhoneNumber.getText());
             if (!UpadateFullName.getText().isEmpty())
-                memberCard.setPersonalName(UpadateFullName.getText());
+                memberSignedIn.setPersonalName(UpadateFullName.getText());
             if (!UpdateEmail.getText().isEmpty())
-                memberCard.setEmail(UpdateEmail.getText());
+                memberSignedIn.setEmail(UpdateEmail.getText());
             List<MemberCard> update= new ArrayList<>();
-            update.add(memberCard);
+            update.add(memberSignedIn);
             try {
                 chat.sendToServer(update);
             }
             catch(IOException ex) {}
-            boolean res = (boolean) chat.receiveObjectFromServer();
-            if(res)
-                messageLabel.setText("Updated successfully!");
-            else
-                messageLabel.setText("Something went worng, please try again");
-        }*/
+            messageLabel.setText("Updated successfully!");
+
+        }
     }
 
     @FXML
