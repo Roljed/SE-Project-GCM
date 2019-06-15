@@ -5,11 +5,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import command.catalog.Catalog;
 import gui.MainClient;
@@ -153,19 +149,15 @@ public class ConnectionToDatabase
                 rs=stmt.executeQuery("SELECT PurchaseCities FROM Purchase_Database WHERE ID = '" + s + "'");
                 if (!rs.next()){break;}
                 String stringcities=rs.getString("PurchaseCities");
-                int[] purchasedCityID = null;
-                String[] tmpCity=stringcities.split(",");
-                int i=0;
-                for (String c : tmpCity)
-                    purchasedCityID[i++]=Integer.parseInt(c);
+                int purchasedCityID=Integer.parseInt(stringcities);
                 rs=stmt.executeQuery("SELECT PurchaseMaps FROM Purchase_Database WHERE ID = '" + s + "'");
                 String stringmaps=rs.getString("PurchaseMaps");
                 int[] purchasedMapID = null;
                 String[] tmpMaps=stringmaps.split(",");
-                i=0;
+                int i=0;
                 for (String m : tmpMaps)
                     purchasedMapID[i++]=Integer.parseInt(m);
-                purchaseHistory.add(new Purchase(id,date,purchasedCityID,purchasedMapID,cost,type));
+                purchaseHistory.add(new Purchase(Integer.parseInt(ID), id,date,purchasedCityID,purchasedMapID,cost,type));
             }
             memberCard = new MemberCard(ID, pn, un, ps, phone, email, null,per);
             memberCard.setPurchaseHistory(purchaseHistory);
@@ -494,19 +486,23 @@ public class ConnectionToDatabase
             String[] mapsString = rs.getString("Maps").split(",");
             rs = stmt.executeQuery("SELECT Tours FROM City_Database WHERE Name = '" + cityName + "'");
             String[] toursString = rs.getString("Tours").split(",");
-            int i=0;
-            for(String m: mapsString)
+
+            for(String m : mapsString)
             {
-                DigitalMap temp=(DigitalMap) DigitalMapByID(mapsString[i]);
-                cityMaps.put(temp.getDigitalMapID(),temp);
-                i++;
+                List<DigitalMap> temp_digitalMap_lsit = DigitalMapByID(m).getDigitalMaps();
+                for (DigitalMap temp_map : temp_digitalMap_lsit)
+                {
+                    cityMaps.put(temp_map.getDigitalMapID() ,temp_map);
+                }
             }
-            i=0;
+
             for(String t: toursString)
             {
-                Tour temp=(Tour) TourByID(toursString[i]);
-                cityTours.put(temp.getTourID(),temp);
-                i++;
+                List<Tour> temp_tour_list = TourByID(t).getTours();
+                for (Tour temp_tour : temp_tour_list)
+                {
+                    cityTours.put(temp_tour.getTourID(),temp_tour);
+                }
             }
             rs = stmt.executeQuery("SELECT ID FROM City_Database WHERE Name = '" + cityName + "'");
             if(!rs.next()) return null;
@@ -536,63 +532,145 @@ public class ConnectionToDatabase
         return null;
     }
 
-    public static Object SearchBySite(String contentName)
-    {
-        return null;
-    }
-
-    public static Site SiteByID(String ID)
+    public static Catalog SearchBySite(String contentName)
     {
         Connection conn= connectToDatabase();
         Statement stmt;
         try
         {
+            List<Site> SiteList = new ArrayList<Site>();
+            stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
+            ResultSet rs = stmt.executeQuery("SELECT ID FROM Content_Database WHERE Name = '" + contentName + "'");
+            if(!rs.next()) return null;
+            int id=rs.getInt("ID");
+            rs = stmt.executeQuery("SELECT Name FROM Content_Database WHERE Name = '" + contentName + "'");
+            if(!rs.next()) return null;
+            String name=rs.getString("Name");
+            rs = stmt.executeQuery("SELECT Coordinate FROM Content_Database WHERE Name = '" + contentName + "'");
+            if(!rs.next()) return null;
+            String[] coordinate = rs.getString("Coordinate").split(",");
+            Location LocationCoordinate = new Location(Double.parseDouble(coordinate[0]),Double.parseDouble(coordinate[1]));
+            rs = stmt.executeQuery("SELECT Duration FROM Content_Database WHERE Name = '" + contentName + "'");
+            if(!rs.next()) return null;
+            double duration=rs.getDouble("Duration");
+            rs = stmt.executeQuery("SELECT Type FROM Content_Database WHERE Name = '" + contentName + "'");
+            if(!rs.next()) return null;
+            String type=rs.getString("Type");
+            rs = stmt.executeQuery("SELECT Description FROM Content_Database WHERE Name = '" + contentName + "'");
+            if(!rs.next()) return null;
+            String description=rs.getString("Description");
+            rs = stmt.executeQuery("SELECT Accessibility FROM Content_Database WHERE Name = '" + contentName + "'");
+            if(!rs.next()) return null;
+            boolean accessibility=rs.getBoolean("Accessibility");
+            SiteList.add(new Site(id, LocationCoordinate, duration, name, type, description, accessibility));
+            if(SiteList.isEmpty()) {
+                return null;
+            }
+            Catalog catalog = new Catalog(SiteList,null,null,null);
+            catalog.viewCatalog();
+            return catalog;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static Catalog SiteByID(String ID)
+    {
+        Connection conn= connectToDatabase();
+        Statement stmt;
+        try
+        {
+            List<Site> SiteList = new ArrayList<Site>();
             stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
             ResultSet rs = stmt.executeQuery("SELECT ID FROM Content_Database WHERE ID = '" + ID + "'");
-            if(rs.next())
-            {
-                String[] coordinate = rs.getString("Coordinate").split(",");
-                Location location=new Location(Double.parseDouble(coordinate[0]),Double.parseDouble(coordinate[1]));
-                return new Site(rs.getInt("ID"),location,rs.getDouble("Duration"),rs.getString("Name"), rs.getString("Type"),
-                        rs.getString("Description"),rs.getInt("Accessibility"));
-
+            if(!rs.next()) return null;
+            int id=rs.getInt("ID");
+            rs = stmt.executeQuery("SELECT Name FROM Content_Database WHERE ID = '" + ID + "'");
+            if(!rs.next()) return null;
+            String name=rs.getString("Name");
+            rs = stmt.executeQuery("SELECT Coordinate FROM Content_Database WHERE ID = '" + ID + "'");
+            if(!rs.next()) return null;
+            String[] coordinate = rs.getString("Coordinate").split(",");
+            Location LocationCoordinate = new Location(Double.parseDouble(coordinate[0]),Double.parseDouble(coordinate[1]));
+            rs = stmt.executeQuery("SELECT Duration FROM Content_Database WHERE ID = '" + ID + "'");
+            if(!rs.next()) return null;
+            double duration=rs.getDouble("Duration");
+            rs = stmt.executeQuery("SELECT Type FROM Content_Database WHERE ID = '" + ID + "'");
+            if(!rs.next()) return null;
+            String type=rs.getString("Type");
+            rs = stmt.executeQuery("SELECT Description FROM Content_Database WHERE ID = '" + ID + "'");
+            if(!rs.next()) return null;
+            String description=rs.getString("Description");
+            rs = stmt.executeQuery("SELECT Accessibility FROM Content_Database WHERE ID = '" + ID + "'");
+            if(!rs.next()) return null;
+            boolean accessibility=rs.getBoolean("Accessibility");
+            SiteList.add(new Site(id, LocationCoordinate, duration, name, type, description, accessibility));
+            if(SiteList.isEmpty()) {
+                return null;
             }
+            Catalog catalog = new Catalog(SiteList,null,null,null);
+            catalog.viewCatalog();
+            return catalog;
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    public static DigitalMap DigitalMapByID(String ID)
+    public static Catalog DigitalMapByID(String ID)
     {
         Connection conn= connectToDatabase();
         Statement stmt;
         try
         {
+            List<DigitalMap> DigitalMapList = new ArrayList<DigitalMap>();
+            HashMap<Integer, Content> digitalMapContents = new HashMap<>();
             stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
             ResultSet rs = stmt.executeQuery("SELECT ID FROM Maps_Database WHERE ID = '" + ID + "'");
-            if(rs.next())
+            if(!rs.next()) return null;
+            int id=rs.getInt("ID");
+            rs = stmt.executeQuery("SELECT Version FROM Maps_Database WHERE ID = '" + ID + "'");
+            if(!rs.next()) return null;
+            double version=rs.getDouble("Version");
+            rs = stmt.executeQuery("SELECT Description FROM Maps_Database WHERE ID = '" + ID + "'");
+            if(!rs.next()) return null;
+            String description = rs.getString("Description");
+            rs = stmt.executeQuery("SELECT Contents FROM Maps_Database WHERE ID = '" + ID + "'");
+            if(!rs.next()) return null;
+            String[] contents=rs.getString("Contents").split(",");
+
+            for(String c: contents)
             {
-                HashMap<Integer, Content> digitalMapContents=new HashMap<>();
-                String[] contents = rs.getString("Contents").split(",");
-                int i=0;
-                for(String c: contents)
-                {
-                    Content temp=(Content) SiteByID(contents[i]);
-                    digitalMapContents.put(temp.getContendID(),temp);
-                    i++;
-                }
-                String[] cost = rs.getString("Cost").split(",");
-                MapCost mapcost= new MapCost(Double.parseDouble(cost[0]),Integer.parseInt(cost[1]),cost[2]);
-                return new DigitalMap(rs.getInt("ID"),rs.getDouble("Version"),rs.getString("Description"),digitalMapContents,mapcost);
+                List<Site> temp_site_list = Objects.requireNonNull(SiteByID(c)).getContents();
+               for (Site site : temp_site_list)
+               {
+                    digitalMapContents.put(site.getContendID(),site);
+               }
             }
+
+            rs = stmt.executeQuery("SELECT Cost FROM Maps_Database WHERE ID = '" + ID + "'");
+            if(!rs.next()) return null;
+            double cost=rs.getDouble("Cost");
+            rs = stmt.executeQuery("SELECT LastApproved FROM Maps_Database WHERE ID = '" + ID + "'");
+            if(!rs.next()) return null;
+            String lastApproved=rs.getString("LastApproved");
+            rs = stmt.executeQuery("SELECT LastModifiedDate FROM Maps_Database WHERE ID = '" + ID + "'");
+            if(!rs.next()) return null;
+            DigitalMapList.add(new DigitalMap(id,version,description,digitalMapContents,new MapCost(cost, id, lastApproved)));
+            if(DigitalMapList.isEmpty()) {
+                return null;
+            }
+            Catalog catalog = new Catalog(null,DigitalMapList,null,null);
+            catalog.viewCatalog();
+            return catalog;
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    public static City CityByID(String ID)
+    public static Catalog CityByID(String ID)
     {
         Connection conn= connectToDatabase();
         Statement stmt;
@@ -600,95 +678,157 @@ public class ConnectionToDatabase
         {
             stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
             ResultSet rs = stmt.executeQuery("SELECT ID FROM City_Database WHERE ID = '" + ID + "'");
-            if(rs.next())
+            if(!rs.next()) return null;
+            List<City> cityList = new ArrayList<City>();
+            HashMap<Integer, DigitalMap> cityMaps=new HashMap<Integer, DigitalMap>();
+            HashMap<Integer, Tour> cityTours=new HashMap<Integer, Tour>();
+            rs = stmt.executeQuery("SELECT Maps FROM City_Database WHERE ID = '" + ID + "'");
+            if(!rs.next()) return null;
+            String[] mapsString = rs.getString("Maps").split(",");
+            rs = stmt.executeQuery("SELECT Tours FROM City_Database WHERE ID = '" + ID + "'");
+            if(!rs.next()) return null;
+            String[] toursString = rs.getString("Tours").split(",");
+            for(String m : mapsString)
             {
-                HashMap<Integer, DigitalMap> cityMaps=new HashMap<>();
-                String[] digitalMap = rs.getString("Maps").split(",");
-                int i=0;
-                for(String d: digitalMap)
+                List<DigitalMap> temp_digitalMap_lsit = DigitalMapByID(m).getDigitalMaps();
+                for (DigitalMap temp_map : temp_digitalMap_lsit)
                 {
-                    DigitalMap temp=(DigitalMap) DigitalMapByID(digitalMap[i]);
-                    cityMaps.put(temp.getDigitalMapID(),temp);
-                    i++;
+                    cityMaps.put(temp_map.getDigitalMapID() ,temp_map);
                 }
-                i=0;
-                HashMap<Integer, Tour> cityTours=new HashMap<>();
-                String[] tour = rs.getString("Tours").split(",");
-                for(String t: tour)
-                {
-                    Tour temp=(Tour) TourByID(tour[i]);
-                    cityTours.put(temp.getTourID(),temp);
-                    i++;
-                }
-                return new City(rs.getInt("ID"),rs.getString("Name"),cityMaps, cityTours, rs.getDouble("Price"), rs.getInt("Version"),
-                        rs.getDate("LastUpdatedDate"));
-
             }
+
+            for(String t: toursString)
+            {
+                List<Tour> temp_tour_list = TourByID(t).getTours();
+                for (Tour temp_tour : temp_tour_list)
+                {
+                    cityTours.put(temp_tour.getTourID(),temp_tour);
+                }
+            }
+            rs = stmt.executeQuery("SELECT ID FROM City_Database WHERE ID = '" + ID + "'");
+            if(!rs.next()) return null;
+            int id=rs.getInt("ID");
+            System.out.println(id);
+            rs = stmt.executeQuery("SELECT Name FROM City_Database WHERE ID = '" + ID + "'");
+            if(!rs.next()) return null;
+            String name=rs.getString("Name");
+            rs = stmt.executeQuery("SELECT Price FROM City_Database WHERE ID = '" + ID + "'");
+            if(!rs.next()) return null;
+            double price=rs.getDouble("Price");
+            rs = stmt.executeQuery("SELECT Version FROM City_Database WHERE ID = '" + ID + "'");
+            if(!rs.next()) return null;
+            int Version=rs.getInt("Version");
+            rs = stmt.executeQuery("SELECT LastUpdatedDate FROM City_Database WHERE ID = '" + ID + "'");
+            if(!rs.next()) return null;
+            Date date=rs.getDate("Date");
+            cityList.add(new City(id,name,cityMaps,cityTours,price,Version,date));
+            if(cityList.isEmpty()) {
+                return null;
+            }
+            Catalog catalog = new Catalog(null,null,null,cityList);
+            catalog.viewCatalog();
+            return catalog;
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    public static Tour TourByID(String ID)
+    public static Catalog TourByID(String ID)
     {
         Connection conn= connectToDatabase();
         Statement stmt;
         try
         {
             stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
-            ResultSet rs = stmt.executeQuery("SELECT ID FROM Content_Database WHERE ID = '" + ID + "'");
-            if(rs.next())
+            List<Tour> tourList = new ArrayList<Tour>();
+            ResultSet rs = stmt.executeQuery("SELECT ID FROM Tour_Database WHERE ID = '" + ID + "'");
+            if(!rs.next()) return null;
+            int id=rs.getInt("ID");
+            rs = stmt.executeQuery("SELECT Name FROM Tour_Database WHERE ID = '" + ID + "'");
+            if(!rs.next()) return null;
+            String name=rs.getString("Name");
+            rs = stmt.executeQuery("SELECT Description FROM Tour_Database WHERE ID = '" + ID + "'");
+            if(!rs.next()) return null;
+            String description=rs.getString("Description");
+            rs = stmt.executeQuery("SELECT Duration FROM Tour_Database WHERE ID = '" + ID + "'");
+            if(!rs.next()) return null;
+            double duration=rs.getDouble("Duration");
+            rs = stmt.executeQuery("SELECT Contents FROM Tour_Database WHERE ID = '" + ID + "'");
+            if(!rs.next()) return null;
+            String[] contents=rs.getString("Contents").split(",");
+            List<Content> tourSequence=new ArrayList();
+            for(String c: contents)
             {
-                List<Content> tourSequence=new ArrayList<>();
-                String[] content = rs.getString("Contents").split(",");
-                int i=0;
-                for(String c: content)
+                List<Site> temp_site_list = Objects.requireNonNull(SiteByID(c)).getContents();
+                for (Site site : temp_site_list)
                 {
-                    Content temp=(Content) SiteByID(content[i]);
-                    tourSequence.add(temp);
-                    i++;
+                    tourSequence.add(site.getContendID(),site);
                 }
-                return new Tour(rs.getInt("ID"),rs.getString("Name"), rs.getString("Description"),tourSequence,rs.getDouble("Duration"));
             }
+            tourList.add(new Tour(id,name,description,tourSequence,duration));
+            if(tourList.isEmpty()) {
+                return null;
+            }
+            Catalog catalog = new Catalog(null,null,tourList,null);
+            catalog.viewCatalog();
+            return catalog;
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    public static List<Object> SearchByDescription(String description){
+    public static Catalog SearchByDescription(String description){
         Connection conn= connectToDatabase();
+        List<City> cityList = new ArrayList<City>();
+        List<Site> siteList = new ArrayList<Site>();
         Statement stmt;
         try
         {
-            List<Object> objects = new ArrayList<Object>();
             stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
             ResultSet rs = stmt.executeQuery("SELECT ID FROM City_Database WHERE Description CONTAINS '" + description + "'");
             while(true)
             {
                 if(rs.next())
                 {
+                    String id=rs.getString("ID");
                     HashMap<Integer, DigitalMap> cityMaps=new HashMap<>();
                     String[] digitalMap = rs.getString("Maps").split(",");
-                    int i=0;
-                    for(String d: digitalMap)
+
+                    for(String m : digitalMap)
                     {
-                        DigitalMap temp=(DigitalMap) DigitalMapByID(digitalMap[i]);
-                        cityMaps.put(temp.getDigitalMapID(),temp);
-                        i++;
+                        List<DigitalMap> temp_digitalMap_lsit = DigitalMapByID(m).getDigitalMaps();
+                        for (DigitalMap temp_map : temp_digitalMap_lsit)
+                        {
+                            cityMaps.put(temp_map.getDigitalMapID() ,temp_map);
+                        }
                     }
-                    i=0;
+
                     HashMap<Integer, Tour> cityTours=new HashMap<>();
-                    String[] tour = rs.getString("Tours").split(",");
-                    for(String t: tour)
+                    String[] toursString = rs.getString("Tours").split(",");
+                    for(String t: toursString)
                     {
-                        Tour temp=(Tour) TourByID(tour[i]);
-                        cityTours.put(temp.getTourID(),temp);
-                        i++;
+                        List<Tour> temp_tour_list = TourByID(t).getTours();
+                        for (Tour temp_tour : temp_tour_list)
+                        {
+                            cityTours.put(temp_tour.getTourID(),temp_tour);
+                        }
                     }
-                    objects.add(new City(rs.getInt("ID"),rs.getString("Name"),cityMaps, cityTours, rs.getDouble("Price"), rs.getInt("Version"),
-                            rs.getDate("LastUpdatedDate")));
+
+                    ResultSet rs2 = stmt.executeQuery("SELECT Name FROM City_Database WHERE ID = '" + id + "'");
+                    if(!rs2.next()) return null;
+                    String name=rs2.getString("Name");
+                    rs2 = stmt.executeQuery("SELECT Price FROM City_Database WHERE ID = '" + id + "'");
+                    if(!rs2.next()) return null;
+                    double price=rs2.getDouble("Price");
+                    rs2 = stmt.executeQuery("SELECT Version FROM City_Database WHERE ID = '" + id + "'");
+                    if(!rs2.next()) return null;
+                    int version=rs2.getInt("Version");
+                    rs2 = stmt.executeQuery("SELECT LastUpdatedDate FROM City_Database WHERE ID = '" + id + "'");
+                    if(!rs2.next()) return null;
+                    Date lastUpdatedDate=rs2.getDate("LastUpdatedDate");
+                    cityList.add(new City(Integer.parseInt(id),name,cityMaps, cityTours,price, version,lastUpdatedDate));
                 }
                 else {
                     break;
@@ -699,16 +839,33 @@ public class ConnectionToDatabase
             {
                 if(rs.next())
                 {
+                    String id=rs.getString("ID");
+                    ResultSet rs2 = stmt.executeQuery("SELECT Coordinate FROM Site_Database WHERE ID = '" + id + "'");
+                    if(!rs2.next()) return null;
                     String[] coordinates = rs.getString("Coordinate").split(",");
                     Location local = new Location(Double.parseDouble(coordinates[0]),Double.parseDouble(coordinates[1]));
-                    objects.add(new Site(rs.getInt("ID"),local,rs.getDouble("Duration"),rs.getString("Name"),rs.getString("Type"),
-                            rs.getString("Description"),rs.getInt("Accessibility")));
+                    rs2 = stmt.executeQuery("SELECT Duration FROM Site_Database WHERE ID = '" + id + "'");
+                    if(!rs2.next()) return null;
+                    double duration=rs2.getDouble("Duration");
+                    rs2 = stmt.executeQuery("SELECT Name FROM Site_Database WHERE ID = '" + id + "'");
+                    if(!rs2.next()) return null;
+                    String name=rs2.getString("Name");
+                    rs2 = stmt.executeQuery("SELECT Type FROM Site_Database WHERE ID = '" + id + "'");
+                    if(!rs2.next()) return null;
+                    String type=rs2.getString("Type");
+                    rs2 = stmt.executeQuery("SELECT Description FROM Site_Database WHERE ID = '" + id + "'");
+                    if(!rs2.next()) return null;
+                    String description2=rs2.getString("Description");
+                    rs2 = stmt.executeQuery("SELECT Accessibility FROM Site_Database WHERE ID = '" + id + "'");
+                    if(!rs2.next()) return null;
+                    boolean accessibility=rs2.getBoolean("Accessibility");
+                    siteList.add(new Site(Integer.parseInt(id),local,duration,name,type,description2,accessibility));
                 }
                 else {
                     break;
                 }
             }
-            return objects;
+            return new Catalog(siteList,null,null,cityList);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -732,19 +889,23 @@ public class ConnectionToDatabase
                     HashMap<Integer, Tour> cityTours=new HashMap<Integer, Tour>();
                     String[] mapsString = rs.getString("Maps").split(",");
                     String[] toursString = rs.getString("Tours").split(",");
-                    int i=0;
-                    for(String m: mapsString)
+
+                    for(String m : mapsString)
                     {
-                        DigitalMap temp=(DigitalMap) DigitalMapByID(mapsString[i]);
-                        cityMaps.put(temp.getDigitalMapID(),temp);
-                        i++;
+                        List<DigitalMap> temp_digitalMap_lsit = DigitalMapByID(m).getDigitalMaps();
+                        for (DigitalMap temp_map : temp_digitalMap_lsit)
+                        {
+                            cityMaps.put(temp_map.getDigitalMapID() ,temp_map);
+                        }
                     }
-                    i=0;
-                    for(String t: toursString)
+
+                    for(String t : toursString)
                     {
-                        Tour temp=(Tour) TourByID(toursString[i]);
-                        cityTours.put(temp.getTourID(),temp);
-                        i++;
+                        List<Tour> temp_tour_list = TourByID(t).getTours();
+                        for (Tour temp_tour : temp_tour_list)
+                        {
+                            cityTours.put(temp_tour.getTourID(),temp_tour);
+                        }
                     }
                     cityList.add(new City(rs.getInt("ID"),rs.getString("Name"),cityMaps,cityTours,rs.getDouble("Price"),rs.getInt("Version"),rs.getDate("LastUpdatedDate")));
                 }
@@ -758,7 +919,7 @@ public class ConnectionToDatabase
         return null;
     }
 
-    public static boolean AddPurchase (String ID, String date,String cost,String purchasedType,String purchasedCities, String purchasedMaps)
+    public static boolean AddPurchase (String ID, String date,String cost,String purchasedType,String purchasedCities, String purchasedMaps,String userID)
     {
         Connection conn = connectToDatabase();
         Statement stmt;
@@ -774,6 +935,23 @@ public class ConnectionToDatabase
             }
         } catch (SQLException e) {
             return false;
+        }
+        try
+        {
+            stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
+            stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
+            ResultSet rs = stmt.executeQuery("SELECT PurchaseID FROM User_Database WHERE ID = '" + userID + "'");
+            String purchaseID=rs.getString("PurchaseID");
+            purchaseID=purchaseID+","+ID;
+            stmt.executeUpdate("UPDATE User_Database SET PurchaseID = '" + purchaseID + "' WHERE ID='"+ userID +"'");
+            if (stmt != null) {
+                try {
+                    stmt.close();
+                } catch (SQLException e) {}
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
         }
         return true;
     }

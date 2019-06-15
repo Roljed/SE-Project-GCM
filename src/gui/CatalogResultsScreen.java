@@ -15,8 +15,13 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import product.City;
 import product.DigitalMap;
+import product.pricing.Purchase;
+import product.pricing.PurchaseType;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -25,7 +30,7 @@ import java.util.Map;
  */
 public class CatalogResultsScreen
 {
-
+    private List<City> cityList;
 
 
     private static class CityToDisplay
@@ -78,6 +83,7 @@ public class CatalogResultsScreen
             System.exit(101);
         }
 
+        cityList = catalog.getCities();
         for (City city : catalog.getCities())
         {
             // City details and firs map description
@@ -100,14 +106,43 @@ public class CatalogResultsScreen
             return;
         }
 
+        int desiredCityID = 0;
+        double desiredCityPrice = 0;
+        String cityName = tableView.getSelectionModel().getSelectedItem().name;
+        for (City city : cityList)
+        {
+            if (city.getCityName().equals(cityName))
+            {
+                desiredCityID = city.getCityID();
+                desiredCityPrice = city.getCityPrice();
+            }
+
+        }
+
+        PurchaseType type;
         if (purchaseOption.getSelectedToggle().equals(oneTimePurchaseRadioButton))
         {
             System.out.println("One Time Purchase");
+            type = PurchaseType.ONE_TIME_PURCHASE;
+
         }
         else
         {
             System.out.println("Subscription");
+            type = PurchaseType.ONE_TIME_PURCHASE;
         }
+        Purchase purchase = new Purchase(MainClient.memberSignedIn.getMemberID() , desiredCityID, null, desiredCityPrice, type);
+        MainClient.memberSignedIn.addPurchase(purchase);
+
+        // TODO add to client and update database
+        // TODO pop up message for download
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Download purchased city maps?" , ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
+        alert.showAndWait();
+
+        if (alert.getResult() == ButtonType.YES) {
+            // TODO download
+        }
+
     }
 
     public void backButton(ActionEvent actionEvent) throws IOException

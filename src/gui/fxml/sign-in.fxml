@@ -13,7 +13,7 @@
             <Font name="Gisha" size="24.0" />
          </font>
       </Label>
-      <Label fx:id="messageLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="111.0" layoutY="71.0" prefHeight="17.0" prefWidth="0.0" textAlignment="CENTER" textFill="#078d1f">
+      <Label fx:id="messageLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="84.0" layoutY="71.0" prefHeight="29.0" prefWidth="92.0" text="Label" textAlignment="CENTER" textFill="#078d1f">
          <font>
             <Font name="Consolas" size="14.0" />
          </font>
