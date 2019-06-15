@@ -87,8 +87,9 @@ public class SignInScreen implements ChatIF, Serializable
             {
                 memberSignedIn = ((MemberCard) res);
                 MainClient.permission = memberSignedIn.getPermission();
+                MainClient.personalName = memberSignedIn.getPersonalName();
 
-                switch (memberSignedIn.getPermission())
+                switch (MainClient.permission)
                 {
                     case USER:
                         // Goto Search screen

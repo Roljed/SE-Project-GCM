@@ -26,7 +26,6 @@ public class SearchScreen implements ChatIF, Serializable{
 
     static private final int SERVER_PORT = 5555;
     private ChatClient chat = MainClient.getChat();
-    private command.catalog.Catalog catalogToShow = null;
 
     @FXML // fx:id="searchByDescription"
     private Button searchByDescription; // Value injected by FXMLLoader
@@ -46,10 +45,7 @@ public class SearchScreen implements ChatIF, Serializable{
     private Label messageLabel;
 
     @FXML
-    public void initialize()
-    {
-
-    }
+    public void initialize() {}
 
     @FXML
     void SearchByCity(ActionEvent event) throws IOException{
@@ -64,22 +60,12 @@ public class SearchScreen implements ChatIF, Serializable{
             this.chat = new ChatClient(MainClient.getHost(),SERVER_PORT, this);
         }
         User user = new User(chat);
-        catalogToShow = user.viewCatalog(request, 1);
-        if(catalogToShow == null) {
+        MainClient.catalog = user.viewCatalog(request, 1);
+        if(MainClient.catalog == null) {
             messageLabel.setText("Your request is now found");
             return;
         }
-        ((Node)event.getSource()).getScene().getWindow().hide();
-        Stage searchStage = new Stage();
-        searchStage.setTitle("Search Results");
-        searchStage.setOnCloseRequest(e -> {
-            e.consume();
-            System.out.print("");
-        });
-        Pane root = FXMLLoader.load(getClass().getResource("fxml/catalog-results.fxml"));
-        Scene searchScene = new Scene(root);
-        searchStage.setScene(searchScene);
-        searchStage.show();
+        gotoCatalog(event);
     }
 
     @FXML
@@ -95,22 +81,12 @@ public class SearchScreen implements ChatIF, Serializable{
             this.chat = new ChatClient(MainClient.getHost(),SERVER_PORT, this);
         }
         User user = new User(chat);
-        catalogToShow = user.viewCatalog(request, 2);
-        if(catalogToShow == null) {
+        MainClient.catalog = user.viewCatalog(request, 2);
+        if(MainClient.catalog == null) {
             messageLabel.setText("Your request is now found");
             return;
         }
-        ((Node)event.getSource()).getScene().getWindow().hide();
-        Stage searchStage = new Stage();
-        searchStage.setTitle("Search Results");
-        searchStage.setOnCloseRequest(e -> {
-            e.consume();
-            System.out.print("");
-        });
-        Pane root = FXMLLoader.load(getClass().getResource("fxml/catalog-results.fxml"));
-        Scene searchScene = new Scene(root);
-        searchStage.setScene(searchScene);
-        searchStage.show();
+        gotoCatalog(event);
     }
 
     @FXML
@@ -126,22 +102,28 @@ public class SearchScreen implements ChatIF, Serializable{
             this.chat = new ChatClient(MainClient.getHost(),SERVER_PORT, this);
         }
         User user = new User(chat);
-        catalogToShow = user.viewCatalog(request, 3);
-        if(catalogToShow == null) {
+        MainClient.catalog = user.viewCatalog(request, 3);
+        if(MainClient.catalog == null) {
             messageLabel.setText("Your request is now found");
             return;
         }
+        gotoCatalog(event);
+
+    }
+
+    private void gotoCatalog(ActionEvent event) throws IOException
+    {
         ((Node)event.getSource()).getScene().getWindow().hide();
-        Stage searchStage = new Stage();
-        searchStage.setTitle("Search Results");
-        searchStage.setOnCloseRequest(e -> {
+        Stage catalogStage = new Stage();
+        catalogStage.setTitle("Catalog Results");
+        catalogStage.setOnCloseRequest(e -> {
             e.consume();
             System.out.print("");
         });
         Pane root = FXMLLoader.load(getClass().getResource("fxml/catalog-results.fxml"));
-        Scene searchScene = new Scene(root);
-        searchStage.setScene(searchScene);
-        searchStage.show();
+        Scene catalogScene = new Scene(root);
+        catalogStage.setScene(catalogScene);
+        catalogStage.show();
     }
 
     @FXML

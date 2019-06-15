@@ -1,14 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="gui.UserInfoScreen"
-            prefHeight="400.0" prefWidth="600.0">
 
+<AnchorPane prefHeight="429.0" prefWidth="315.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.UserInfoScreen">
+    <children>
+        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="108.0" layoutY="14.0" prefHeight="46.0" prefWidth="104.0" text="User Info" AnchorPane.bottomAnchor="442.0" AnchorPane.topAnchor="14.0">
+            <font>
+                <Font name="Gisha" size="24.0" />
+            </font>
+        </Label>
+        <VBox alignment="BASELINE_LEFT" layoutX="14.0" layoutY="81.0" prefHeight="288.0" prefWidth="136.0" spacing="10.0">
+            <children>
+                <Label text="Username" />
+                <Label prefHeight="17.0" prefWidth="106.0" text="Update Username" />
+                <Label text="Password" />
+                <Label prefHeight="17.0" prefWidth="100.0" text="Update Password" />
+                <Label text="Full Name" />
+                <Label text="Update Full Name" />
+                <Label text="Phone Number" />
+                <Label text="Update Phone Number" />
+                <Label text="Email" />
+                <Label text="Update Email" />
+            </children>
+        </VBox>
+        <AnchorPane layoutX="120.0" layoutY="74.0" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="123.0">
+            <children>
+                <VBox layoutX="40.0" layoutY="3.0" prefHeight="272.0" prefWidth="136.0" spacing="3.0">
+                    <children>
+                        <Label fx:id="Username" prefHeight="25.0" prefWidth="136.0" />
+                        <TextField fx:id="UpdateUsername" promptText="Enter Username" />
+                        <Label fx:id="Password" prefHeight="25.0" prefWidth="136.0" />
+                        <TextField fx:id="UpadatePassword" promptText="Enter Password" />
+                        <Label fx:id="FullName" prefHeight="25.0" prefWidth="136.0" />
+                        <TextField fx:id="UpadateFullName" promptText="Enter Full Name" />
+                        <Label fx:id="PhoneNumber" prefHeight="25.0" prefWidth="136.0" />
+                        <TextField fx:id="UpdatePhoneNumber" promptText="Enter Phone Number" />
+                        <Label fx:id="Email" prefHeight="25.0" prefWidth="136.0" />
+                        <TextField fx:id="UpdateEmail" prefHeight="25.0" prefWidth="136.0" promptText="Enter Email" />
+                    </children>
+                </VBox>
+            </children>
+        </AnchorPane>
+        <Button layoutX="94.0" layoutY="395.0" mnemonicParsing="false" onAction="#btn_Update" text="Update" />
+        <Button layoutX="195.0" layoutY="395.0" mnemonicParsing="false" onAction="#btn_Back" text="Back" />
+        <Label fx:id="messageLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="33.0" layoutY="369.0" prefHeight="17.0" prefWidth="253.0" textFill="#ff0404" />
+    </children>
 </AnchorPane>
