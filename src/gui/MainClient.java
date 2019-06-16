@@ -28,6 +28,7 @@ public class MainClient extends Application implements Initializable, ChatIF
 {
     public static String personalName;
     public static Permission permission;
+    public static boolean memberReportActivity;
     private static ChatClient chat = null;
     final public static int DEFAULT_PORT = 5555;
     private static String host = "";

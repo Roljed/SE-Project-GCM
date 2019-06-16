@@ -1,13 +1,14 @@
 package gui;
 
 import java.io.IOException;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 import chat.ChatClient;
 import chat.common.ChatIF;
+import command.Editor;
 import command.Search;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -23,7 +24,6 @@ import product.City;
 import product.ProductType;
 import product.pricing.Purchase;
 import user.Permission;
-import user.member.MemberCard;
 
 
 public class MemberPurchaseScreen implements ChatIF, Serializable
@@ -77,18 +77,20 @@ public class MemberPurchaseScreen implements ChatIF, Serializable
         {
             this.chat = new ChatClient(host, port, this);
         }
-		/*List<Purchase> purchaseHistory = MainClient.getPurchaseHistory();
-		for (Purchase p : purchaseHistory)
-		{
-			int[] purchaseCityIDs = p.getPurchasedCityID();
-			for (int cityID : purchaseCityIDs)
-			{
-				String city = ((City) Objects.requireNonNull(Search.searchByID(cityID, ProductType.CITY, Permission.COMPANY_MANAGER))).getCityName();
-
-				PurchaseForDisplay temp = new PurchaseForDisplay(p.getDateOfPurchase(),p.getCostByString(),p.getPurchaseTypeInString()
-						,city,p.getPurchasedMapNumberByString());
-			}
-		}*/
+        List<Purchase> purchaseHistory = null;
+        if(MainClient.memberReportActivity) {
+//            purchaseHistory = ((Editor)(MainClient.memberSignedIn)).getCustomersReportActivity(chat);
+            MainClient.memberReportActivity = false;
+        }
+        else {
+            purchaseHistory = MainClient.memberSignedIn.getPurchaseReport();
+        }
+        for (Purchase p : purchaseHistory)
+        {
+            City city = (City)Search.searchByID(p.getCityID(),ProductType.CITY,Permission.CONTENT_MANAGER);
+            PurchaseForDisplay temp = new PurchaseForDisplay(p.getDateOfPurchase(),p.getCostByString(),p.getPurchaseTypeInString()
+                    ,city.getCityName(),p.getPurchasedMapNumberByString());
+        }
     }
 
     public void start(Stage primaryStage) throws Exception

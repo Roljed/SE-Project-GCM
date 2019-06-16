@@ -2,10 +2,13 @@ package user.manager;
 import chat.ChatClient;
 import command.ReportActivity;
 import command.Editor;
+import product.pricing.Purchase;
 import user.Permission;
 import user.worker.Worker;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 abstract class Manager extends Worker implements Editor, Serializable
 {
@@ -32,4 +35,16 @@ abstract class Manager extends Worker implements Editor, Serializable
 		return new ReportActivity(personalName);
 	}
 
+	public List<Purchase> getCustomersReportActivity(ChatClient chat){
+		String request = "REPORT";
+		chat.handleMessageFromClientUI(request);
+		List<?> res = (List<?>)chat.receiveObjectFromServer();
+		List<Purchase> purchases = new ArrayList<Purchase>();
+		for(Object o : res) {
+			if(o instanceof Purchase) {
+				purchases.add((Purchase)o);
+			}
+		}
+		return purchases;
+	}
 }

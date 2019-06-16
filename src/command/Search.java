@@ -46,6 +46,12 @@ public class Search implements Serializable
     {
         try {
             chat.sendToServer("#Search city name " + cityName);
+            try {
+                Thread.sleep(15000);
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
             Object obj = MainClient.result;
             if (obj instanceof Catalog)
             {

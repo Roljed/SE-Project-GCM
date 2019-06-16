@@ -135,7 +135,7 @@ public class ConnectionToClient extends Thread
    */
   final public void close() throws IOException
   {
-    readyToStop = true; // Set the flag that tells the thread to stop
+    readyToStop = true; // Set the memberReportActivity that tells the thread to stop
 
     try
     {

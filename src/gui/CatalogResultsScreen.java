@@ -33,13 +33,12 @@ public class CatalogResultsScreen
 
     private static class CityToDisplay
     {
-        private String name;
-        private String numberMap;
-        private String numberSite;
-        private String numberTour;
-        private String price;
-        private String description;
-
+        public String name;
+        public String numberMap;
+        public String numberSite;
+        public String numberTour;
+        public String price;
+        public String description;
 
         public CityToDisplay(String name, String numberMaps, String numberSites, String numberTour, String price, String description) {
             this.name = name;
@@ -50,7 +49,6 @@ public class CatalogResultsScreen
             this.description = description;
         }
     }
-
 
     @FXML
     public void initialize()

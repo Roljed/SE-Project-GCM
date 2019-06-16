@@ -135,7 +135,8 @@ public class EchoServer extends AbstractServer
                     ((Tour)msg).getTourTotalDurationToString(),	((Tour)msg).getTourSequence());
         }
 
-        if (msg instanceof String) {
+        if (msg instanceof String)
+        {
             String[] message = ((String) msg).split(" ");
             if (message[0].equals("userID")) {
                 try {
@@ -182,6 +183,21 @@ public class EchoServer extends AbstractServer
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+                }
+            }
+
+            if(message[0].equals("report")) {
+                try {
+                    client.sendToClient(ConnectionToDatabase.SearchReportForID(message[1]));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if(message[0].equals("REPORT")) {
+                try {
+                    client.sendToClient(ConnectionToDatabase.SearchReportForAll());
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
             }
         }
