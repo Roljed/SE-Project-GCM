@@ -39,6 +39,9 @@ abstract class Manager extends Worker implements Editor, Serializable
 		String request = "REPORT";
 		chat.handleMessageFromClientUI(request);
 		List<?> res = (List<?>)chat.receiveObjectFromServer();
+		if(res == null) {
+			return null;
+		}
 		List<Purchase> purchases = new ArrayList<Purchase>();
 		for(Object o : res) {
 			if(o instanceof Purchase) {

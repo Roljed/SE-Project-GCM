@@ -16,7 +16,7 @@ import server.EchoServer;
 import java.io.IOException;
 
 /**
- *  TODO explain class
+ *  Main class that implements the server side
  * @author Yaad Nahshon
  */
 public class MainServer extends Application

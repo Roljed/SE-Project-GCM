@@ -129,7 +129,7 @@ public class ConnectionToDatabase
             rs=stmt.executeQuery("SELECT Permission FROM User_Database WHERE UserName = '" + nameUser + "'");
             if (!rs.next()){return null;}
             String per=rs.getString("Permission");
-            List<Purchase> purchaseHistory = null;
+            List<Purchase> purchaseHistory = new ArrayList<Purchase>();
             rs=stmt.executeQuery("SELECT PurchaseID FROM User_Database WHERE UserName = '" + nameUser + "'");
             if (!rs.next()){return null;}
             String purchaseID=rs.getString("PurchaseID");
@@ -140,10 +140,14 @@ public class ConnectionToDatabase
                 int id=Integer.parseInt(rs.getString("ID"));
                 rs=stmt.executeQuery("SELECT DateOfPurchase FROM Purchase_Database WHERE ID = '" + s + "'");
                 if (!rs.next()){break;}
-
-                // Parse to LocalDate
-                Date date=rs.getDate("DateOfPurchase");
-
+                String dateString = rs.getString("DateOfPurchase");
+                DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+                Date date=null;
+                try {
+                    date= formatter.parse(dateString);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
                 rs=stmt.executeQuery("SELECT Cost FROM Purchase_Database WHERE ID = '" + s + "'");
                 if (!rs.next()){break;}
                 int cost=rs.getInt("Cost");
@@ -154,10 +158,11 @@ public class ConnectionToDatabase
                 if (!rs.next()){break;}
                 String stringcities=rs.getString("PurchasedCities");
                 int purchasedCityID=Integer.parseInt(stringcities);
-                rs=stmt.executeQuery("SELECT PurchaseMaps FROM Purchase_Database WHERE ID = '" + s + "'");
-                String stringmaps=rs.getString("PurchaseMaps");
-                int[] purchasedMapID = null;
+                rs=stmt.executeQuery("SELECT PurchasedMaps FROM Purchase_Database WHERE ID = '" + s + "'");
+                if (!rs.next()){break;}
+                String stringmaps=rs.getString("PurchasedMaps");
                 String[] tmpMaps=stringmaps.split(",");
+                int[] purchasedMapID=new int[tmpMaps.length];
                 int i=0;
                 for (String m : tmpMaps)
                     purchasedMapID[i++]=Integer.parseInt(m);
@@ -662,10 +667,10 @@ public class ConnectionToDatabase
             for(String c: contents)
             {
                 List<Site> temp_site_list = (SiteByID(c)).getContents();
-               for (Site site : temp_site_list)
-               {
+                for (Site site : temp_site_list)
+                {
                     digitalMapContents.put(site.getContendID(),site);
-               }
+                }
             }
 
             rs = stmt.executeQuery("SELECT Cost FROM Maps_Database WHERE ID = '" + ID + "'");
@@ -1048,7 +1053,7 @@ public class ConnectionToDatabase
                 return null;
             }
             String[] purchaseIDs = rs.getString("PurchaseID").split(",");
-            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+            SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
             for(String p : purchaseIDs) {
                 try
                 {
@@ -1062,7 +1067,9 @@ public class ConnectionToDatabase
                         mapIDs[i] = Integer.parseInt(mapIDsString[i]);
                     }
                     try {
+                        System.out.println("1");
                         purchases.add(new Purchase(Integer.parseInt(ID),Integer.parseInt(p),formatter.parse(rs.getString("DateOfPurchase")),Integer.parseInt(rs.getString("purchasedCities")),mapIDs,Double.parseDouble(rs.getString("Cost")),rs.getString("PurchaseType")));
+                        System.out.println("2");
                     } catch(ParseException e) {
                         e.printStackTrace();
                     }
@@ -1071,6 +1078,7 @@ public class ConnectionToDatabase
                     return null;
                 }
             }
+            System.out.println("3");
             return purchases;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -1087,7 +1095,7 @@ public class ConnectionToDatabase
         {
             stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
             rs = stmt.executeQuery("SELECT * FROM Purchase_Database");
-            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+            SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
             while(rs.next()) {
                 try
                 {

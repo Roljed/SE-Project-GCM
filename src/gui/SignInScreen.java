@@ -24,7 +24,8 @@ import java.io.Serializable;
 import static gui.MainClient.memberSignedIn;
 
 /**
- *  TODO explain class
+ *  Sign In main screen with username and password fields
+ *
  * @author Yaad Nahshon
  */
 public class SignInScreen implements ChatIF, Serializable
