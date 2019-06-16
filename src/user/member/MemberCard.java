@@ -6,6 +6,7 @@ import chat.ChatClient;
 import user.User;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MemberCard extends User implements Serializable
@@ -137,6 +138,20 @@ public class MemberCard extends User implements Serializable
 
 	public void setConnencted(boolean connencted) {
 		this.connencted = connencted;
+	}
+
+	public List<Purchase> getPurchaseReport()
+	{
+		String request = "report" + Integer.toString(memberID);
+		m_chat.handleMessageFromClientUI(request);
+		List<?> res = (List<?>)m_chat.receiveObjectFromServer();
+		List<Purchase> purchases = new ArrayList<Purchase>();
+		for(Object o : res) {
+			if(o instanceof Purchase) {
+				purchases.add((Purchase)o);
+			}
+		}
+		return purchases;
 	}
 
 }

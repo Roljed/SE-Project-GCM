@@ -116,7 +116,7 @@ public class Search implements Serializable
             return null;
         }
     }
-    
+
 
     private static String productTypeToString(ProductType productType)
     {

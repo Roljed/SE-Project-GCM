@@ -137,6 +137,10 @@ public class Purchase implements Serializable
 	}
 
 
+	public int getCityID() {
+		return purchasedCityID;
+	}
+
 	public void AddDigitalMap(DigitalMap map) {
 		this.digitalMap.add(map);
 	}

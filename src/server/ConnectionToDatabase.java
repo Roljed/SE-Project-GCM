@@ -1030,4 +1030,89 @@ public class ConnectionToDatabase
         }
         return  memberCard;
     }
+
+    public static List<Purchase> SearchReportForID(String ID) throws NumberFormatException{
+        if(ID.isEmpty()) {
+            return null;
+        }
+        Connection conn = connectToDatabase();
+        Statement stmt;
+        ResultSet rs = null;
+        List<Purchase> purchases = new ArrayList<Purchase>();
+        try
+        {
+            stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
+            rs = stmt.executeQuery("SELECT PurchaseID FROM User_Database WHERE ID = '" + ID + "'");
+            if(!rs.next()) {
+                return null;
+            }
+            String[] purchaseIDs = rs.getString("PurchaseID").split(",");
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+            for(String p : purchaseIDs) {
+                try
+                {
+                    rs = stmt.executeQuery("SELECT * FROM Purchase_Database WHERE ID = '" + p + "'");
+                    if(!rs.next()) {
+                        continue;
+                    }
+                    String[] mapIDsString = rs.getString("PurchasedMaps").split(",");
+                    int[] mapIDs = new int[mapIDsString.length];
+                    for(int i=0;i<mapIDsString.length;i++) {
+                        mapIDs[i] = Integer.parseInt(mapIDsString[i]);
+                    }
+                    try {
+                        purchases.add(new Purchase(Integer.parseInt(ID),Integer.parseInt(p),formatter.parse(rs.getString("DateOfPurchase")),Integer.parseInt(rs.getString("purchasedCities")),mapIDs,Double.parseDouble(rs.getString("Cost")),rs.getString("PurchaseType")));
+                    } catch(ParseException e) {
+                        e.printStackTrace();
+                    }
+                }catch(SQLException e) {
+                    e.printStackTrace();
+                    return null;
+                }
+            }
+            return purchases;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    public static List<Purchase> SearchReportForAll(){
+        Connection conn = connectToDatabase();
+        Statement stmt;
+        ResultSet rs = null;
+        ResultSet rs1 = null;
+        List<Purchase> purchases = new ArrayList<Purchase>();
+        try
+        {
+            stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
+            rs = stmt.executeQuery("SELECT * FROM Purchase_Database");
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+            while(rs.next()) {
+                try
+                {
+                    rs1 = stmt.executeQuery("SELECT ID FROM USER_Database WHERE PurchaseID CONTAINS '" + rs.getString("ID") + "'");
+                    if(!rs1.next()) {
+                        continue;
+                    }
+                    String[] mapIDsString = rs.getString("PurchasedMaps").split(",");
+                    int[] mapIDs = new int[mapIDsString.length];
+                    for(int i=0;i<mapIDsString.length;i++) {
+                        mapIDs[i] = Integer.parseInt(mapIDsString[i]);
+                    }
+                    try {
+                        purchases.add(new Purchase(Integer.parseInt(rs1.getString("ID")),Integer.parseInt(rs.getString("ID")),formatter.parse(rs.getString("DateOfPurchase")),Integer.parseInt(rs.getString("purchasedCities")),mapIDs,Double.parseDouble(rs.getString("Cost")),rs.getString("PurchaseType")));
+                    } catch(ParseException e) {
+                        e.printStackTrace();
+                    }
+                } catch(SQLException e) {
+                    e.printStackTrace();
+                    return null;
+                }
+            }
+            return purchases;
+        } catch(SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

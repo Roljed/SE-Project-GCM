@@ -35,4 +35,22 @@ public class ManagerScreen extends WorkerScreen
         approvalStage.setScene(approvalScene);
         approvalStage.show();
     }
+
+    @FXML
+    public void purchaseInfoButton(ActionEvent actionEvent) throws IOException
+    {
+//        MainClient.memberReportActivity = 1;
+        ((Node)actionEvent.getSource()).getScene().getWindow().hide();
+        Stage approvalStage = new Stage();
+        approvalStage.setTitle("ClientsPurchases");
+        approvalStage.setOnCloseRequest(e -> {
+            e.consume();
+            System.out.print("");
+        });
+
+        Pane root = FXMLLoader.load(getClass().getResource("fxml/member-purchase.fxml"));
+        Scene approvalScene = new Scene(root);
+        approvalStage.setScene(approvalScene);
+        approvalStage.show();
+    }
 }
