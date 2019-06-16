@@ -95,11 +95,19 @@ public class MemberPurchaseScreen implements ChatIF, Serializable
             MainClient.memberReportActivity = false;
         }
         else {
-            purchaseHistory = MainClient.memberSignedIn.getPurchaseReport();
+            System.out.println("else");
+            MainClient.result=null;
+            chat.sendToServer("report "+MainClient.memberSignedIn.getMemberIDByString());
+            while (MainClient.result == null)
+            {
+                System.out.print("");
+            }
+            purchaseHistory = (List<Purchase>) MainClient.result;
         }
         if(purchaseHistory == null) {
             return;
         }
+        System.out.println("1");
         ObservableList<PurchaseForDisplay> temp=FXCollections.observableArrayList();
         for (Purchase p : purchaseHistory)
         {

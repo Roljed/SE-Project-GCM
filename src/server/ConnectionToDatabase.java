@@ -750,7 +750,14 @@ public class ConnectionToDatabase
             int Version=rs.getInt("Version");
             rs = stmt.executeQuery("SELECT LastUpdatedDate FROM City_Database WHERE ID = '" + ID + "'");
             if(!rs.next()) return null;
-            Date date=rs.getDate("LastUpdatedDate");
+            String dateString = rs.getString("LastUpdatedDate");
+            DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+            Date date=null;
+            try {
+                date= formatter.parse(dateString);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
             cityList.add(new City(id,name,cityMaps,cityTours,price,Version,date));
             if(cityList.isEmpty()) {
                 return null;
@@ -866,7 +873,14 @@ public class ConnectionToDatabase
                     int version=rs2.getInt("Version");
                     rs2 = stmt.executeQuery("SELECT LastUpdatedDate FROM City_Database WHERE ID = '" + id + "'");
                     if(!rs2.next()) return null;
-                    Date date = rs2.getDate("LastUpdatedDate");
+                    String dateString = rs.getString("LastUpdatedDate");
+                    DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+                    Date date=null;
+                    try {
+                        date= formatter.parse(dateString);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
                     cityList.add(new City(Integer.parseInt(id),name,cityMaps, cityTours,price, version,date));
                 }
                 else {
@@ -919,15 +933,21 @@ public class ConnectionToDatabase
         {
             stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
             ResultSet rs = stmt.executeQuery("SELECT ID FROM City_Database WHERE ID = '" + ID + "'");
+            if(!rs.next()) return null;
             List<City> cityList = new ArrayList<City>();
             while(true)
             {
                 if(rs.next())
                 {
+                    String id=rs.getString("ID");
                     HashMap<Integer, DigitalMap> cityMaps=new HashMap<Integer, DigitalMap>();
                     HashMap<Integer, Tour> cityTours=new HashMap<Integer, Tour>();
-                    String[] mapsString = rs.getString("Maps").split(",");
-                    String[] toursString = rs.getString("Tours").split(",");
+                    ResultSet rs2 = stmt.executeQuery("SELECT Maps FROM City_Database WHERE ID = '" + id + "'");
+                    if(!rs2.next()) return null;
+                    String[] mapsString = rs2.getString("Maps").split(",");
+                    rs2 = stmt.executeQuery("SELECT Tours FROM City_Database WHERE ID = '" + id + "'");
+                    if(!rs2.next()) return null;
+                    String[] toursString = rs2.getString("Tours").split(",");
 
                     for(String m : mapsString)
                     {
@@ -953,8 +973,26 @@ public class ConnectionToDatabase
                             cityTours.put(temp_tour.getTourID(),temp_tour);
                         }
                     }
-                    Date date = rs.getDate("LastUpdatedDate");
-                    cityList.add(new City(rs.getInt("ID"),rs.getString("Name"),cityMaps,cityTours,rs.getDouble("Price"),rs.getInt("Version"),date));
+                    rs2 = stmt.executeQuery("SELECT Name FROM City_Database WHERE ID = '" + id + "'");
+                    if(!rs2.next()) return null;
+                    String name=rs2.getString("Name");
+                    rs2 = stmt.executeQuery("SELECT Price FROM City_Database WHERE ID = '" + id + "'");
+                    if(!rs2.next()) return null;
+                    double price=rs2.getDouble("Price");
+                    rs2 = stmt.executeQuery("SELECT Version FROM City_Database WHERE ID = '" + id + "'");
+                    if(!rs2.next()) return null;
+                    int version=rs2.getInt("Version");
+                    rs2 = stmt.executeQuery("SELECT Date FROM City_Database WHERE ID = '" + id + "'");
+                    if(!rs2.next()) return null;
+                    String dateString = rs2.getString("LastUpdatedDate");
+                    DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+                    Date date=null;
+                    try {
+                        date= formatter.parse(dateString);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    cityList.add(new City(Integer.parseInt(id),name,cityMaps,cityTours,price,version,date));
                 }
                 else{
                     return cityList;
@@ -1067,9 +1105,7 @@ public class ConnectionToDatabase
                         mapIDs[i] = Integer.parseInt(mapIDsString[i]);
                     }
                     try {
-                        System.out.println("1");
                         purchases.add(new Purchase(Integer.parseInt(ID),Integer.parseInt(p),formatter.parse(rs.getString("DateOfPurchase")),Integer.parseInt(rs.getString("purchasedCities")),mapIDs,Double.parseDouble(rs.getString("Cost")),rs.getString("PurchaseType")));
-                        System.out.println("2");
                     } catch(ParseException e) {
                         e.printStackTrace();
                     }
@@ -1078,7 +1114,6 @@ public class ConnectionToDatabase
                     return null;
                 }
             }
-            System.out.println("3");
             return purchases;
         } catch (SQLException e) {
             e.printStackTrace();
