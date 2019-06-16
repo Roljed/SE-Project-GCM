@@ -5,6 +5,9 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.ZoneId;
 import java.util.*;
 
@@ -527,7 +530,14 @@ public class ConnectionToDatabase
             int Version=rs.getInt("Version");
             rs = stmt.executeQuery("SELECT LastUpdatedDate FROM City_Database WHERE Name = '" + cityName + "'");
             if(!rs.next()) return null;
-            Date date = rs.getDate("LastUpdatedDate");
+            String dateString = rs.getString("LastUpdatedDate");
+            DateFormat formatter = new SimpleDateFormat("dd-mm-yyyy");
+            Date date = null;
+            try {
+                date = formatter.parse(dateString);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
             cityList.add(new City(id,name,cityMaps,cityTours,price,Version, date));
 
             if(cityList.isEmpty()) {
