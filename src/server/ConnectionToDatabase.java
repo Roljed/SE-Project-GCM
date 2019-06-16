@@ -8,7 +8,6 @@ import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.ZoneId;
 import java.util.*;
 
 import command.catalog.Catalog;
@@ -151,9 +150,9 @@ public class ConnectionToDatabase
                 rs=stmt.executeQuery("SELECT PurchaseType FROM Purchase_Database WHERE ID = '" + s + "'");
                 if (!rs.next()){break;}
                 String type=rs.getString("PurchaseType");
-                rs=stmt.executeQuery("SELECT PurchaseCities FROM Purchase_Database WHERE ID = '" + s + "'");
+                rs=stmt.executeQuery("SELECT PurchasedCities FROM Purchase_Database WHERE ID = '" + s + "'");
                 if (!rs.next()){break;}
-                String stringcities=rs.getString("PurchaseCities");
+                String stringcities=rs.getString("PurchasedCities");
                 int purchasedCityID=Integer.parseInt(stringcities);
                 rs=stmt.executeQuery("SELECT PurchaseMaps FROM Purchase_Database WHERE ID = '" + s + "'");
                 String stringmaps=rs.getString("PurchaseMaps");
@@ -530,14 +529,16 @@ public class ConnectionToDatabase
             int Version=rs.getInt("Version");
             rs = stmt.executeQuery("SELECT LastUpdatedDate FROM City_Database WHERE Name = '" + cityName + "'");
             if(!rs.next()) return null;
+
             String dateString = rs.getString("LastUpdatedDate");
-            DateFormat formatter = new SimpleDateFormat("dd-mm-yyyy");
-            Date date = null;
+            DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+            Date date=null;
             try {
-                date = formatter.parse(dateString);
+                date= formatter.parse(dateString);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
+
             cityList.add(new City(id,name,cityMaps,cityTours,price,Version, date));
 
             if(cityList.isEmpty()) {

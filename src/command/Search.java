@@ -34,31 +34,23 @@ public class Search implements Serializable
 
         try {
             chat.sendToServer("#Search product " + type + " " + objectID);
-            while (MainClient.result == null)
-            {
-
-            }
-            Object obj = MainClient.result;
-            if (obj instanceof Catalog)
-            {
-                return (Catalog)obj;
-            }
-            else {
-                return null;
-            }
+//            return chat.receiveObjectFromServer();
         }
         catch(IOException ex) {
             return null;
         }
+        return null;
     }
 
     public Catalog searchByCityName(String cityName)
     {
         try {
             chat.sendToServer("#Search city name " + cityName);
-            while (MainClient.result == null)
-            {
-
+            try {
+                Thread.sleep(15000);
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
             }
             Object obj = MainClient.result;
             if (obj instanceof Catalog)
@@ -78,45 +70,43 @@ public class Search implements Serializable
     {
         try {
             chat.sendToServer("#Search site name " + siteName);
-            while (MainClient.result == null)
-            {
-
-            }
-            Object obj = MainClient.result;
-            if (obj instanceof Catalog)
-            {
-                return (Catalog)obj;
-            }
-            else {
-                return null;
-            }
+//            return chat.receiveObjectFromServer();
         }
         catch(IOException ex) {
             return null;
         }
+        return null;
     }
 
     public Catalog searchByDescription(String description) {
         try {
             chat.sendToServer("#Search object " + description);
-            while (MainClient.result == null)
-            {
-
-            }
-            Object obj = MainClient.result;
-            if (obj instanceof Catalog)
-            {
-                return (Catalog)obj;
-            }
-            else {
-                return null;
-            }
+//            return chat.receiveObjectFromServer();
         }
         catch(IOException ex) {
             return null;
         }
+        return null;
     }
 
+
+    public void displayCityMaps(int cityID) {
+        try {
+            chat.sendToServer(cityID);
+            List<?> objectCities = (List<?>)chat.receiveObjectFromServer();
+            if(objectCities.isEmpty()) {
+                return;
+            }
+            List<City> cities = new ArrayList<>();
+            for (Object obj : objectCities) {
+                cities.add((City)obj);
+            }
+            catalog = new Catalog(null,null,null,cities);
+        }
+        catch(IOException ex) {
+            return;
+        }
+    }
 
     private static String productTypeToString(ProductType productType)
     {

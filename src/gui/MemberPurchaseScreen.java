@@ -79,7 +79,7 @@ public class MemberPurchaseScreen implements ChatIF, Serializable
         }
         List<Purchase> purchaseHistory = null;
         if(MainClient.memberReportActivity) {
-            purchaseHistory = ((Editor)(MainClient.memberSignedIn)).getCustomersReportActivity(chat);
+//            purchaseHistory = ((Editor)(MainClient.memberSignedIn)).getCustomersReportActivity(chat);
             MainClient.memberReportActivity = false;
         }
         else {
