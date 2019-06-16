@@ -93,10 +93,10 @@ public class MemberCard extends User implements Serializable
 		return email;
 	}
 
-    public String getMemberIDByString()
+	public String getMemberIDByString()
 	{
 		return Integer.toString(memberID);
-    }
+	}
 
 
 	public void setPassword(String password)
@@ -142,16 +142,17 @@ public class MemberCard extends User implements Serializable
 
 	public List<Purchase> getPurchaseReport()
 	{
-		String request = "report" + Integer.toString(memberID);
+		String request = "report " + Integer.toString(memberID);
 		m_chat.handleMessageFromClientUI(request);
-		List<?> res = (List<?>)m_chat.receiveObjectFromServer();
-		List<Purchase> purchases = new ArrayList<Purchase>();
-		for(Object o : res) {
-			if(o instanceof Purchase) {
-				purchases.add((Purchase)o);
-			}
+		Object res = m_chat.receiveObjectFromServer();
+		if(res == null) {
+			return null;
 		}
-		return purchases;
+		if(res instanceof Purchase) {
+			return (List<Purchase>) res;
+		}
+		else
+			return null;
 	}
 
 }

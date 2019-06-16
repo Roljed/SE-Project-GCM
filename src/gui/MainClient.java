@@ -28,12 +28,12 @@ public class MainClient extends Application implements Initializable, ChatIF
 {
     public static String personalName;
     public static Permission permission;
-    public static boolean memberReportActivity;
+    public static boolean memberReportActivity = false;
     private static ChatClient chat = null;
     final public static int DEFAULT_PORT = 5555;
     private static String host = "";
 
-//    public static Stack<Scene> sceneStack = new Stack<>(); TODO after all scenes are build
+    //    public static Stack<Scene> sceneStack = new Stack<>(); TODO after all scenes are build
     public static Object result = null;    // holds server return message
     static MemberCard memberSignedIn = null;
     public static Catalog catalog = null;
@@ -82,7 +82,7 @@ public class MainClient extends Application implements Initializable, ChatIF
     }
 
     @Override
-     public void start(Stage primaryStage) throws Exception
+    public void start(Stage primaryStage) throws Exception
     {
         primaryStage.setResizable(false);
         primaryStage.setTitle("Connection Configuration");

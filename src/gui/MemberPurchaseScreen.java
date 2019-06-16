@@ -2,14 +2,19 @@ package gui;
 
 import java.io.IOException;
 
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import chat.ChatClient;
 import chat.common.ChatIF;
 import command.Editor;
 import command.Search;
+import command.catalog.Catalog;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,6 +29,7 @@ import product.City;
 import product.ProductType;
 import product.pricing.Purchase;
 import user.Permission;
+import user.manager.*;
 
 
 public class MemberPurchaseScreen implements ChatIF, Serializable
@@ -77,20 +83,50 @@ public class MemberPurchaseScreen implements ChatIF, Serializable
         {
             this.chat = new ChatClient(host, port, this);
         }
+        System.out.println("start");
         List<Purchase> purchaseHistory = null;
         if(MainClient.memberReportActivity) {
-//            purchaseHistory = ((Editor)(MainClient.memberSignedIn)).getCustomersReportActivity(chat);
+            if(MainClient.memberSignedIn instanceof CompanyManager) {
+                purchaseHistory = ((CompanyManager)(MainClient.memberSignedIn)).getCustomersReportActivity(chat);
+            }
+            if(MainClient.memberSignedIn instanceof ContentManager) {
+                purchaseHistory = ((ContentManager)(MainClient.memberSignedIn)).getCustomersReportActivity(chat);
+            }
             MainClient.memberReportActivity = false;
         }
         else {
-            purchaseHistory = MainClient.memberSignedIn.getPurchaseReport();
+            System.out.println("else");
+            MainClient.result=null;
+            chat.sendToServer("report "+MainClient.memberSignedIn.getMemberIDByString());
+            while (MainClient.result == null)
+            {
+                System.out.print("");
+            }
+            purchaseHistory = (List<Purchase>) MainClient.result;
         }
+        if(purchaseHistory == null) {
+            return;
+        }
+        System.out.println("1");
+        ObservableList<PurchaseForDisplay> temp=FXCollections.observableArrayList();
         for (Purchase p : purchaseHistory)
         {
-            City city = (City)Search.searchByID(p.getCityID(),ProductType.CITY,Permission.CONTENT_MANAGER);
-            PurchaseForDisplay temp = new PurchaseForDisplay(p.getDateOfPurchase(),p.getCostByString(),p.getPurchaseTypeInString()
-                    ,city.getCityName(),p.getPurchasedMapNumberByString());
+            int purchaseCityIDs = p.getPurchasedCityID();
+            MainClient.result = null;
+            //Search.searchByID(purchaseCityIDs, ProductType.CITY, Permission.COMPANY_MANAGER);
+            chat.sendToServer("#Search product city " + purchaseCityIDs);
+            while (MainClient.result == null)
+            {
+                System.out.print("");
+            }
+            Catalog res = (Catalog) MainClient.result;
+            System.out.println(res.getCities().get(0).getCityName());
+            System.out.println(p.getDateOfPurchase() + " " + p.getCostByString() + " " + p.getPurchaseTypeInString() + " " + p.getPurchasedMapNumberByString());
+            String city = Objects.requireNonNull(res.getCities().get(0).getCityName());
+            temp.add(new PurchaseForDisplay(p.getDateOfPurchase(),p.getCostByString(),p.getPurchaseTypeInString()
+                    ,city,p.getPurchasedMapNumberByString()));
         }
+        table.setItems(temp);
     }
 
     public void start(Stage primaryStage) throws Exception

@@ -1,5 +1,11 @@
 package product;
 
+
+/**
+ *  Class for parsing to CatalogScreenView City data
+ *
+ * @author Yaad Nahshon
+ */
 public class CityToDisplay
 {
     public String getName() {
