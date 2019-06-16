@@ -14,6 +14,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import product.City;
+import product.CityToDisplay;
 import product.DigitalMap;
 import product.pricing.Purchase;
 import product.pricing.PurchaseType;
@@ -30,36 +31,16 @@ public class CatalogResultsScreen
 {
     private List<City> cityList;
 
-
-    private static class CityToDisplay
-    {
-        public String name;
-        public String numberMap;
-        public String numberSite;
-        public String numberTour;
-        public String price;
-        public String description;
-
-        public CityToDisplay(String name, String numberMaps, String numberSites, String numberTour, String price, String description) {
-            this.name = name;
-            this.numberMap = numberMaps;
-            this.numberSite = numberSites;
-            this.numberTour = numberTour;
-            this.price = price;
-            this.description = description;
-        }
-    }
-
     @FXML
     public void initialize()
     {
         // Table
-        cityNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-        cityCountMapsColumn.setCellValueFactory(new PropertyValueFactory<>("numberMap"));
-        cityCountSitesColumn.setCellValueFactory(new PropertyValueFactory<>("numberSite"));
-        cityCountToursColumn.setCellValueFactory(new PropertyValueFactory<>("numberTour"));
-        cityPriceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
-        mapDescriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
+        cityNameColumn.setCellValueFactory(new PropertyValueFactory<CityToDisplay, String>("name"));
+        cityCountMapsColumn.setCellValueFactory(new PropertyValueFactory<CityToDisplay, String>("numberMap"));
+        cityCountSitesColumn.setCellValueFactory(new PropertyValueFactory<CityToDisplay, String>("numberSite"));
+        cityCountToursColumn.setCellValueFactory(new PropertyValueFactory<CityToDisplay, String>("numberTour"));
+        cityPriceColumn.setCellValueFactory(new PropertyValueFactory<CityToDisplay, String>("price"));
+        mapDescriptionColumn.setCellValueFactory(new PropertyValueFactory<CityToDisplay, String>("description"));
 
         tableView.setItems(getCatalog());
 
@@ -68,6 +49,7 @@ public class CatalogResultsScreen
         oneTimePurchaseRadioButton.setToggleGroup(purchaseOption);
         subscriptionRadioButton.setToggleGroup(purchaseOption);
     }
+
 
     private ObservableList<CityToDisplay> getCatalog()
     {
@@ -104,7 +86,7 @@ public class CatalogResultsScreen
 
         int desiredCityID = 0;
         double desiredCityPrice = 0;
-        String cityName = tableView.getSelectionModel().getSelectedItem().name;
+        String cityName = tableView.getSelectionModel().getSelectedItem().getName();
         for (City city : cityList)
         {
             if (city.getCityName().equals(cityName))
@@ -200,34 +182,35 @@ public class CatalogResultsScreen
     private ChatClient chat = MainClient.getChat();
 
     @FXML
-    public TableView<CityToDisplay> tableView;
+    private TableView<CityToDisplay> tableView;
 
     @FXML
-    public TableColumn<CityToDisplay, String> cityNameColumn;
+    private TableColumn<CityToDisplay, String> cityNameColumn;
 
     @FXML
-    public TableColumn<CityToDisplay, String> cityCountMapsColumn;
+    private TableColumn<CityToDisplay, String> cityCountMapsColumn;
 
     @FXML
-    public TableColumn<CityToDisplay, String> cityCountSitesColumn;
+    private TableColumn<CityToDisplay, String> cityCountSitesColumn;
 
     @FXML
-    public TableColumn<CityToDisplay, String> cityCountToursColumn;
+    private TableColumn<CityToDisplay, String> cityCountToursColumn;
 
     @FXML
-    public TableColumn<CityToDisplay, String> cityPriceColumn;
+    private TableColumn<CityToDisplay, String> cityPriceColumn;
 
     @FXML
-    public TableColumn<CityToDisplay, String> mapDescriptionColumn;
+    private TableColumn<CityToDisplay, String> mapDescriptionColumn;
 
     @FXML
-    public RadioButton oneTimePurchaseRadioButton;
+    private RadioButton oneTimePurchaseRadioButton;
 
     @FXML
-    public RadioButton subscriptionRadioButton;
+    private RadioButton subscriptionRadioButton;
 
     @FXML
-    public Label messageLabel;
+    private Label messageLabel;
 
+    @FXML
     private ToggleGroup purchaseOption;
 }
