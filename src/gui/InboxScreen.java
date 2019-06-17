@@ -1,8 +1,8 @@
 package gui;
 
 /**
- *  TODO explain class
- * @author
+ *  Opens display of the messages.approval requests of the user
+ * @author GOD
  */
 public class InboxScreen
 {
