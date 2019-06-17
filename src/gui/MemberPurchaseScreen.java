@@ -72,6 +72,10 @@ public class MemberPurchaseScreen implements ChatIF, Serializable
 
     @FXML // fx:id="table"
     private TableView<PurchaseForDisplay> table; // Value injected by FXMLLoader
+    
+    /**
+     * This method initializes the parameters on the screen so it will ne shown to the user on opeping
+     */
 
     public void initialize() throws IOException{
         PurchaseType.setCellValueFactory(new PropertyValueFactory<PurchaseForDisplay, String>("type"));
@@ -128,6 +132,12 @@ public class MemberPurchaseScreen implements ChatIF, Serializable
         }
         table.setItems(temp);
     }
+    
+    /**
+     * This method initializes the window parametes
+     *
+     * @param prinaryStage the window to be opened
+     */
 
     public void start(Stage primaryStage) throws Exception
     {
@@ -143,6 +153,12 @@ public class MemberPurchaseScreen implements ChatIF, Serializable
         primaryStage.setScene(scene);
         primaryStage.show();
     }
+    
+    /**
+     * This method handles with pushing the "Back" button on the screen
+     *
+     * @param actionEvent the event of mouse clicking on the "Back" button
+     */
 
     @FXML
     void backButton(ActionEvent event)  throws IOException{
