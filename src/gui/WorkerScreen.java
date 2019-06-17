@@ -21,6 +21,10 @@ public class WorkerScreen extends MemberScreen
 {
 
     public Button editProducts;
+    
+    /**
+     * This method initializes the parameters on the window so it will be shown on openning
+     */
 
     @FXML
     @Override
@@ -33,6 +37,12 @@ public class WorkerScreen extends MemberScreen
             editProducts.setDisable(true);
         }
     }
+    
+    /**
+     * This method handles with pushing the "Edit" button on the screen
+     *
+     * @param actionEvent the event of mouse clicking on the "Edit" button
+     */
 
     @FXML
     protected void editButtonAction(ActionEvent actionEvent) throws IOException
