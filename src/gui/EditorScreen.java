@@ -130,6 +130,12 @@ public class EditorScreen {
 
     @FXML // fx:id="addTourToCityRadionBtn"
     private RadioButton addTourToCityRadionBtn; // Value injected by FXMLLoader
+    
+    /**
+     * This method handles with pushing the "Submit" button on the screen
+     *
+     * @param actionEvent the event of mouse clicking on the "Submit" button
+     */
 
     @FXML
     void submit(ActionEvent event) throws IOException{
@@ -271,6 +277,12 @@ public class EditorScreen {
             }
         }
     }
+    
+    /**
+     * This method handles with pushing the "Back" button on the screen
+     *
+     * @param actionEvent the event of mouse clicking on the "Back" button
+     */
 
     @FXML
     void back(ActionEvent event) throws IOException{
