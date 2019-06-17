@@ -49,7 +49,12 @@ public class MainServer extends Application
         }
         launch(args);
     }
-
+    
+    /**
+     * This method initializes the window that is opened
+     *
+     * @param primaryStage the window to be opened
+     */
 
     @Override
     public void start(Stage primaryStage) throws Exception
@@ -67,7 +72,11 @@ public class MainServer extends Application
         primaryStage.show();
     }
 
-    // TODO DELETE before submission
+    /**
+     * This method initializes the parameters on screen openening
+     *
+     */
+     
     public void initialize()
     {
         ipText.setText("127.0.0.1");
@@ -76,6 +85,12 @@ public class MainServer extends Application
         databaseUsernameText.setText("xdhLgvyRnN");
         databasePasswordText.setText("uNtE7bXJvV");
     }
+    
+    /**
+     * This method handles with pushing the "Connect" button on the screen
+     *
+     * @param actionEvent the event of mouse clicking on the "Connect" button
+     */
 
     public void connectAction(ActionEvent actionEvent)
     {
@@ -114,6 +129,12 @@ public class MainServer extends Application
             e.printStackTrace();
         }
     }
+    
+    /**
+     * This method handles with pushing the "Disconnect" button on the screen
+     *
+     * @param actionEvent the event of mouse clicking on the "Disconnect" button
+     */
 
     public void disconnectAction(ActionEvent actionEvent)
     {
@@ -134,6 +155,12 @@ public class MainServer extends Application
         messageLabel.setText("Server Disconnected");
 
     }
+    
+    /**
+     * This method handles with pushing the "Exit" button on the screen
+     *
+     * @param actionEvent the event of mouse clicking on the "Exit" button
+     */
 
     public void exitAction(ActionEvent actionEvent)
     {
