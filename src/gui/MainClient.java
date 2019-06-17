@@ -68,6 +68,11 @@ public class MainClient extends Application implements Initializable, ChatIF
     {
         return DEFAULT_PORT;
     }
+    
+    /**
+     * This method initializes the screen so a text will be shown to the user when the screen is opened
+     *
+     */
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1)
@@ -80,6 +85,12 @@ public class MainClient extends Application implements Initializable, ChatIF
     {
         return host;
     }
+    
+    /**
+     * This method sets initial parameters of the opened window
+     *
+     * @param primaryStage the window that is opened
+     */
 
     @Override
     public void start(Stage primaryStage) throws Exception
@@ -92,6 +103,12 @@ public class MainClient extends Application implements Initializable, ChatIF
         primaryStage.setScene(scene);
         primaryStage.show();
     }
+    
+    /**
+     * This method handles with pushing the "Submit" button on the screen
+     *
+     * @param actionEvent the event of mouse clicking on the "Submit" button
+     */
 
     public void submitButton(ActionEvent actionEvent) throws Exception
     {
