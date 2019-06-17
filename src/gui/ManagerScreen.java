@@ -27,6 +27,12 @@ public class ManagerScreen extends WorkerScreen{
     @FXML // fx:id="welcomeMessage"
     private Label welcomeMessage; // Value injected by FXMLLoader
 
+    /**
+     * This method handles with pushing the "Approve" button on the screen
+     *
+     * @param actionEvent the event of mouse clicking on the "Approve" button
+     */
+    
     @FXML
     public void approvalsButton(ActionEvent actionEvent) throws IOException
     {
@@ -44,6 +50,12 @@ public class ManagerScreen extends WorkerScreen{
         approvalStage.setScene(approvalScene);
         approvalStage.show();
     }
+    
+    /**
+     * This method handles with pushing the "PurchaseInfo" button on the screen
+     *
+     * @param actionEvent the event of mouse clicking on the "PurchaseInfo" button
+     */
 
     @FXML
     public void purchaseInfoButton(ActionEvent actionEvent) throws IOException
