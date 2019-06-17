@@ -30,7 +30,9 @@ import java.util.Map;
 public class CatalogResultsScreen
 {
     private List<City> cityList;
-
+    /**
+     * This method initializes the screen, so when the screen is openned, the data is visible.
+     */
     @FXML
     public void initialize()
     {
@@ -49,7 +51,10 @@ public class CatalogResultsScreen
         oneTimePurchaseRadioButton.setToggleGroup(purchaseOption);
         subscriptionRadioButton.setToggleGroup(purchaseOption);
     }
-
+    
+    /**
+     * This method puts the objects of the catalog into the observable list, so it can be put into the table ciew.
+     */
 
     private ObservableList<CityToDisplay> getCatalog()
     {
@@ -76,6 +81,12 @@ public class CatalogResultsScreen
         }
         return cityToDisplay;
     }
+    
+    /**
+     * This method handles with pushing the "Purchase" button on the screen
+     *
+     * @param actionEvent the event of mouse clicking on the "Purchase" button
+     */
 
     public void makePurchaseButton(ActionEvent actionEvent)
     {
@@ -122,6 +133,12 @@ public class CatalogResultsScreen
         }
 
     }
+    
+    /**
+     * This method handles with pushing the "Purchase" button on the screen
+     *
+     * @param actionEvent the event of mouse clicking on the "Back" button
+     */
 
     public void backButton(ActionEvent actionEvent) throws IOException
     {
@@ -160,6 +177,11 @@ public class CatalogResultsScreen
         }
     }
 
+    /**
+     * This method handles with pushing the "Logout" button on the screen
+     *
+     * @param actionEvent the event of mouse clicking on the "Logout" button
+     */
 
     public void logoutButton(ActionEvent actionEvent) throws IOException
     {
