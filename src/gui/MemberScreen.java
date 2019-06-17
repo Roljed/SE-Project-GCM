@@ -39,6 +39,12 @@ public class MemberScreen implements ChatIF, Serializable
         alert.showAndWait();
 
     }
+    
+    /**
+     * This method handles with pushing the "Search" button on the screen
+     *
+     * @param actionEvent the event of mouse clicking on the "Search" button
+     */
 
     @FXML
     protected void searchButton(ActionEvent actionEvent) throws IOException
@@ -56,6 +62,12 @@ public class MemberScreen implements ChatIF, Serializable
         searchStage.setScene(searchScene);
         searchStage.show();
     }
+    
+    /**
+     * This method handles with pushing the "View Purchased Items" button on the screen
+     *
+     * @param actionEvent the event of mouse clicking on the "View Purchased Items" button
+     */
 
     @FXML
     private void viewPurchasesButton(ActionEvent actionEvent) throws IOException
@@ -73,6 +85,12 @@ public class MemberScreen implements ChatIF, Serializable
         purchaseStage.setScene(purchaseScene);
         purchaseStage.show();
     }
+    
+    /**
+     * This method handles with pushing the "View User Info" button on the screen
+     *
+     * @param actionEvent the event of mouse clicking on the "View User Info" button
+     */
 
     @FXML
     protected void userInfoButton(ActionEvent actionEvent) throws IOException
@@ -90,6 +108,12 @@ public class MemberScreen implements ChatIF, Serializable
         userInfoStage.setScene(userInfoScene);
         userInfoStage.show();
     }
+    
+    /**
+     * This method handles with pushing the "Logout" button on the screen
+     *
+     * @param actionEvent the event of mouse clicking on the "Logout" button
+     */
 
     @FXML
     protected void logoutButton(ActionEvent actionEvent) throws IOException
@@ -109,6 +133,12 @@ public class MemberScreen implements ChatIF, Serializable
         mainScreenStage.setScene(mainScreenScene);
         mainScreenStage.show();
     }
+    
+    /**
+     * This method handles with pushing the "Exit" button on the screen
+     *
+     * @param actionEvent the event of mouse clicking on the "Exit" button
+     */
 
     @FXML
     protected void exitButton(ActionEvent actionEvent)
