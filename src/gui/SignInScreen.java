@@ -188,6 +188,12 @@ public class SignInScreen implements ChatIF, Serializable
             }
         }
     }
+    
+    /**
+     * This method handles with pushing the "submit" button on the screen and forwards the user to the "Worker" screen
+     *
+     * @param actionEvent the event of mouse clicking on the "Submit" button
+     */
 
     private void workerPage(ActionEvent actionEvent) throws IOException
     {
@@ -203,6 +209,12 @@ public class SignInScreen implements ChatIF, Serializable
         workerStage.setScene(workerScene);
         workerStage.show();
     }
+    
+    /**
+     * This method handles with pushing the "submit" button on the screen and forwards the user to the "Manager" screen
+     *
+     * @param actionEvent the event of mouse clicking on the "Submit" button
+     */
 
     private void managerPage(ActionEvent actionEvent) throws IOException
     {
@@ -218,6 +230,12 @@ public class SignInScreen implements ChatIF, Serializable
         managerStage.setScene(managerScene);
         managerStage.show();
     }
+    
+    /**
+     * This method handles with pushing the "submit" button on the screen and forwards the user to the "Main Screen" screen
+     *
+     * @param actionEvent the event of mouse clicking on the "Submit" button
+     */
 
     private void mainPage(ActionEvent actionEvent) throws  IOException
     {
