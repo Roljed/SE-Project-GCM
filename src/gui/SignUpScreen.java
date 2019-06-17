@@ -38,6 +38,13 @@ public class SignUpScreen implements ChatIF, Serializable
     public TextField emailText;
 
     @FXML
+    
+    /**
+     * This method handles with pushing the "submit" button on the screen
+     *
+     * @param actionEvent the event of mouse clicking on the "Submit" button
+     */
+     
     public void submitButton(ActionEvent actionEvent) throws IOException
     {
         if (usernameText.getText().isEmpty() || passwordText.getText().isEmpty() || nameText.getText().isEmpty() ||
@@ -95,6 +102,12 @@ public class SignUpScreen implements ChatIF, Serializable
             }
         }
     }
+    
+    /**
+     * This method handles with pushing the "Back" button on the screen
+     *
+     * @param actionEvent the event of mouse clicking on the "Back" button
+     */
 
     @FXML
     public void backButton(ActionEvent actionEvent) throws IOException
