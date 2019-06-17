@@ -9,12 +9,13 @@ import java.util.ArrayList;
 import java.util.List;
 import chat.ChatClient;
 import command.catalog.Catalog;
-import product.content.Site;
-import user.Permission;
 
 
 /**
+ * Communicate with database to retrieve relevant requested information
  *
+ * @author Daniel Katz
+ * @version 1
  */
 public class Search implements Serializable
 {
@@ -27,14 +28,18 @@ public class Search implements Serializable
         catalog = null;
     }
 
-    public static Object searchByID(int objectID, ProductType productType, Permission permission)
+    /**
+     * @param objectID object to search by his id
+     * @param productType for search focus
+     * @return requested object that match the search argument
+     */
+    public static Object searchByID(int objectID, ProductType productType)
     {
         String type = productTypeToString(productType);
         assert !type.equals("none");
 
         try {
             chat.sendToServer("#Search product " + type + " " + objectID);
-//            return chat.receiveObjectFromServer();
         }
         catch(IOException ex) {
             return null;
@@ -42,6 +47,10 @@ public class Search implements Serializable
         return null;
     }
 
+    /**
+     * @param cityName requested city to search
+     * @return Catalog with all the cities that match the search argument
+     */
     public Catalog searchByCityName(String cityName)
     {
         try {
@@ -49,7 +58,6 @@ public class Search implements Serializable
             try {
                 Thread.sleep(15000);
             } catch (InterruptedException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
             Object obj = MainClient.result;
@@ -66,11 +74,14 @@ public class Search implements Serializable
         }
     }
 
+    /**
+     * @param siteName requested site to search
+     * @return Catalog with all the sites that match the search argument
+     */
     public Catalog searchBySite(String siteName)
     {
         try {
             chat.sendToServer("#Search site name " + siteName);
-//            return chat.receiveObjectFromServer();
         }
         catch(IOException ex) {
             return null;
@@ -78,10 +89,13 @@ public class Search implements Serializable
         return null;
     }
 
+    /**
+     * @param description searches through cities and sites for description match
+     * @return Catalog with all the cities and sites that match the search argument
+     */
     public Catalog searchByDescription(String description) {
         try {
             chat.sendToServer("#Search object " + description);
-//            return chat.receiveObjectFromServer();
         }
         catch(IOException ex) {
             return null;
@@ -89,25 +103,10 @@ public class Search implements Serializable
         return null;
     }
 
-
-    public void displayCityMaps(int cityID) {
-        try {
-            chat.sendToServer(cityID);
-            List<?> objectCities = (List<?>)chat.receiveObjectFromServer();
-            if(objectCities.isEmpty()) {
-                return;
-            }
-            List<City> cities = new ArrayList<>();
-            for (Object obj : objectCities) {
-                cities.add((City)obj);
-            }
-            catalog = new Catalog(null,null,null,cities);
-        }
-        catch(IOException ex) {
-            return;
-        }
-    }
-
+    /**
+     * @param productType parsed to string
+     * @return String class that matches the ProductType enum
+     */
     private static String productTypeToString(ProductType productType)
     {
         switch (productType)
@@ -125,6 +124,10 @@ public class Search implements Serializable
         }
     }
 
+
+    /**
+     * @return Catalog private argument getter
+     */
     public Catalog getCatalog() {
         return catalog;
     }

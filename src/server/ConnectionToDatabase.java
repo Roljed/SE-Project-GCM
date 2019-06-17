@@ -19,7 +19,7 @@ import product.content.Location;
 import product.content.Site;
 import product.pricing.MapCost;
 import product.pricing.Purchase;
-import user.member.MemberCard;
+import user.member.Member;
 
 /**
  *
@@ -98,7 +98,7 @@ public class ConnectionToDatabase
         Statement stmt;
         ResultSet rs = null;
         String name = "";
-        MemberCard memberCard = null;
+        Member member = null;
         try
         {
             stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
@@ -168,8 +168,8 @@ public class ConnectionToDatabase
                     purchasedMapID[i++]=Integer.parseInt(m);
                 purchaseHistory.add(new Purchase(Integer.parseInt(ID), id, date, purchasedCityID, purchasedMapID, cost, type));
             }
-            memberCard = new MemberCard(ID, pn, un, ps, phone, email, null,per);
-            memberCard.setPurchaseHistory(purchaseHistory);
+            member = new Member(ID, pn, un, ps, phone, email, null,per);
+            member.setPurchaseHistory(purchaseHistory);
             if (pn.equals("Tester") == false)
             {
                 stmt.executeUpdate("UPDATE User_Database SET Registered = 'YES' WHERE UserName='"+ nameUser +"'");
@@ -183,7 +183,7 @@ public class ConnectionToDatabase
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return  memberCard;
+        return member;
     }
 
     public static void UpdateClient(String ID, String nameUser, String namePersonal, String password, String phoneNumber, String email, String permission)
@@ -1047,7 +1047,7 @@ public class ConnectionToDatabase
         Statement stmt;
         ResultSet rs = null;
         String name = "";
-        MemberCard memberCard = null;
+        Member member = null;
         try
         {
             stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
@@ -1063,7 +1063,7 @@ public class ConnectionToDatabase
             rs = stmt.executeQuery("SELECT Email FROM User_Database WHERE ID = '" + ID + "'");
             if(!rs.next()){return null;}
             String email=rs.getString("Email");
-            memberCard = new MemberCard(ID, null, userName, password, phone, email, null,null);
+            member = new Member(ID, null, userName, password, phone, email, null,null);
             if (stmt != null) {
                 try {
                     stmt.close();
@@ -1072,7 +1072,7 @@ public class ConnectionToDatabase
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return  memberCard;
+        return member;
     }
 
     public static List<Purchase> SearchReportForID(String ID) throws NumberFormatException{

@@ -14,7 +14,7 @@ import server.ClientServerStatus;
 import user.User;
 import user.manager.CompanyManager;
 import user.manager.ContentManager;
-import user.member.MemberCard;
+import user.member.Member;
 import user.worker.ContentWorker;
 import user.worker.Worker;
 
@@ -104,9 +104,9 @@ public class SignInScreen implements ChatIF, Serializable
                 }
             }
 
-            else if (res instanceof MemberCard)
+            else if (res instanceof Member)
             {
-                memberSignedIn = ((MemberCard) res);
+                memberSignedIn = ((Member) res);
                 MainClient.permission = memberSignedIn.getPermission();
                 MainClient.personalName = memberSignedIn.getPersonalName();
 

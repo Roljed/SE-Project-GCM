@@ -7,6 +7,12 @@ import product.pricing.MapCost;
 
 import java.io.Serializable;
 
+/**
+ * Content manager that has the authority to edit all company's product and set Map costs
+ *
+ * @version 1
+ * @author Daniel Katz
+ */
 public class ContentManager extends Manager implements Serializable
 {
 

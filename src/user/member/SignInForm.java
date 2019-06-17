@@ -2,6 +2,13 @@ package user.member;
 
 import java.io.Serializable;
 
+
+/**
+ * Sing in form to be send to database for requesting signing in
+ *
+ * @version 1
+ * @author Daniel Katz
+ */
 public class SignInForm implements Serializable
 {
 	private String userName;

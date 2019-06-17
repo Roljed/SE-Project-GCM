@@ -9,6 +9,7 @@ import java.util.Map;
 
 /**
  * Main product - Digital Map
+ * Regular maps come from different source
  *
  * @version 1
  * @author Yaad Nahshon
@@ -101,20 +102,4 @@ public class DigitalMap implements Serializable
        return this.digitalMapContents.put(newContent.getContendID(), newContent);
     }
 
-    public void out(Permission permission)
-    {
-        if (permission != null && (permission != Permission.USER && permission != Permission.MEMBER))
-        {
-            System.out.println("\tID: " + digitalMapID);
-        }
-
-        System.out.println("\tVersion: " + digitalMapVersion);
-        System.out.println("\tMap Description: " + digitalMapDescription);
-        System.out.println("\tPrice: " + digitalMapCost.getPrice());
-        System.out.println("\tContent");
-        for (Map.Entry<Integer, Content> content : digitalMapContents.entrySet())
-        {
-            content.getValue().out(permission);
-        }
-    }
 }

@@ -1,12 +1,13 @@
 package command;
 
-import java.io.Serializable;
 import java.text.SimpleDateFormat;
 
 /**
-*
-* @version 1
-* @author Avi Ayeli
+ * Currently the only kind of report available
+ * Viewed by company manager
+ *
+ * @version 1
+ * @author Avi Ayeli
 */
 
 public class ReportActivity extends Report

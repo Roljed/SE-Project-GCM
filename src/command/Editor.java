@@ -1,7 +1,6 @@
 package command;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,10 +11,9 @@ import product.DigitalMap;
 import product.ProductType;
 import product.Tour;
 import product.content.Site;
-import user.Permission;
 
 /**
- * Interface of editor capabilities
+ * Interface for company's editors
  *
  * @version 1
  * @author Yaad Nahshon
@@ -35,8 +33,7 @@ public interface Editor
             throw new IllegalArgumentException("Error.\nupdateContent can't except null arguments.");
         }
 
-        Search search = new Search(chat);
-        Site updateContent = (Site) search.searchByID(oldContentID, ProductType.CONTENT, Permission.EDITOR);
+        Site updateContent = (Site) Search.searchByID(oldContentID, ProductType.CONTENT);
         if (updateContent == null)
         {
             return false;
@@ -68,8 +65,7 @@ public interface Editor
             throw new IllegalArgumentException("Error.\naddContentToMap can't except null arguments.");
         }
 
-        Search search = new Search(chat);
-        DigitalMap updateMap  = (DigitalMap) search.searchByID(digitalMapID, ProductType.DIGITAL_MAP, Permission.EDITOR);
+        DigitalMap updateMap  = (DigitalMap) Search.searchByID(digitalMapID, ProductType.DIGITAL_MAP);
         if (updateMap == null)
         {
             return false;
@@ -99,8 +95,7 @@ public interface Editor
             throw new IllegalArgumentException("Error.\naddContentToCity can't except null arguments.");
         }
 
-        Search search = new Search(chat);
-        City updateCity  = (City) search.searchByID(cityID, ProductType.CITY, Permission.EDITOR);
+        City updateCity  = (City) Search.searchByID(cityID, ProductType.CITY);
         if (updateCity == null)
         {
             return false;
@@ -135,8 +130,7 @@ public interface Editor
             throw new IllegalArgumentException("Error.\nupdateDigitalMap can't except null arguments.");
         }
 
-        Search search = new Search(chat);
-        DigitalMap updateDigitalMap = (DigitalMap) search.searchByID(oldDigitalMapID, ProductType.DIGITAL_MAP, Permission.EDITOR);
+        DigitalMap updateDigitalMap = (DigitalMap) Search.searchByID(oldDigitalMapID, ProductType.DIGITAL_MAP);
         if (updateDigitalMap == null)
         {
             return false;
@@ -168,7 +162,7 @@ public interface Editor
         }
 
         Search search = new Search(chat);
-        City updatedCity = (City) search.searchByID(cityID, ProductType.CITY, Permission.EDITOR);
+        City updatedCity = (City) Search.searchByID(cityID, ProductType.CITY);
         if (updatedCity == null)
         {
             updatedCity = new City("new_city", new HashMap<>(), new HashMap<>(), 0, 0, new Date());
@@ -201,7 +195,7 @@ public interface Editor
         }
 
         Search search = new Search(chat);
-        Tour updatedTour = (Tour) search.searchByID(oldTour, ProductType.TOUR, Permission.EDITOR);
+        Tour updatedTour = (Tour) Search.searchByID(oldTour, ProductType.TOUR);
         if (updatedTour == null)
         {
             return false;
@@ -233,8 +227,7 @@ public interface Editor
             throw new IllegalArgumentException("Error.\naddTour can't except null arguments.");
         }
 
-        Search search = new Search(chat);
-        City updatedCity = (City) search.searchByID(cityID, ProductType.CITY, Permission.EDITOR);
+        City updatedCity = (City) Search.searchByID(cityID, ProductType.CITY);
         if (updatedCity == null)
         {
             return null;
@@ -266,8 +259,7 @@ public interface Editor
             throw new IllegalArgumentException("Error.\nupdateCity can't except null arguments.");
         }
 
-        Search search = new Search(chat);
-        City updatedCity = (City) search.searchByID(cityID, ProductType.CITY, Permission.EDITOR);
+        City updatedCity = (City) Search.searchByID(cityID, ProductType.CITY);
         if (updatedCity == null)
         {
             return false;

@@ -6,6 +6,13 @@ import user.Permission;
 import java.io.Serializable;
 import java.lang.String;
 
+
+/**
+ * Register user form to be sent to the database
+ *
+ * @version 1
+ * @author Daniel Katz
+ */
 public class SignUpForm implements Serializable
 {
 	private String name;
@@ -24,8 +31,8 @@ public class SignUpForm implements Serializable
 		this.chat = chat;
 	}
 
-	public MemberCard createMemberCard()
+	public Member createMemberCard()
 	{
-		return new MemberCard(name, userName, password, phoneNumber, email, chat, Permission.MEMBER);
+		return new Member(name, userName, password, phoneNumber, email, chat, Permission.MEMBER);
 	}
 }

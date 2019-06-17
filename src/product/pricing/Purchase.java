@@ -3,7 +3,6 @@ package product.pricing;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -11,6 +10,7 @@ import java.util.List;
 import product.DigitalMap;
 
 /**
+ * Hold Members purchased City class products with their maps
  *
  * @version 1
  * @author Avi Ayeli
@@ -135,7 +135,6 @@ public class Purchase implements Serializable
 			default: return "Subscription";
 		}
 	}
-
 
 	public int getCityID() {
 		return purchasedCityID;

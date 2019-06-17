@@ -2,12 +2,11 @@ package product;
 
 import java.io.Serializable;
 import java.util.List;
-import product.content.Content;
 import product.content.Site;
-import user.Permission;
 
 /**
  * Third product - Route
+ * City tour container with Site class sequence
  *
  * @version 1
  * @author Yaad Nahshon
@@ -94,18 +93,4 @@ public class Tour implements Serializable
         this.tourTotalDuration = tourTotalDuration;
     }
 
-//    public void out(Permission permission)
-//    {
-//        if (permission != null && (permission != Permission.USER && permission != Permission.MEMBER))
-//        {
-//            System.out.println("\tID: " + tourID);
-//        }
-//        System.out.println("\tTour Name: " + tourName);
-//        System.out.println("\tDescription: " + tourDescription);
-//        System.out.println("\tDuration: " + tourTotalDuration);
-//        for (Content content : tourSequence)
-//        {
-//            content.out(permission);
-//        }
-//    }
 }

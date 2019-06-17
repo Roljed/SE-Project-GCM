@@ -14,7 +14,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import user.Permission;
-import user.member.MemberCard;
+import user.member.Member;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -35,7 +35,7 @@ public class MainClient extends Application implements Initializable, ChatIF
 
     //    public static Stack<Scene> sceneStack = new Stack<>(); TODO after all scenes are build
     public static Object result = null;    // holds server return message
-    static MemberCard memberSignedIn = null;
+    static Member memberSignedIn = null;
     public static Catalog catalog = null;
 
     @FXML

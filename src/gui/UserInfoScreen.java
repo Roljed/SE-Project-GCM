@@ -18,7 +18,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import user.member.MemberCard;
+import user.member.Member;
 
 /**
  * User Info screen
@@ -113,7 +113,7 @@ public class UserInfoScreen implements ChatIF, Serializable
                 memberSignedIn.setPersonalName(UpadateFullName.getText());
             if (!UpdateEmail.getText().isEmpty())
                 memberSignedIn.setEmail(UpdateEmail.getText());
-            List<MemberCard> update= new ArrayList<>();
+            List<Member> update= new ArrayList<>();
             update.add(memberSignedIn);
             try {
                 chat.sendToServer(update);

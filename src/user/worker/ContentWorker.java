@@ -6,6 +6,13 @@ import user.Permission;
 
 import java.io.Serializable;
 
+
+/**
+ * Worker class that have additional editorial capabilities
+ *
+ * @version 1
+ * @author Daniel Katz
+ */
 public class ContentWorker extends Worker implements Editor, Serializable
 {
 	public ContentWorker(String namePersonal_, String nameUser_, String password_, int phoneNumber_, String email_, ChatClient chat_){

@@ -4,9 +4,10 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 /**
-*
-* @version 1
-* @author Avi Ayeli
+ * Abstract class for different kind reports
+ *
+ * @version 1
+ * @author Avi Ayeli
 */
 
 public abstract class Report implements Serializable

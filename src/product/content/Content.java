@@ -5,7 +5,7 @@ import user.Permission;
 import java.io.Serializable;
 
 /**
- * Abstract class for future proof content classes
+ * Abstract class for future content classes
  *
  * @version 1
  * @author Yaad Nahshon
@@ -61,7 +61,7 @@ public abstract class Content implements Serializable
     }
 
 
-    public void setLocationCoordinate(Location locationCoordinate)
+    void setLocationCoordinate(Location locationCoordinate)
     {
         this.locationCoordinate = locationCoordinate;
     }
@@ -80,7 +80,5 @@ public abstract class Content implements Serializable
     {
         this.contentDuration = contentDuration;
     }
-
-    public abstract void out(Permission permission);
 
 }

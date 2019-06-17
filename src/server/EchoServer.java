@@ -12,7 +12,7 @@ import product.DigitalMap;
 import product.Tour;
 import product.content.Site;
 import product.pricing.Purchase;
-import user.member.MemberCard;
+import user.member.Member;
 import user.member.SignInForm;
 import chat.common.ChatIF;
 
@@ -90,12 +90,12 @@ public class EchoServer extends AbstractServer
             }
         }
 
-        if (msg instanceof MemberCard)
+        if (msg instanceof Member)
         {
             try {
-                client.sendToClient(ConnectionToDatabase.SignUp(((MemberCard) msg).getMemberIDByString(),((MemberCard) msg).getPermissionByString(),
-                        ((MemberCard) msg).getUserName(),((MemberCard) msg).getPassword(),((MemberCard) msg).getPersonalName(),((MemberCard) msg).getEmail(),
-                        ((MemberCard) msg).getPhoneNumberByString()));
+                client.sendToClient(ConnectionToDatabase.SignUp(((Member) msg).getMemberIDByString(),((Member) msg).getPermissionByString(),
+                        ((Member) msg).getUserName(),((Member) msg).getPassword(),((Member) msg).getPersonalName(),((Member) msg).getEmail(),
+                        ((Member) msg).getPhoneNumberByString()));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -103,9 +103,9 @@ public class EchoServer extends AbstractServer
 
         if (msg instanceof List<?>)
         {
-            MemberCard memberCard=(MemberCard) ((List<?>) msg).get(0);
-            ConnectionToDatabase.UpdateClient(memberCard.getMemberIDByString(),memberCard.getUserName(),memberCard.getPersonalName(),
-                    memberCard.getPassword(),memberCard.getPhoneNumberByString(),memberCard.getEmail(),memberCard.getPermissionByString());
+            Member member =(Member) ((List<?>) msg).get(0);
+            ConnectionToDatabase.UpdateClient(member.getMemberIDByString(), member.getUserName(), member.getPersonalName(),
+                    member.getPassword(), member.getPhoneNumberByString(), member.getEmail(), member.getPermissionByString());
         }
 
         if (msg instanceof Site)

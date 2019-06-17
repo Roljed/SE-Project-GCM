@@ -2,11 +2,18 @@ package user.worker;
 
 import chat.ChatClient;
 import user.Permission;
-import user.member.MemberCard;
+import user.member.Member;
 
 import java.io.Serializable;
 
-public class Worker extends MemberCard implements Serializable
+
+/**
+ * Basic company's worker class for all around worker
+ *
+ * @version 1
+ * @author Daniel Katz
+ */
+public class Worker extends Member implements Serializable
 {
 	private int workerID;
 	static int NextworkerID = 0;

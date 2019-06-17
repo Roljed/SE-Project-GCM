@@ -1,17 +1,15 @@
 package product.pricing;
 
 import java.io.Serializable;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import user.Permission;
 
 /**
-*
-* @version 1
-* @author Avi Ayeli
+ * Container for map prices
+ *
+ * @version 1
+ * @author Avi Ayeli
 */
 
 public class MapCost implements Serializable
@@ -59,15 +57,13 @@ public class MapCost implements Serializable
         return formatter.format(lastModifiedDate);
     }
 
-    public boolean setPrice(double price, String approvalName, Permission permission)
+    public void setPrice(double price, String approvalName, Permission permission)
     {
         if (permission == Permission.CONTENT_MANAGER)
         {
         	this.price=price;
         	this.lastApproval=approvalName;
         	this.lastModifiedDate = LocalDate.now();
-        	return true;
         }
-        return false;
     }
 }

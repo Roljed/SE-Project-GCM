@@ -169,26 +169,4 @@ public class Site extends Content implements Serializable
         this.siteAccessibility = siteAccessibility;
     }
 
-    public void out()
-    {
-
-    }
-
-    public void out(Permission permission)
-    {
-        if (permission != Permission.USER && permission != Permission.MEMBER)
-        {
-            System.out.println("\tID: " + getContendID());
-            System.out.println("\tLocation:");
-            System.out.println("\t\tCoordinate X " + this.getLocationCoordinate().getCoordinateX());
-            System.out.println("\t\tCoordinate Y " + this.getLocationCoordinate().getCoordinateY());
-        }
-
-        System.out.println("\tName: " + siteName);
-        System.out.println("\tType: " + siteType);
-        System.out.println("\tDuration: " + this.getContentDuration());
-        System.out.println("\tDescription: " + siteDescription);
-        System.out.println("\tAccessibility: " + ((siteAccessibility) ? "True" : "False"));
-        System.out.println("\tName: " + this.getSiteName());
-    }
 }

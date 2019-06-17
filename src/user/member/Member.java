@@ -6,41 +6,37 @@ import chat.ChatClient;
 import user.User;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
-public class MemberCard extends User implements Serializable
+
+/**
+ * Register user class.
+ * Can make purchases and hold a client card in company's database.
+ */
+public class Member extends User implements Serializable
 {
 	private int memberID;
-	protected static int NextMemberID = 0;
+	private static int NextMemberID = 0;
 	protected String personalName;
 	private String password;
 	protected String userName;
 	private int phoneNumber;
 	private String email;
-	protected SignInForm signInForm = null;
 	private List<Purchase> purchaseHistory;
 	private boolean connencted = false;
 
-	public MemberCard(String namePersonal_, String nameUser_, String password_, int phoneNumber_, String email_, ChatClient client, Permission permission_){
+	public Member(String namePersonal_, String nameUser_, String password_, int phoneNumber_, String email_, ChatClient client, Permission permission_){
 		super(client);
 		personalName = namePersonal_;
 		password = password_;
 		userName = nameUser_;
 		phoneNumber = phoneNumber_;
 		email = email_;
-		if (permission_ == null)
-		{
-			permission_ = Permission.MEMBER;
-		}
-		else
-		{
-			permission = permission_;
-		}
+		permission = permission_;
 		memberID = NextMemberID++;
 	}
 
-	public MemberCard(String id_, String namePersonal_, String nameUser_, String password_, String phoneNumber_, String email_, ChatClient client, String permission_)
+	public Member(String id_, String namePersonal_, String nameUser_, String password_, String phoneNumber_, String email_, ChatClient client, String permission_)
 	{
 		super(m_chat);
 		memberID = Integer.parseInt(id_);
@@ -140,6 +136,10 @@ public class MemberCard extends User implements Serializable
 		this.connencted = connencted;
 	}
 
+
+	/**
+	 * @return list of purchases that have been made by this member
+	 */
 	public List<Purchase> getPurchaseReport()
 	{
 		String request = "report " + Integer.toString(memberID);

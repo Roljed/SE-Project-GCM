@@ -1,51 +1,70 @@
 package user;
 
 import command.catalog.Catalog;
-import server.ClientServerStatus;
-import user.member.MemberCard;
+import user.member.Member;
 import command.Search;
 import chat.ChatClient;
 import user.member.SignInForm;
 import user.member.SignUpForm;
-import java.io.IOException;
 import java.io.Serializable;
 
-import static server.ClientServerStatus.*;
 import static user.Permission.*;
 
 
+/**
+ * The basic class for all app user.
+ *
+ * @version 1
+ * @author Daniel Katz
+ *
+ */
 public class User implements Serializable
 {
-	public boolean registeredUser = false;
-	private Search search = null;
 	protected static ChatClient m_chat;
 	protected Permission permission = Permission.USER;
-
-	protected ClientServerStatus clientServerStatus = ClientServerStatus.NOT_EXIST;
-	private SignUpForm signUpForm;
-	private SignInForm signInForm;
 
 	public User(ChatClient chat_)
 	{
 		m_chat = chat_;
 	}
 
+
+	/**
+	 * @param chat client connector with the company's server
+	 * @param username user's private and uniq username
+	 * @param password user's private password
+	 */
 	public void signIn(ChatClient chat, String username, String password)
 	{
-		this.signInForm = new SignInForm(username,password);
+		SignInForm signInForm = new SignInForm(username, password);
 		chat.handleMessageFromClientUI(signInForm);
 	}
 
+
+	/**
+	 * @param chat client connector with the company's server
+	 * @param name personal user's full name
+	 * @param username user's uniq username for future access to his card
+	 * @param password user's private password for future access to his card
+	 * @param phoneNumber user's phone number
+	 * @param email user's email
+	 */
 	public void signUp(ChatClient chat, String name, String username, String password, int phoneNumber, String email)
 	{
-		this.signUpForm = new SignUpForm(name, username, password, phoneNumber, email, chat);
-		MemberCard clientCard = signUpForm.createMemberCard();
+		SignUpForm signUpForm = new SignUpForm(name, username, password, phoneNumber, email, chat);
+		Member clientCard = signUpForm.createMemberCard();
 		chat.handleMessageFromClientUI(clientCard);
 	}
 
+
+	/**
+	 * @param request requested string to search
+	 * @param searchType for 3 search configurations {1: City name, 2: Site name, 3: City or Site description}
+	 * @return Catalog class with search results
+	 */
 	public Catalog viewCatalog(String request, int searchType)
 	{
-		search = new Search(m_chat);
+		Search search = new Search(m_chat);
 		Catalog resultCatalog = null;
 		switch(searchType){
 			case 1: resultCatalog = search.searchByCityName(request); break;
@@ -54,11 +73,6 @@ public class User implements Serializable
 			default: break;
 		}
 		return resultCatalog;
-	}
-
-	public SignUpForm getSignUpForm()
-	{
-		return signUpForm;
 	}
 
 	public Permission getPermission()
@@ -78,7 +92,7 @@ public class User implements Serializable
 		}
 	}
 
-	public  Permission getPermissionFromString(String str)
+	protected Permission getPermissionFromString(String str)
 	{
 		switch(str) {
 			case "MEMBER": return MEMBER;
@@ -89,39 +103,4 @@ public class User implements Serializable
 			default: return USER;
 		}
 	}
-
-
-	public ClientServerStatus getClientServerStatus()
-	{
-		return clientServerStatus;
-	}
-
-	public String getClientServerStatusToString()
-	{
-		switch(clientServerStatus) {
-			case CONNECTED: return "CONNECTED";
-			case NOT_CONNECTED: return "NOT_CONNECTED";
-			case WRONG_USERNAME_OR_PASSWORD: return "WRONG_USERNAME_OR_PASSWORD";
-			case WRONG_ARGUMENTS: return "WRONG_ARGUMENTS";
-			default: return "NOT_EXIST";
-		}
-	}
-
-	public ClientServerStatus getClientServerStatusFromString(String str)
-	{
-		switch(str) {
-			case "CONNECTED": return CONNECTED;
-			case "NOT_CONNECTED": return NOT_CONNECTED;
-			case "WRONG_USERNAME_OR_PASSWORD": return WRONG_USERNAME_OR_PASSWORD;
-			case "WRONG_ARGUMENTS": return WRONG_ARGUMENTS;
-			default: return NOT_EXIST;
-		}
-	}
-
-	public void setClientServerStatus(ClientServerStatus clientServerStatus)
-	{
-		this.clientServerStatus = clientServerStatus;
-	}
-
-
 }

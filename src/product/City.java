@@ -1,16 +1,13 @@
 package product;
 
-import user.Permission;
-
 import java.io.Serializable;
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * Second product - City
+ * Holds at current stage all companies products
  *
  * @version 1
  * @author Yaad Nahshon
@@ -74,7 +71,7 @@ public class City implements Serializable
         return price;
     }
 
-    public int countCityContent()
+    private int countCityContent()
     {
         int count = 0;
         for (Map.Entry<Integer, DigitalMap> digitalMap : this.cityMaps.entrySet())
@@ -150,7 +147,6 @@ public class City implements Serializable
         return String.valueOf(updateVersionDate);
     }
 
-
     public void setUpdateVersionDate(Date updateVersionDate)
     {
         this.updateVersionDate = updateVersionDate;
@@ -181,23 +177,4 @@ public class City implements Serializable
         this.cityVersion += 1;
     }
 
-//    public void out(Permission permission)
-//    {
-//        if (permission != null && (permission != Permission.USER && permission != Permission.MEMBER))
-//        {
-//            System.out.println("\tID: " + cityID);
-//        }
-//        System.out.println("\tCity Name: " + cityName);
-//        System.out.println("\tMap Count:" + cityMaps.size());
-//
-//        int countContent = 0;
-//        for (Map.Entry<Integer, DigitalMap> map : cityMaps.entrySet())
-//        {
-//            System.out.println("\t\tMap Description" + map.getValue().getDigitalMapDescription());
-//            countContent += map.getValue().getDigitalMapContents().size();
-//        }
-//
-//        System.out.println("\tNumber Of Contents: " + countContent);
-//        System.out.println("\tNumber Of Tours: " + cityTours.size());
-//    }
 }

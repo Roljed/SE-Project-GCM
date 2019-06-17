@@ -6,6 +6,13 @@ import user.Permission;
 
 import java.io.Serializable;
 
+/**
+ * Main and single Company Manager that has the authority to edit all company's product,
+ * approve product edits done by company's workers and see company's reports
+ *
+ * @version 1
+ * @author Daniel Katz
+ */
 public class CompanyManager extends Manager implements Serializable
 {
 
