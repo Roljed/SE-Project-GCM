@@ -51,7 +51,7 @@ public class Search implements Serializable
      * @param cityName requested city to search
      * @return Catalog with all the cities that match the search argument
      */
-    public Catalog searchByCityName(String cityName)
+    public static Catalog searchByCityName(String cityName)
     {
         try {
             chat.sendToServer("#Search city name " + cityName);
@@ -78,7 +78,7 @@ public class Search implements Serializable
      * @param siteName requested site to search
      * @return Catalog with all the sites that match the search argument
      */
-    public Catalog searchBySite(String siteName)
+    public static Catalog searchBySite(String siteName)
     {
         try {
             chat.sendToServer("#Search site name " + siteName);

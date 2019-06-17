@@ -90,9 +90,6 @@ public class ConnectionToDatabase
         return con;
     }
 
-
-    // TODO make getVersion
-
     public static Object SignIn (String nameUser, String password) throws SQLException {
         Connection conn = connectToDatabase();
         Statement stmt;

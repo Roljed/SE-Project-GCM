@@ -140,7 +140,7 @@ public class EditorScreen {
                 resultLbl.setText("Please enter the required fields");
             }
             else {
-                Tour newTour = (Tour)Search.searchByID(Integer.parseInt(updateTour_newID.getText()),ProductType.TOUR,MainClient.permission);
+                Tour newTour = (Tour)Search.searchByID(Integer.parseInt(updateTour_newID.getText()),ProductType.TOUR);
                 boolean res = ((Editor)(MainClient.memberSignedIn)).updateTour(Integer.parseInt(updateTour_oldID.getText()),newTour,chat);
                 if (res) {
                     resultLbl.setText("The information was updated");
@@ -155,7 +155,7 @@ public class EditorScreen {
                 resultLbl.setText("Please enter the required fields");
             }
             else {
-                Site newSite = (Site)Search.searchByID(Integer.parseInt(updateContent_newIDID.getText()),ProductType.CONTENT,MainClient.permission);
+                Site newSite = (Site)Search.searchByID(Integer.parseInt(updateContent_newIDID.getText()),ProductType.CONTENT);
                 boolean res = ((Editor)(MainClient.memberSignedIn)).updateContent(Integer.parseInt(updateTour_oldID.getText()),newSite,chat);
                 if (res) {
                     resultLbl.setText("The information was updated");
@@ -170,7 +170,7 @@ public class EditorScreen {
                 resultLbl.setText("Please enter the required fields");
             }
             else {
-                DigitalMap newMap = (DigitalMap)Search.searchByID(Integer.parseInt(updateMap_newID.getText()),ProductType.DIGITAL_MAP,MainClient.permission);
+                DigitalMap newMap = (DigitalMap)Search.searchByID(Integer.parseInt(updateMap_newID.getText()),ProductType.DIGITAL_MAP);
                 boolean res = ((Editor)(MainClient.memberSignedIn)).updateDigitalMap(Integer.parseInt(updateMap_oldID.getText()),newMap,chat);
                 if (res) {
                     resultLbl.setText("The information was updated");
@@ -185,7 +185,7 @@ public class EditorScreen {
                 resultLbl.setText("Please enter the required fields");
             }
             else {
-                City newCity = (City)Search.searchByID(Integer.parseInt(updateCity_newID.getText()),ProductType.CITY,MainClient.permission);
+                City newCity = (City)Search.searchByID(Integer.parseInt(updateCity_newID.getText()),ProductType.CITY);
                 boolean res = ((Editor)(MainClient.memberSignedIn)).updateCity(Integer.parseInt(updateCity_oldID.getText()),newCity,chat);
                 if (res) {
                     resultLbl.setText("The information was updated");
@@ -200,7 +200,7 @@ public class EditorScreen {
                 resultLbl.setText("Please enter the required fields");
             }
             else {
-                Site newSite = (Site)Search.searchByID(Integer.parseInt(addContentToCity_contentID.getText()),ProductType.CONTENT,MainClient.permission);
+                Site newSite = (Site)Search.searchByID(Integer.parseInt(addContentToCity_contentID.getText()),ProductType.CONTENT);
                 boolean res = ((Editor)(MainClient.memberSignedIn)).addContentToCity(Integer.parseInt(addContentToCity_cityID.getText()),newSite,chat);
                 if (res) {
                     resultLbl.setText("The information was updated");
@@ -215,7 +215,7 @@ public class EditorScreen {
                 resultLbl.setText("Please enter the required fields");
             }
             else {
-                Site newSite = (Site)Search.searchByID(Integer.parseInt(addContentToCity_contentID.getText()),ProductType.CONTENT,MainClient.permission);
+                Site newSite = (Site)Search.searchByID(Integer.parseInt(addContentToCity_contentID.getText()),ProductType.CONTENT);
                 boolean res = ((Editor)(MainClient.memberSignedIn)).addContentToMap(Integer.parseInt(addContentToMap_mapID.getText()),newSite,chat);
                 if (res) {
                     resultLbl.setText("The information was updated");
@@ -230,7 +230,7 @@ public class EditorScreen {
                 resultLbl.setText("Please enter the required fields");
             }
             else {
-                DigitalMap newMap = (DigitalMap)Search.searchByID(Integer.parseInt(addMapToCity_mapID.getText()),ProductType.DIGITAL_MAP,MainClient.permission);
+                DigitalMap newMap = (DigitalMap)Search.searchByID(Integer.parseInt(addMapToCity_mapID.getText()),ProductType.DIGITAL_MAP);
                 City res = ((Editor)(MainClient.memberSignedIn)).addDigitalMapToCity(Integer.parseInt(addMapToCity_cityID.getText()),newMap,chat);
                 if (res == null) {
                     resultLbl.setText("The information was updated");
@@ -260,7 +260,7 @@ public class EditorScreen {
                 resultLbl.setText("Please enter the required fields");
             }
             else {
-                Tour newTour = (Tour)Search.searchByID(Integer.parseInt(addTourToCity_tourID.getText()),ProductType.TOUR,MainClient.permission);
+                Tour newTour = (Tour)Search.searchByID(Integer.parseInt(addTourToCity_tourID.getText()),ProductType.TOUR);
                 City res = ((Editor)(MainClient.memberSignedIn)).addTour(Integer.parseInt(addTourToCity_cityID.getText()),newTour,chat);
                 if (res == null) {
                     resultLbl.setText("The information was updated");
