@@ -43,9 +43,19 @@ public class SearchScreen implements ChatIF, Serializable{
     private Button searchByCityName; // Value injected by FXMLLoader
 
     private Label messageLabel;
+  
+  /**
+     * This method initializes the parameters of the window on openning
+     */
 
     @FXML
     public void initialize() {}
+  
+  /**
+     * This method handles with pushing the "Search By City" button on the screen
+     *
+     * @param actionEvent the event of mouse clicking on the "Search By City" button
+     */
 
     @FXML
     void SearchByCity(ActionEvent event) throws IOException{
@@ -67,6 +77,12 @@ public class SearchScreen implements ChatIF, Serializable{
         }
         gotoCatalog(event);
     }
+  
+  /**
+     * This method handles with pushing the "Search By Site" button on the screen
+     *
+     * @param actionEvent the event of mouse clicking on the "Search By Site" button
+     */
 
     @FXML
     void SearchBySite(ActionEvent event) throws IOException {
@@ -88,6 +104,12 @@ public class SearchScreen implements ChatIF, Serializable{
         }
         gotoCatalog(event);
     }
+  
+  /**
+     * This method handles with pushing the "Search By Description" button on the screen
+     *
+     * @param actionEvent the event of mouse clicking on the "Search By Description" button
+     */
 
     @FXML
     void SearchByDescription(ActionEvent event) throws IOException {
@@ -110,6 +132,12 @@ public class SearchScreen implements ChatIF, Serializable{
         gotoCatalog(event);
 
     }
+  
+  /**
+     * This method opens the catalog screen, following the user's choice of searching
+     *
+     * @param actionEvent the event of mouse clicking on any of the search button
+     */
 
     private void gotoCatalog(ActionEvent event) throws IOException
     {
@@ -125,6 +153,12 @@ public class SearchScreen implements ChatIF, Serializable{
         catalogStage.setScene(catalogScene);
         catalogStage.show();
     }
+  
+  /**
+     * This method handles with pushing the "Back" button on the screen
+     *
+     * @param actionEvent the event of mouse clicking on the "Back" button
+     */
 
     @FXML
     void goBack(ActionEvent event) throws IOException{
