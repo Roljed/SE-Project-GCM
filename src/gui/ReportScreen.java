@@ -1,8 +1,8 @@
 package gui;
 
 /**
- *  TODO explain class
- * @author
+ *  A class showing the report of the company activity
+ * @author GOD
  */
 public class ReportScreen
 {
