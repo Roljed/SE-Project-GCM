@@ -65,6 +65,12 @@ public class UserInfoScreen implements ChatIF, Serializable
 
     @FXML // fx:id="Password"
     private Label Password; // Value injected by FXMLLoader
+    
+    /**
+     * This method initializes the window paraneters
+     *
+     * @param prinaryStage the window to be opened
+     */
 
 
     public void start(Stage primaryStage) throws Exception
@@ -81,6 +87,11 @@ public class UserInfoScreen implements ChatIF, Serializable
         primaryStage.setScene(scene);
         primaryStage.show();
     }
+    
+    /**
+     * This method initializes the parameteres on the window, so it will be shown to the user on opening
+     */
+    
     @FXML
     public void initialize() throws IOException
     {
@@ -90,6 +101,12 @@ public class UserInfoScreen implements ChatIF, Serializable
         PhoneNumber.setText(memberSignedIn.getPhoneNumberByString());
         Email.setText(memberSignedIn.getEmail());
     }
+    
+    /**
+     * This method handles with pushing the "Update" button on the screen
+     *
+     * @param actionEvent the event of mouse clicking on the "Update" button
+     */
 
     @FXML
     void btn_Update(ActionEvent event) throws IOException {
@@ -123,6 +140,12 @@ public class UserInfoScreen implements ChatIF, Serializable
 
         }
     }
+    
+    /**
+     * This method handles with pushing the "Back" button on the screen
+     *
+     * @param actionEvent the event of mouse clicking on the "Back" button
+     */
 
     @FXML
     void btn_Back(ActionEvent event)  throws IOException{
@@ -169,7 +192,5 @@ public class UserInfoScreen implements ChatIF, Serializable
 
     @Override
     public void display(String message) {
-        // TODO Auto-generated method stub
-
     }
 }
